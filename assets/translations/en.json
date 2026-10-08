@@ -1,0 +1,96 @@
+{
+  "common": {
+    "appName": "Personal Memory",
+    "tagline": "Your secure second memory",
+    "close": "Close",
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip",
+    "start": "Get started",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "secureLocal": "Private and encrypted on your device"
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "SAVE WHAT MATTERS",
+        "subTitle": "Every important detail in one place",
+        "description": "Save medication, appointments, numbers, and notes with photos and files, then organize them with ease."
+      },
+      {
+        "title": "INSTANT RECALL",
+        "subTitle": "Just say the memory's name",
+        "description": "Speak naturally and Ameen will find the right memory, even when you do not remember its exact name."
+      },
+      {
+        "title": "TRUE PRIVACY",
+        "subTitle": "Your memories remain yours",
+        "description": "Your data stays encrypted on your device, works offline, and is protected by your biometrics or PIN."
+      }
+    ]
+  },
+  "home": {
+    "greeting": "Hello, {name}!",
+    "headline": "What would you like to remember?",
+    "localData": "Your data is stored locally",
+    "searchPlaceholder": "Search your memories...",
+    "clearSearch": "Clear search",
+    "voiceEyebrow": "FASTEST AND EASIEST",
+    "voiceTitle": "Recall a memory by voice",
+    "voiceDescription": "Tap and speak, and I will find it right away",
+    "startListening": "Start listening",
+    "memoriesTitle": "Your memories",
+    "memoriesCount": "{{count}} saved memories",
+    "viewAll": "View all",
+    "emptyTitle": "No memories found",
+    "emptyDescription": "Try another word or choose a different category",
+    "privacyTitle": "Your privacy comes first, always",
+    "privacyDescription": "All your memories are encrypted and stored only on your device. We cannot see or share them."
+  },
+  "categories": {
+    "all": "All",
+    "medical": "Medical",
+    "financial": "Financial",
+    "family": "Family",
+    "friends": "Friends",
+    "personal": "Personal",
+    "other": "Other"
+  },
+  "voice": {
+    "dialogLabel": "Recall a memory by voice",
+    "title": "I am listening",
+    "description": "Say the name of the memory you want to recall",
+    "listening": "Listening...",
+    "noMatch": "I could not find a matching memory. Please try again."
+  },
+  "memory": {
+    "detailsLabel": "Memory details",
+    "details": "Details",
+    "attachments": "Attachments",
+    "createdAt": "Date added",
+    "updatedAt": "Last updated",
+    "reminder": "Reminder",
+    "openAttachment": "Open attachment",
+    "recallByVoice": "Recall this memory by voice",
+    "noAttachments": "No attachments"
+  },
+  "addMemory": {
+    "dialogLabel": "Add memory",
+    "title": "New memory",
+    "subtitle": "Save what matters and find it in seconds",
+    "nameLabel": "Memory name",
+    "namePlaceholder": "Example: Mom's doctor appointment",
+    "detailsLabel": "Details",
+    "detailsPlaceholder": "Write everything you want to remember...",
+    "attachmentTitle": "Add attachment",
+    "attachmentTypes": "Photo, file, or voice recording",
+    "save": "Save memory",
+    "saved": "Saved securely"
+  },
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode"
+  }
+}

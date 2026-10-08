@@ -1,0 +1,96 @@
+{
+  "common": {
+    "appName": "ذاكرتك الشخصية",
+    "tagline": "ذاكرتك الثانية الآمنة",
+    "close": "إغلاق",
+    "next": "التالي",
+    "back": "السابق",
+    "skip": "تخطي",
+    "start": "ابدأ الن",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "secureLocal": "خاص ومشفر على جهازك"
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "احفظ ما يهم",
+        "subTitle": "كل تفاصيل حياتك في مكان واحد",
+        "description": "احفظ الأدوية والمواعيد والأرقام والملاحظات مع الصور والملفات، ونظّمها ببساطة."
+      },
+      {
+        "title": "استرجاع فوري",
+        "subTitle": "قل اسم الذكرى فقط",
+        "description": "تحدّث بطريقتك الطبيعية، وسيجد أمين الذكرى المناسبة حتى لو لم تتذكر اسمها بدقة."
+      },
+      {
+        "title": "خصوصية حقيقية",
+        "subTitle": "ذكرياتك تبقى لك وحدك",
+        "description": "تعيش بياناتك مشفرة على جهازك، وتعمل دون إنترنت، وتحميها بصمتك أو رمزك السري."
+      }
+    ]
+  },
+  "home": {
+    "greeting": "مرحباً، {name}!",
+    "headline": "ماذا تريد أن تتذكّر؟",
+    "localData": "بياناتك محفوظة محلياً",
+    "searchPlaceholder": "ابحث في ذكرياتك...",
+    "clearSearch": "مسح البحث",
+    "voiceEyebrow": "الأسرع والأبسط",
+    "voiceTitle": "استرجع ذكرى بصوتك",
+    "voiceDescription": "اضغط وتحدّث، وسأجدها لك فوراً",
+    "startListening": "ابدأ الاستماع",
+    "memoriesTitle": "ذكرياتك",
+    "memoriesCount": "{{count}} ذكريات محفوظة",
+    "viewAll": "عرض الكل",
+    "emptyTitle": "لم نعثر على ذكرى",
+    "emptyDescription": "جرّب كلمة أخرى أو اختر تصنيفاً مختلفاً",
+    "privacyTitle": "خصوصيتك أولاً، دائماً",
+    "privacyDescription": "كل ذكرياتك مشفرة ومحفوظة على جهازك فقط. لا نراها ولا نشاركها."
+  },
+  "categories": {
+    "all": "الكل",
+    "medical": "طبي",
+    "financial": "مالي",
+    "family": "العائلة",
+    "friends": "الأصدقاء",
+    "personal": "شخصي",
+    "other": "أخرى"
+  },
+  "voice": {
+    "dialogLabel": "استدعاء ذكرى بالصوت",
+    "title": "أنا أستمع إليك",
+    "description": "قل اسم الذكرى التي تريد استرجاعها",
+    "listening": "جارٍ الاستماع...",
+    "noMatch": "لم أجد ذكرى مطابقة، حاول مرة أخرى"
+  },
+  "memory": {
+    "detailsLabel": "تفاصيل الذكرى",
+    "details": "التفاصيل",
+    "attachments": "المرفقات",
+    "createdAt": "تاريخ الإضافة",
+    "updatedAt": "آخر تحديث",
+    "reminder": "التذكير",
+    "openAttachment": "فتح المرفق",
+    "recallByVoice": "استدعِ هذه الذكرى بصوتك",
+    "noAttachments": "لا توجد مرفقات"
+  },
+  "addMemory": {
+    "dialogLabel": "إضافة ذكرى",
+    "title": "ذكرى جديدة",
+    "subtitle": "احفظ ما يهمك لتجده في لحظة",
+    "nameLabel": "اسم الذكرى",
+    "namePlaceholder": "مثال: موعد طبيب الوالدة",
+    "detailsLabel": "التفاصيل",
+    "detailsPlaceholder": "اكتب كل ما تريد تذكره...",
+    "attachmentTitle": "إضافة مرفق",
+    "attachmentTypes": "صورة، ملف أو تسجيل صوتي",
+    "save": "حفظ الذكرى",
+    "saved": "تم الحفظ بأمان"
+  },
+  "theme": {
+    "light": "الوضع النهاري",
+    "dark": "الوضع الليلي"
+  }
+}
