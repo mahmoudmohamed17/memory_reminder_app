@@ -18,8 +18,7 @@ abstract final class AppSpacing {
   static const double gutter = 16;
 
   /// Symmetric, so identical in RTL and LTR.
-  static const EdgeInsets screenPadding =
-      EdgeInsets.symmetric(horizontal: screenMargin);
+  static const EdgeInsets screenPadding = EdgeInsets.symmetric(horizontal: screenMargin);
 }
 
 /// Corner radii.
@@ -34,8 +33,7 @@ abstract final class AppRadius {
 
   static const BorderRadius mdAll = BorderRadius.all(Radius.circular(md));
   static const BorderRadius lgAll = BorderRadius.all(Radius.circular(lg));
-  static const BorderRadius dialogAll =
-      BorderRadius.all(Radius.circular(dialog));
+  static const BorderRadius dialogAll = BorderRadius.all(Radius.circular(dialog));
   static const BorderRadius pillAll = BorderRadius.all(Radius.circular(pill));
   static const BorderRadius sheetTop = BorderRadius.vertical(
     top: Radius.circular(xl),
@@ -45,50 +43,46 @@ abstract final class AppRadius {
 /// Ambient, teal-tinted shadows. Dark mode uses surface tiers instead,
 /// so these return an empty list there.
 abstract final class AppShadows {
-  static List<BoxShadow> level1(BuildContext context) =>
-      _isDark(context)
-          ? const []
-          : const [
-              BoxShadow(
-                color: Color(0x0A1D4E5B), // 4 %
-                blurRadius: 8,
-                spreadRadius: -2,
-                offset: Offset(0, 2),
-              ),
-              BoxShadow(
-                color: Color(0x081D4E5B), // 3 %
-                blurRadius: 16,
-                offset: Offset(0, 4),
-              ),
-            ];
+  static List<BoxShadow> level1(BuildContext context) => _isDark(context)
+      ? const []
+      : const [
+          BoxShadow(
+            color: Color(0x0A1D4E5B), // 4 %
+            blurRadius: 8,
+            spreadRadius: -2,
+            offset: Offset(0, 2),
+          ),
+          BoxShadow(
+            color: Color(0x081D4E5B), // 3 %
+            blurRadius: 16,
+            offset: Offset(0, 4),
+          ),
+        ];
 
-  static List<BoxShadow> level2(BuildContext context) =>
-      _isDark(context)
-          ? const []
-          : const [
-              BoxShadow(
-                color: Color(0x141D4E5B), // 8 %
-                blurRadius: 20,
-                spreadRadius: -4,
-                offset: Offset(0, 4),
-              ),
-            ];
+  static List<BoxShadow> level2(BuildContext context) => _isDark(context)
+      ? const []
+      : const [
+          BoxShadow(
+            color: Color(0x141D4E5B), // 8 %
+            blurRadius: 20,
+            spreadRadius: -4,
+            offset: Offset(0, 4),
+          ),
+        ];
 
   /// Voice button and sheets.
-  static List<BoxShadow> level3(BuildContext context) =>
-      _isDark(context)
-          ? const []
-          : const [
-              BoxShadow(
-                color: Color(0x291D4E5B), // 16 %
-                blurRadius: 32,
-                spreadRadius: -4,
-                offset: Offset(0, 8),
-              ),
-            ];
+  static List<BoxShadow> level3(BuildContext context) => _isDark(context)
+      ? const []
+      : const [
+          BoxShadow(
+            color: Color(0x291D4E5B), // 16 %
+            blurRadius: 32,
+            spreadRadius: -4,
+            offset: Offset(0, 8),
+          ),
+        ];
 
-  static bool _isDark(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark;
+  static bool _isDark(BuildContext context) => Theme.of(context).brightness == Brightness.dark;
 }
 
 /// Motion tokens. Respect `MediaQuery.disableAnimationsOf(context)`
@@ -109,11 +103,9 @@ abstract final class AppMotion {
 
 /// Entry point: `MaterialApp(theme: AppTheme.light, darkTheme: AppTheme.dark)`.
 abstract final class AppTheme {
-  static ThemeData get light =>
-      _build(AppColors.lightScheme, AppSemanticColors.light);
+  static ThemeData get light => _build(AppColors.lightScheme, AppSemanticColors.light);
 
-  static ThemeData get dark =>
-      _build(AppColors.darkScheme, AppSemanticColors.dark);
+  static ThemeData get dark => _build(AppColors.darkScheme, AppSemanticColors.dark);
 
   static const double _minTarget = 48;
   static const double _controlHeight = 52;
@@ -167,9 +159,7 @@ abstract final class AppTheme {
         toolbarHeight: 56,
         titleTextStyle: text.titleLarge,
         iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
-        systemOverlayStyle: isDark
-            ? SystemUiOverlayStyle.light
-            : SystemUiOverlayStyle.dark,
+        systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
 
       // ── Cards ────────────────────────────────────────────────────────────
@@ -202,6 +192,7 @@ abstract final class AppTheme {
           shape: const StadiumBorder(),
           textStyle: text.labelLarge,
           elevation: 0,
+          shadowColor: Colors.transparent,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -212,6 +203,7 @@ abstract final class AppTheme {
           textStyle: text.labelLarge,
           foregroundColor: scheme.primary,
           side: BorderSide(color: scheme.outline),
+          shadowColor: Colors.transparent,
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -221,6 +213,7 @@ abstract final class AppTheme {
           shape: const StadiumBorder(),
           textStyle: text.labelLarge,
           foregroundColor: scheme.primary,
+          shadowColor: Colors.transparent,
         ),
       ),
       iconButtonTheme: IconButtonThemeData(
@@ -266,10 +259,8 @@ abstract final class AppTheme {
       // ── Search bar (pill) ────────────────────────────────────────────────
       searchBarTheme: SearchBarThemeData(
         elevation: const WidgetStatePropertyAll<double>(0),
-        backgroundColor:
-            WidgetStatePropertyAll<Color>(scheme.surfaceContainerLow),
-        surfaceTintColor:
-            const WidgetStatePropertyAll<Color>(Colors.transparent),
+        backgroundColor: WidgetStatePropertyAll<Color>(scheme.surfaceContainerLow),
+        surfaceTintColor: const WidgetStatePropertyAll<Color>(Colors.transparent),
         constraints: const BoxConstraints(minHeight: _controlHeight),
         padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
           EdgeInsets.symmetric(horizontal: 16),
@@ -323,8 +314,7 @@ abstract final class AppTheme {
         actionsPadding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 16),
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.dialogAll),
         titleTextStyle: text.titleLarge,
-        contentTextStyle:
-            text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
+        contentTextStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
       ),
 
       // ── Snackbar ─────────────────────────────────────────────────────────
@@ -333,8 +323,7 @@ abstract final class AppTheme {
         backgroundColor: scheme.inverseSurface,
         actionTextColor: scheme.inversePrimary,
         disabledActionTextColor: scheme.onInverseSurface.withAlpha(97),
-        contentTextStyle:
-            text.bodyMedium?.copyWith(color: scheme.onInverseSurface),
+        contentTextStyle: text.bodyMedium?.copyWith(color: scheme.onInverseSurface),
         insetPadding: const EdgeInsets.all(AppSpacing.screenMargin),
         elevation: 0,
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
@@ -350,17 +339,13 @@ abstract final class AppTheme {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
           (Set<WidgetState> states) => text.labelMedium?.copyWith(
-            color: states.contains(WidgetState.selected)
-                ? scheme.onSurface
-                : scheme.onSurfaceVariant,
+            color: states.contains(WidgetState.selected) ? scheme.onSurface : scheme.onSurfaceVariant,
           ),
         ),
         iconTheme: WidgetStateProperty.resolveWith<IconThemeData?>(
           (Set<WidgetState> states) => IconThemeData(
             size: 24,
-            color: states.contains(WidgetState.selected)
-                ? scheme.onPrimaryContainer
-                : scheme.onSurfaceVariant,
+            color: states.contains(WidgetState.selected) ? scheme.onPrimaryContainer : scheme.onSurfaceVariant,
           ),
         ),
       ),
@@ -372,9 +357,7 @@ abstract final class AppTheme {
             if (states.contains(WidgetState.disabled)) {
               return scheme.onSurface.withAlpha(97);
             }
-            return states.contains(WidgetState.selected)
-                ? scheme.onPrimary
-                : scheme.outline;
+            return states.contains(WidgetState.selected) ? scheme.onPrimary : scheme.outline;
           },
         ),
         trackColor: WidgetStateProperty.resolveWith<Color?>(
@@ -382,15 +365,11 @@ abstract final class AppTheme {
             if (states.contains(WidgetState.disabled)) {
               return scheme.onSurface.withAlpha(31);
             }
-            return states.contains(WidgetState.selected)
-                ? scheme.primary
-                : scheme.surfaceContainerHighest;
+            return states.contains(WidgetState.selected) ? scheme.primary : scheme.surfaceContainerHighest;
           },
         ),
         trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) => states.contains(WidgetState.selected)
-              ? Colors.transparent
-              : scheme.outline,
+          (Set<WidgetState> states) => states.contains(WidgetState.selected) ? Colors.transparent : scheme.outline,
         ),
       ),
 
@@ -402,8 +381,7 @@ abstract final class AppTheme {
         iconColor: scheme.onSurfaceVariant,
         textColor: scheme.onSurface,
         titleTextStyle: text.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
-        subtitleTextStyle:
-            text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
+        subtitleTextStyle: text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
       ),
 

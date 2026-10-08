@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/onboarding/view/onboarding_screen.dart';
 import 'app_routes.dart';
 import 'page_transition_builder.dart';
 
@@ -8,12 +9,12 @@ class AppRouter {
   static final router = GoRouter(
     routes: [
       _route(
-        AppRoutes.splash,
-        builder: (context, state) => const Placeholder(),
+        AppRoutes.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
       ),
     ],
   );
-  
+
   static GoRoute _route(
     String path, {
     required Widget Function(BuildContext context, GoRouterState state) builder,

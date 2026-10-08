@@ -13,23 +13,21 @@
     "secureLocal": "Private and encrypted on your device"
   },
   "onboarding": {
-    "steps": [
-      {
-        "title": "SAVE WHAT MATTERS",
-        "subTitle": "Every important detail in one place",
-        "description": "Save medication, appointments, numbers, and notes with photos and files, then organize them with ease."
-      },
-      {
-        "title": "INSTANT RECALL",
-        "subTitle": "Just say the memory's name",
-        "description": "Speak naturally and Ameen will find the right memory, even when you do not remember its exact name."
-      },
-      {
-        "title": "TRUE PRIVACY",
-        "subTitle": "Your memories remain yours",
-        "description": "Your data stays encrypted on your device, works offline, and is protected by your biometrics or PIN."
-      }
-    ]
+    "step1": {
+      "title": "SAVE WHAT MATTERS",
+      "subTitle": "Every important detail in one place",
+      "description": "Save medication, appointments, numbers, and notes with photos and files, then organize them with ease."
+    },
+    "step2": {
+      "title": "INSTANT RECALL",
+      "subTitle": "Just say the memory's name",
+      "description": "Speak naturally and Ameen will find the right memory, even when you do not remember its exact name."
+    },
+    "step3": {
+      "title": "TRUE PRIVACY",
+      "subTitle": "Your memories remain yours",
+      "description": "Your data stays encrypted on your device, works offline, and is protected by your biometrics or PIN."
+    }
   },
   "home": {
     "greeting": "Hello, {name}!",

@@ -15,6 +15,7 @@ class CustomElevatedButton extends StatelessWidget {
   final FontWeight? fontWeight;
   final double? width;
   final double? height;
+  final IconAlignment? iconAlignment;
 
   const CustomElevatedButton({
     super.key,
@@ -28,6 +29,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.fontWeight,
     this.width,
     this.height,
+    this.iconAlignment = IconAlignment.start,
   });
 
   @override
@@ -54,6 +56,7 @@ class CustomElevatedButton extends StatelessWidget {
             fontWeight: fontWeight,
           ),
         ),
+        iconAlignment: iconAlignment,
       ),
     );
   }

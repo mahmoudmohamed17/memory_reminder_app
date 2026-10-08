@@ -15,17 +15,17 @@ class AppStrings {
   static const String secureLocal = 'common.secureLocal';
 
   // Onboarding
-  static const String onboardingStep1Title = 'onboarding.steps.0.title';
-  static const String onboardingStep1SubTitle = 'onboarding.steps.0.subTitle';
-  static const String onboardingStep1Description = 'onboarding.steps.0.description';
+  static const String onboardingStep1Title = 'onboarding.step1.title';
+  static const String onboardingStep1SubTitle = 'onboarding.step1.subTitle';
+  static const String onboardingStep1Description = 'onboarding.step1.description';
 
-  static const String onboardingStep2Title = 'onboarding.steps.1.title';
-  static const String onboardingStep2SubTitle = 'onboarding.steps.1.subTitle';
-  static const String onboardingStep2Description = 'onboarding.steps.1.description';
+  static const String onboardingStep2Title = 'onboarding.step2.title';
+  static const String onboardingStep2SubTitle = 'onboarding.step2.subTitle';
+  static const String onboardingStep2Description = 'onboarding.step2.description';
 
-  static const String onboardingStep3Title = 'onboarding.steps.2.title';
-  static const String onboardingStep3SubTitle = 'onboarding.steps.2.subTitle';
-  static const String onboardingStep3Description = 'onboarding.steps.2.description';
+  static const String onboardingStep3Title = 'onboarding.step3.title';
+  static const String onboardingStep3SubTitle = 'onboarding.step3.subTitle';
+  static const String onboardingStep3Description = 'onboarding.step3.description';
 
   // Home
   static const String homeGreeting = 'home.greeting';
