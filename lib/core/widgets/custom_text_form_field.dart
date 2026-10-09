@@ -50,7 +50,6 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
@@ -78,9 +77,6 @@ class CustomTextFormField extends StatelessWidget {
           style: textTheme.bodyLarge,
           decoration: InputDecoration(
             hintText: hint != null ? context.tr(hint!) : '',
-            hintStyle: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurface.withValues(alpha: 0.5),
-            ),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             prefix: prefixWidget,

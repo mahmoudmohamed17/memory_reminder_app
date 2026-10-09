@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 import 'app_typo.dart';
@@ -237,14 +238,14 @@ abstract final class AppTheme {
         constraints: const BoxConstraints(minHeight: _controlHeight),
         labelStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
         floatingLabelStyle: text.bodyMedium?.copyWith(color: scheme.primary),
-        hintStyle: text.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
+        hintStyle: text.bodyLarge?.copyWith(color: scheme.onSurface.withValues(alpha: 0.50)),
         helperStyle: text.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
         errorStyle: text.bodySmall?.copyWith(color: scheme.error),
         errorMaxLines: 3,
         prefixIconColor: scheme.onSurfaceVariant,
         suffixIconColor: scheme.onSurfaceVariant,
-        border: fieldBorder(scheme.outline),
-        enabledBorder: fieldBorder(scheme.outline),
+        border: fieldBorder(scheme.outline.withValues(alpha: 0.50)),
+        enabledBorder: fieldBorder(scheme.outline.withValues(alpha: 0.50)),
         focusedBorder: fieldBorder(scheme.primary, width: 2),
         errorBorder: fieldBorder(scheme.error),
         focusedErrorBorder: fieldBorder(scheme.error, width: 2),
@@ -391,6 +392,13 @@ abstract final class AppTheme {
         space: 1,
       ),
 
+      badgeTheme: BadgeThemeData(
+        padding: EdgeInsets.all(6.sp),
+        textStyle: text.labelSmall,
+        backgroundColor: scheme.primaryContainer.withValues(alpha: 0.15),
+        textColor: scheme.onPrimary,
+      ),
+
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: scheme.primary,
         linearTrackColor: scheme.surfaceContainerHighest,
@@ -404,6 +412,15 @@ abstract final class AppTheme {
         ),
         textStyle: text.bodyMedium?.copyWith(color: scheme.onInverseSurface),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        iconSize: 24,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadius.dialogAll,
+        ),
       ),
     );
   }

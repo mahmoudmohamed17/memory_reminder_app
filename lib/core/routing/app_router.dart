@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/home/view/home_screen.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
 import '../cubits/app_flow_cubit.dart';
 import '../cubits/app_flow_state.dart';
@@ -44,7 +45,7 @@ class AppRouter {
         ),
         _route(
           AppRoutes.home,
-          builder: (context, state) => const Placeholder(),
+          builder: (context, state) => const HomeScreen(),
         ),
       ],
     );

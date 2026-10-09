@@ -30,7 +30,7 @@
     }
   },
   "home": {
-    "greeting": "Hello, {name}!",
+    "greeting": "Hello, how are you today?",
     "headline": "What would you like to remember?",
     "localData": "Your data is stored locally",
     "searchPlaceholder": "Search your memories...",

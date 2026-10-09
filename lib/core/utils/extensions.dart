@@ -85,6 +85,11 @@ extension ContextExtension on BuildContext {
     ScaffoldMessenger.of(this).hideCurrentSnackBar();
   }
 
+  /// Opens drawer
+  void openDrawer() {
+    Scaffold.of(this).openDrawer();
+  }
+
   /// Closes drawer
   void closeDrawer() {
     Scaffold.of(this).closeDrawer();

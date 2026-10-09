@@ -76,7 +76,7 @@ class _ChangeThemeButtonState extends State<ChangeThemeButton> with SingleTicker
           padding: EdgeInsets.all(10.sp),
           child: Icon(
             context.isDarkMode ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
-            size: 24.sp,
+            size: 20.sp,
           ),
         ),
       ),
