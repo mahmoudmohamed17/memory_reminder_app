@@ -7,6 +7,7 @@ import 'my_app.dart';
 
 void main() async {
   await bootstrapApp();
+  
   runApp(
     EasyLocalization(
       supportedLocales: LocaleManager.supportedLocales,

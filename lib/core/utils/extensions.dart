@@ -92,6 +92,9 @@ extension ContextExtension on BuildContext {
 
   /// Current Locale
   Locale get currentLocale => Localizations.localeOf(this);
+
+  /// Checks if current theme is dark
+  bool get isDarkMode => theme.brightness == Brightness.dark;
 }
 
 extension Spaces on double {

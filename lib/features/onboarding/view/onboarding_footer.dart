@@ -35,6 +35,8 @@ class OnboardingFooter extends StatelessWidget {
             activeDotColor: context.colorScheme.primary,
             dotColor: context.colorScheme.outline.withValues(alpha: 0.50),
             spacing: 12.w,
+            dotWidth: 14.w,
+            dotHeight: 14.h,
           ),
         ),
         CustomElevatedButton(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/cubits/app_flow_cubit.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/widgets/custom_text_button.dart';
@@ -41,20 +43,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  void _onStart() {
-    _completeOnboarding();
-  }
-
-  void _onSkip() {
-    _controller.animateToPage(
-      _items.length - 1,
-      duration: AppMotion.slow,
-      curve: AppMotion.standard,
-    );
-  }
-
-  void _completeOnboarding() {
-    // TODO: Navigate to home screen (e.g., context.go(AppRoutes.home))
+  /// Tells [AppFlowCubit] that onboarding is done.
+  /// The cubit emits [AppFlowState.home], which triggers
+  /// [GoRouterListenableBuilder] → GoRouter re-runs redirect → navigates to /home.
+  void _onComplete() {
+    context.read<AppFlowCubit>().completeOnboarding();
   }
 
   @override
@@ -85,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   child: CustomTextButton(
                     text: AppStrings.skip,
-                    onPressed: _onSkip,
+                    onPressed: _onComplete,
                   ),
                 ),
               ),
@@ -110,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     total: _items.length,
                     isLastPage: currentIndex == _items.length - 1,
                     onNext: _onNext,
-                    onStart: _onStart,
+                    onStart: _onComplete,
                   );
                 },
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/cubits/app_flow_cubit.dart';
 import 'core/cubits/theme_cubit.dart';
 import 'core/di/di.dart';
 import 'core/routing/app_router.dart';
@@ -18,8 +19,13 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return BlocProvider(
-          create: (context) => getIt<ThemeCubit>(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<ThemeCubit>()),
+            // AppFlowCubit is already initialised; expose it so any widget
+            // (e.g. OnboardingScreen) can call completeOnboarding().
+            BlocProvider(create: (_) => getIt<AppFlowCubit>()),
+          ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, state) {
               return MaterialApp.router(

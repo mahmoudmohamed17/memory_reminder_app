@@ -15,4 +15,7 @@ Future<void> bootstrapApp() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   configureDependencies();
+  // Resolve all lazySingletonAsync dependencies (SharedPreferences, AppFlowCubit…)
+  // before AppRouter.router is created.
+  await getIt.allReady();
 }
