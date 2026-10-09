@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Memory categories used by chips, cards and filters.
-enum MemoryCategory { medical, financial, family, friends, personal, other }
+import '../../features/home/domain/models/memory_item_model.dart';
 
 /// Raw palette + Material 3 [ColorScheme]s for "Serene Trust".
 ///
@@ -366,6 +365,5 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
 extension AppColorsContext on BuildContext {
   /// Semantic + category colors for the current theme.
-  AppSemanticColors get appColors =>
-      Theme.of(this).extension<AppSemanticColors>() ?? AppSemanticColors.light;
+  AppSemanticColors get appColors => Theme.of(this).extension<AppSemanticColors>() ?? AppSemanticColors.light;
 }

@@ -5,6 +5,7 @@ import '../../../core/utils/app_strings.dart';
 import '../../../core/widgets/change_theme_button.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 import 'wigdets/greeting_widget.dart';
+import 'wigdets/memories_list.dart';
 import 'wigdets/voice_searching_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -37,6 +38,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     16.verticalSpace,
                     const VoiceSearchingButton(),
+                    16.verticalSpace,
+                    const MemoriesList(),
+                    64.verticalSpace,
                   ],
                 ),
               ),
