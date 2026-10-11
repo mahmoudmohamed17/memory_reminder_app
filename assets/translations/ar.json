@@ -82,6 +82,8 @@
     "namePlaceholder": "مثال: موعد طبيب الوالدة",
     "detailsLabel": "التفاصيل",
     "detailsPlaceholder": "اكتب كل ما تريد تذكره...",
+    "categoryLabel": "تصنيف الذكرى",
+    "categoryHint": "اختر التصنيف الأنسب لتجدها بسهولة",
     "attachmentTitle": "إضافة مرفق",
     "attachmentTypes": "صورة، ملف أو تسجيل صوتي",
     "save": "حفظ الذكرى",

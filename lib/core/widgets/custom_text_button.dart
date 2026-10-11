@@ -46,9 +46,9 @@ class CustomTextButton extends StatelessWidget {
         label: Text(
           context.tr(text),
           style: context.textTheme.titleSmall?.copyWith(
-            color: fontColor ?? context.colorScheme.onSurface,
+            color: fontColor,
             fontSize: fontSize,
-            fontWeight: fontWeight,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

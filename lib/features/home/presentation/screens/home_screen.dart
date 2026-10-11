@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/utils/app_strings.dart';
-import '../../../core/widgets/change_langauge_button.dart';
-import '../../../core/widgets/change_theme_button.dart';
-import '../../../core/widgets/custom_text_form_field.dart';
-import 'wigdets/greeting_widget.dart';
-import 'wigdets/memories_list.dart';
-import 'wigdets/voice_searching_button.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../../../core/widgets/change_langauge_button.dart';
+import '../../../../core/widgets/change_theme_button.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../domain/models/memory_item_model.dart';
+import '../wigdets/greeting_widget.dart';
+import '../wigdets/memories_list.dart';
+import '../wigdets/memory_item_creation_bottom_sheet.dart';
+import '../wigdets/voice_searching_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const new({super.key});
@@ -51,7 +53,18 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet<MemoryItemModel>(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (_) => const MemoryItemCreationBottomSheet(),
+          ).then((item) {
+            if (item == null) return;
+
+            /// Handle adding the item using a Cubit
+          });
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

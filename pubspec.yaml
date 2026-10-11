@@ -27,6 +27,7 @@ dependencies:
   dots_indicator: ^5.0.0
   smooth_page_indicator: ^3.0.0
   shared_preferences: ^2.5.6
+  dotted_border: ^3.1.0
 
 dev_dependencies:
   flutter_test:

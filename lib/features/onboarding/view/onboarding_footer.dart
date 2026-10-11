@@ -42,13 +42,7 @@ class OnboardingFooter extends StatelessWidget {
         CustomElevatedButton(
           width: double.infinity,
           text: isLastPage ? AppStrings.start : AppStrings.next,
-          icon: Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: 20.sp,
-            color: context.colorScheme.onPrimary,
-          ),
-          textColor: context.colorScheme.onPrimary,
-          backgrnColor: context.colorScheme.primary,
+          icon: Icon(Icons.arrow_forward_ios_rounded, size: 20.sp),
           iconAlignment: IconAlignment.end,
           onPressed: isLastPage ? onStart : onNext,
         ),

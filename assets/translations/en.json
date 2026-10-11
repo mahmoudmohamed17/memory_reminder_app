@@ -82,6 +82,8 @@
     "namePlaceholder": "Example: Mom's doctor appointment",
     "detailsLabel": "Details",
     "detailsPlaceholder": "Write everything you want to remember...",
+    "categoryLabel": "Memory category",
+    "categoryHint": "Choose the best category to find it easily",
     "attachmentTitle": "Add attachment",
     "attachmentTypes": "Photo, file, or voice recording",
     "save": "Save memory",

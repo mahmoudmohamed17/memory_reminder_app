@@ -12,8 +12,6 @@ class CustomOutlinedButton extends StatelessWidget {
     this.icon,
     this.borderRadius = 16,
     this.borderColor,
-    this.fontSize,
-    this.fontWeight,
     this.width,
     this.height,
   });
@@ -23,8 +21,6 @@ class CustomOutlinedButton extends StatelessWidget {
   final Color? borderColor;
   final Widget? icon;
   final double borderRadius;
-  final double? fontSize;
-  final FontWeight? fontWeight;
   final double? width;
   final double? height;
 
@@ -41,19 +37,10 @@ class CustomOutlinedButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius.r),
             ),
           ),
-          side: borderColor != null
-              ? WidgetStatePropertyAll(BorderSide(color: borderColor!))
-              : null,
+          side: borderColor != null ? WidgetStatePropertyAll(BorderSide(color: borderColor!)) : null,
         ),
         icon: icon,
-        label: Text(
-          context.tr(text),
-          style: context.textTheme.titleMedium?.copyWith(
-            color: context.colorScheme.onSurface,
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-          ),
-        ),
+        label: Text(context.tr(text)),
       ),
     );
   }

@@ -59,7 +59,7 @@ class MemoryItemModel {
     required this.id,
     required this.title,
     required this.description,
-    required this.category,
+    this.category = MemoryCategory.other,
     required this.creationDate,
     this.lastUpdateDate,
   });
