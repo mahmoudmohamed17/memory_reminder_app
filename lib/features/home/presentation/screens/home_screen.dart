@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/widgets/change_langauge_button.dart';
-import '../../../../core/widgets/change_theme_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../domain/models/memory_item_model.dart';
 import '../wigdets/greeting_widget.dart';
+import '../wigdets/home_header.dart';
+import '../wigdets/home_search_field.dart';
 import '../wigdets/memories_list.dart';
 import '../wigdets/memory_item_creation_bottom_sheet.dart';
 import '../wigdets/voice_searching_button.dart';
@@ -21,12 +19,9 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(12.sp),
           child: Column(
+            spacing: 10.h,
             children: [
-              Row(
-                spacing: 12.w,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [ChangeThemeButton(), ChangeLangaugeButton()],
-              ),
+              const HomeHeader(),
               Expanded(
                 child: ListView(
                   children: [
@@ -36,10 +31,7 @@ class HomeScreen extends StatelessWidget {
                       child: GreetingWidget(),
                     ),
                     16.verticalSpace,
-                    const CustomTextFormField(
-                      hint: AppStrings.homeSearchPlaceholder,
-                      prefixIcon: Icon(Icons.search),
-                    ),
+                    const HomeSearchField(),
                     16.verticalSpace,
                     const VoiceSearchingButton(),
                     16.verticalSpace,

@@ -48,7 +48,7 @@ class MemoriesList extends StatelessWidget {
           Column(
             spacing: 8.h,
             children: List.generate(
-              mockMemories.length,
+              5,
               (index) => MemoryItem(
                 item: mockMemories[index],
               ),

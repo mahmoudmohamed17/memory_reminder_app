@@ -13,6 +13,8 @@ class AppStrings {
   static const String edit = 'common.edit';
   static const String delete = 'common.delete';
   static const String secureLocal = 'common.secureLocal';
+  static const String requiredField = 'common.requiredField';
+  
 
   // Onboarding
   static const String onboardingStep1Title = 'onboarding.step1.title';

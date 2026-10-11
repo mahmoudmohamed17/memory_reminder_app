@@ -10,7 +10,8 @@
     "save": "Save",
     "edit": "Edit",
     "delete": "Delete",
-    "secureLocal": "Private and encrypted on your device"
+    "secureLocal": "Private and encrypted on your device",
+    "requiredField": "This field is required"
   },
   "onboarding": {
     "step1": {

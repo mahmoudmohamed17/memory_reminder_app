@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import 'memory_attachments_widget.dart';
@@ -20,6 +21,7 @@ class MemoryItemCreationBottomSheet extends StatefulWidget {
 class _MemoryItemCreationBottomSheetState extends State<MemoryItemCreationBottomSheet> {
   late final TextEditingController _title;
   late final TextEditingController _description;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -57,7 +59,9 @@ class _MemoryItemCreationBottomSheetState extends State<MemoryItemCreationBottom
             const MemoryAttachmentsWidget(),
             CustomElevatedButton(
               text: AppStrings.addMemorySave,
-              onPressed: () {},
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {}
+              },
               icon: const Icon(Icons.lock),
               iconAlignment: IconAlignment.end,
               width: double.infinity,
@@ -70,21 +74,27 @@ class _MemoryItemCreationBottomSheetState extends State<MemoryItemCreationBottom
   }
 
   Widget _form() {
-    return Column(
-      spacing: 8.h,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CustomTextFormField(
-          controller: _title,
-          hint: AppStrings.addMemoryNamePlaceholder,
-          label: AppStrings.addMemoryNameLabel,
-        ),
-        CustomTextFormField(
-          controller: _description,
-          hint: AppStrings.addMemoryDetailsPlaceholder,
-          label: AppStrings.addMemoryDetailsLabel,
-        ),
-      ],
+    return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        spacing: 8.h,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomTextFormField(
+            controller: _title,
+            hint: AppStrings.addMemoryNamePlaceholder,
+            label: AppStrings.addMemoryNameLabel,
+            validator: (value) => context.tr(Validators.requiredField(value!)!),
+          ),
+          CustomTextFormField(
+            controller: _description,
+            hint: AppStrings.addMemoryDetailsPlaceholder,
+            label: AppStrings.addMemoryDetailsLabel,
+            validator: (value) => context.tr(Validators.requiredField(value!)!),
+          ),
+        ],
+      ),
     );
   }
 

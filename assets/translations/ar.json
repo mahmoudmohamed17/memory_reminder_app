@@ -10,7 +10,8 @@
     "save": "حفظ",
     "edit": "تعديل",
     "delete": "حذف",
-    "secureLocal": "خاص ومشفر على جهازك"
+    "secureLocal": "خاص ومشفر على جهازك",
+    "requiredField": "هذا الحقل مطلوب"
   },
   "onboarding": {
     "step1": {
