@@ -15,6 +15,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../cubits/app_flow_cubit.dart' as _i49;
+import '../cubits/locale_cubit.dart' as _i867;
 import '../cubits/theme_cubit.dart' as _i525;
 import '../utils/shared_prefs_helper.dart' as _i964;
 import 'modules.dart' as _i738;
@@ -27,6 +28,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final modules = _$Modules();
+    gh.singleton<_i867.LocaleCubit>(() => _i867.LocaleCubit());
     gh.singleton<_i525.ThemeCubit>(() => _i525.ThemeCubit());
     gh.lazySingletonAsync<_i460.SharedPreferences>(
       () => modules.sharedPreferences,

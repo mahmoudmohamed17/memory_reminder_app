@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/utils/app_strings.dart';
+import '../../../core/widgets/change_langauge_button.dart';
 import '../../../core/widgets/change_theme_button.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 import 'wigdets/greeting_widget.dart';
@@ -19,9 +20,10 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.all(12.sp),
           child: Column(
             children: [
-              const Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: ChangeThemeButton(),
+              Row(
+                spacing: 12.w,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [ChangeThemeButton(), ChangeLangaugeButton()],
               ),
               Expanded(
                 child: ListView(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/cubits/app_flow_cubit.dart';
+import 'core/cubits/locale_cubit.dart';
 import 'core/cubits/theme_cubit.dart';
 import 'core/di/di.dart';
 import 'core/routing/app_router.dart';
@@ -25,21 +26,26 @@ class MyApp extends StatelessWidget {
             // AppFlowCubit is already initialised; expose it so any widget
             // (e.g. OnboardingScreen) can call completeOnboarding().
             BlocProvider(create: (_) => getIt<AppFlowCubit>()),
+            BlocProvider(create: (_) => getIt<LocaleCubit>()),
           ],
-          child: BlocBuilder<ThemeCubit, ThemeMode>(
-            builder: (context, state) {
-              return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                themeMode: state,
-                theme: AppTheme.light,
-                darkTheme: AppTheme.dark,
-                themeAnimationDuration: const Duration(milliseconds: 1500),
-                themeAnimationCurve: Curves.fastOutSlowIn,
-                routerConfig: AppRouter.router,
-              );
-            },
+          child: BlocListener<LocaleCubit, Locale>(
+            listener: (context, locale) => context.setLocale(locale),
+            child: BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, themeMode) {
+                return MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  themeMode: themeMode,
+                  theme: AppTheme.light,
+                  darkTheme: AppTheme.dark,
+                  themeAnimationDuration: const Duration(milliseconds: 1500),
+                  themeAnimationCurve: Curves.fastOutSlowIn,
+                  routerConfig: AppRouter.router,
+                );
+              },
+            ),
           ),
         );
       },
