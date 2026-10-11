@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../features/home/domain/models/memory_item_model.dart';
-
 /// Raw palette + Material 3 [ColorScheme]s for "Serene Trust".
 ///
 /// Rule of thumb: widgets should read colors from `Theme.of(context)`
@@ -125,6 +123,42 @@ class AppCategoryColors {
   final Color base;
   final Color tint;
   final Color onTint;
+
+  static const AppCategoryColors medical = AppCategoryColors(
+    base: Color(0xFF0D9488),
+    tint: Color(0x1F0D9488),
+    onTint: Color(0xFF0F766E),
+  );
+
+  static const AppCategoryColors financial = AppCategoryColors(
+    base: Color(0xFFB45309),
+    tint: Color(0x1FB45309),
+    onTint: Color(0xFF92400E),
+  );
+
+  static const AppCategoryColors family = AppCategoryColors(
+    base: Color(0xFFC2410C),
+    tint: Color(0x1FC2410C),
+    onTint: Color(0xFF9A3412),
+  );
+
+  static const AppCategoryColors friends = AppCategoryColors(
+    base: Color(0xFF4F46E5),
+    tint: Color(0x1F4F46E5),
+    onTint: Color(0xFF4F46E5),
+  );
+
+  static const AppCategoryColors personal = AppCategoryColors(
+    base: Color(0xFF7C3AED),
+    tint: Color(0x1F7C3AED),
+    onTint: Color(0xFF7C3AED),
+  );
+
+  static const AppCategoryColors other = AppCategoryColors(
+    base: Color(0xFF64748B),
+    tint: Color(0x1F64748B),
+    onTint: Color(0xFF475569),
+  );
 }
 
 /// Status colors (success / warning / info / danger).
@@ -157,12 +191,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.warning,
     required this.info,
     required this.danger,
-    required this.medical,
-    required this.financial,
-    required this.family,
-    required this.friends,
-    required this.personal,
-    required this.other,
     required this.overlaySurface,
     required this.voiceProcessingTrack,
   });
@@ -174,35 +202,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   /// Voice "no match" / destructive emphasis (#DC2626 family).
   final AppStatusColors danger;
 
-  final AppCategoryColors medical;
-  final AppCategoryColors financial;
-  final AppCategoryColors family;
-  final AppCategoryColors friends;
-  final AppCategoryColors personal;
-  final AppCategoryColors other;
-
   /// Dialogs and bottom sheets.
   final Color overlaySurface;
 
   /// Amber track that rotates around the mic button while processing.
   final Color voiceProcessingTrack;
-
-  AppCategoryColors category(MemoryCategory c) {
-    switch (c) {
-      case MemoryCategory.medical:
-        return medical;
-      case MemoryCategory.financial:
-        return financial;
-      case MemoryCategory.family:
-        return family;
-      case MemoryCategory.friends:
-        return friends;
-      case MemoryCategory.personal:
-        return personal;
-      case MemoryCategory.other:
-        return other;
-    }
-  }
 
   static const AppSemanticColors light = AppSemanticColors(
     success: AppStatusColors(
@@ -228,37 +232,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       text: Color(0xFFB91C1C),
       container: Color(0xFFFEE2E2),
       onContainer: Color(0xFF7F1D1D),
-    ),
-    // tint = category base @ 12 % (0x1F)
-    medical: AppCategoryColors(
-      base: Color(0xFF0D9488),
-      tint: Color(0x1F0D9488),
-      onTint: Color(0xFF0F766E),
-    ),
-    financial: AppCategoryColors(
-      base: Color(0xFFB45309),
-      tint: Color(0x1FB45309),
-      onTint: Color(0xFF92400E),
-    ),
-    family: AppCategoryColors(
-      base: Color(0xFFC2410C),
-      tint: Color(0x1FC2410C),
-      onTint: Color(0xFF9A3412),
-    ),
-    friends: AppCategoryColors(
-      base: Color(0xFF4F46E5),
-      tint: Color(0x1F4F46E5),
-      onTint: Color(0xFF4F46E5),
-    ),
-    personal: AppCategoryColors(
-      base: Color(0xFF7C3AED),
-      tint: Color(0x1F7C3AED),
-      onTint: Color(0xFF7C3AED),
-    ),
-    other: AppCategoryColors(
-      base: Color(0xFF64748B),
-      tint: Color(0x1F64748B),
-      onTint: Color(0xFF475569),
     ),
     overlaySurface: AppColors.card,
     voiceProcessingTrack: Color(0xFFF59E0B),
@@ -289,37 +262,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       container: Color(0xFF3F1414),
       onContainer: Color(0xFFFECACA),
     ),
-    // tint = category base @ 20 % (0x33)
-    medical: AppCategoryColors(
-      base: Color(0xFF2DD4BF),
-      tint: Color(0x332DD4BF),
-      onTint: Color(0xFF5EEAD4),
-    ),
-    financial: AppCategoryColors(
-      base: Color(0xFFFBBF24),
-      tint: Color(0x33FBBF24),
-      onTint: Color(0xFFFCD34D),
-    ),
-    family: AppCategoryColors(
-      base: Color(0xFFFB923C),
-      tint: Color(0x33FB923C),
-      onTint: Color(0xFFFDBA74),
-    ),
-    friends: AppCategoryColors(
-      base: Color(0xFF818CF8),
-      tint: Color(0x33818CF8),
-      onTint: Color(0xFFA5B4FC),
-    ),
-    personal: AppCategoryColors(
-      base: Color(0xFFA78BFA),
-      tint: Color(0x33A78BFA),
-      onTint: Color(0xFFC4B5FD),
-    ),
-    other: AppCategoryColors(
-      base: Color(0xFF94A3B8),
-      tint: Color(0x3394A3B8),
-      onTint: Color(0xFFCBD5E1),
-    ),
     overlaySurface: AppColors.darkOverlay,
     voiceProcessingTrack: Color(0xFFFBBF24),
   );
@@ -330,12 +272,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     AppStatusColors? warning,
     AppStatusColors? info,
     AppStatusColors? danger,
-    AppCategoryColors? medical,
-    AppCategoryColors? financial,
-    AppCategoryColors? family,
-    AppCategoryColors? friends,
-    AppCategoryColors? personal,
-    AppCategoryColors? other,
     Color? overlaySurface,
     Color? voiceProcessingTrack,
   }) {
@@ -344,12 +280,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       warning: warning ?? this.warning,
       info: info ?? this.info,
       danger: danger ?? this.danger,
-      medical: medical ?? this.medical,
-      financial: financial ?? this.financial,
-      family: family ?? this.family,
-      friends: friends ?? this.friends,
-      personal: personal ?? this.personal,
-      other: other ?? this.other,
       overlaySurface: overlaySurface ?? this.overlaySurface,
       voiceProcessingTrack: voiceProcessingTrack ?? this.voiceProcessingTrack,
     );
