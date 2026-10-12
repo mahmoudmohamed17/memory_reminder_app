@@ -1,20 +1,18 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../search/presentation/screens/search_screen.dart';
 
 class HomeSearchField extends StatelessWidget {
-  const new({
-    super.key,
-  });
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
-      transitionDuration: AppMotion.slow,
+      transitionDuration: const Duration(milliseconds: 400),
       closedElevation: 0,
       closedColor: context.theme.scaffoldBackgroundColor,
       openColor: context.theme.scaffoldBackgroundColor,
@@ -30,9 +28,7 @@ class HomeSearchField extends StatelessWidget {
           ),
         ),
       ),
-      openBuilder: (context, closeContainer) => Scaffold(
-        appBar: AppBar(),
-      ),
+      openBuilder: (context, closeContainer) => const SearchScreen(),
     );
   }
 }

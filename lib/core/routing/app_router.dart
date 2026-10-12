@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/onboarding/view/onboarding_screen.dart';
+import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/search/presentation/screens/search_screen.dart';
 import '../cubits/app_flow_cubit.dart';
 import '../cubits/app_flow_state.dart';
 import '../di/di.dart';
@@ -46,6 +47,10 @@ class AppRouter {
         _route(
           AppRoutes.home,
           builder: (context, state) => const HomeScreen(),
+        ),
+        _route(
+          AppRoutes.search,
+          builder: (context, state) => const SearchScreen(),
         ),
       ],
     );

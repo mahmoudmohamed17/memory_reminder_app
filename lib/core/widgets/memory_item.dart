@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/extensions.dart';
-import '../../domain/models/memory_item_model.dart';
+import '../utils/extensions.dart';
+import '../../features/home/domain/models/memory_item_model.dart';
 
 class MemoryItem extends StatelessWidget {
   final MemoryItemModel item;

@@ -48,6 +48,23 @@
     "privacyTitle": "Your privacy comes first, always",
     "privacyDescription": "All your memories are encrypted and stored only on your device. We cannot see or share them."
   },
+  "searchPage": {
+    "label": "Search memories",
+    "back": "Back",
+    "title": "Search",
+    "subtitle": "All your memories within reach",
+    "promptTitle": "What are you looking for?",
+    "promptDescription": "Search by the memory name or any detail you remember",
+    "recentTitle": "Recent searches",
+    "clearRecent": "Clear",
+    "voiceTipTitle": "Search your way",
+    "voiceTipDescription": "Type simple words as you remember them, and Ameen will find the closest results",
+    "resultsTitle": "Search results",
+    "resultsCount": "{count} results",
+    "emptyTitle": "No matching results",
+    "emptyDescription": "Try fewer words or search in a different category",
+    "reset": "Reset search"
+  },
   "categories": {
     "all": "All",
     "medical": "Medical",

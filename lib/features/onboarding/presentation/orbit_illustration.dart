@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../models/onboarding_model.dart';
+import '../domain/models/onboarding_model.dart';
 
 class OrbitIllustration extends StatelessWidget {
   final OnboardingModel model;

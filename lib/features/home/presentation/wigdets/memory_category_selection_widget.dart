@@ -63,7 +63,7 @@ class _MemoryCategorySelectionWidgetState extends State<MemoryCategorySelectionW
       duration: AppMotion.fast,
       curve: Curves.ease,
       decoration: BoxDecoration(
-        color: context.colorScheme.outline.withValues(alpha: 0.15),
+        color: context.colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
           color: isActive ? context.colorScheme.primary : Colors.transparent,

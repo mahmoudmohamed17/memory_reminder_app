@@ -14,7 +14,6 @@ class AppStrings {
   static const String delete = 'common.delete';
   static const String secureLocal = 'common.secureLocal';
   static const String requiredField = 'common.requiredField';
-  
 
   // Onboarding
   static const String onboardingStep1Title = 'onboarding.step1.title';
@@ -46,6 +45,23 @@ class AppStrings {
   static const String homeEmptyDescription = 'home.emptyDescription';
   static const String homePrivacyTitle = 'home.privacyTitle';
   static const String homePrivacyDescription = 'home.privacyDescription';
+
+  // Search
+  static const String searchLabel = 'searchPage.label';
+  static const String searchBack = 'searchPage.back';
+  static const String searchTitle = 'searchPage.title';
+  static const String searchSubtitle = 'searchPage.subtitle';
+  static const String searchPromptTitle = 'searchPage.promptTitle';
+  static const String searchPromptDescription = 'searchPage.promptDescription';
+  static const String searchRecentTitle = 'searchPage.recentTitle';
+  static const String searchClearRecent = 'searchPage.clearRecent';
+  static const String searchVoiceTipTitle = 'searchPage.voiceTipTitle';
+  static const String searchVoiceTipDescription = 'searchPage.voiceTipDescription';
+  static const String searchResultsTitle = 'searchPage.resultsTitle';
+  static const String searchResultsCount = 'searchPage.resultsCount';
+  static const String searchEmptyTitle = 'searchPage.emptyTitle';
+  static const String searchEmptyDescription = 'searchPage.emptyDescription';
+  static const String searchReset = 'searchPage.reset';
 
   // Categories
   static const String categoriesAll = 'categories.all';

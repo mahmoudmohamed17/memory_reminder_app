@@ -6,7 +6,7 @@ import '../../../core/cubits/app_flow_cubit.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/widgets/custom_text_button.dart';
-import '../models/onboarding_model.dart';
+import '../domain/models/onboarding_model.dart';
 import 'onboarding_footer.dart';
 import 'onboarding_item.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 import 'app_typo.dart';
@@ -397,9 +396,9 @@ abstract final class AppTheme {
       ),
 
       badgeTheme: BadgeThemeData(
-        padding: EdgeInsets.all(6.sp),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         textStyle: text.labelSmall,
-        backgroundColor: scheme.primaryContainer.withValues(alpha: 0.15),
+        backgroundColor: scheme.primary,
         textColor: scheme.onPrimary,
       ),
 

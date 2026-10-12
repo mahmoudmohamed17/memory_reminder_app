@@ -48,6 +48,23 @@
     "privacyTitle": "خصوصيتك أولاً، دائماً",
     "privacyDescription": "كل ذكرياتك مشفرة ومحفوظة على جهازك فقط. لا نراها ولا نشاركها."
   },
+  "searchPage": {
+    "label": "البحث في الذكريات",
+    "back": "العودة",
+    "title": "البحث",
+    "subtitle": "كل ذكرياتك في متناولك",
+    "promptTitle": "ما الذي تبحث عنه؟",
+    "promptDescription": "ابحث باسم الذكرى أو أي تفصيل تتذكره منها",
+    "recentTitle": "عمليات البحث الأخيرة",
+    "clearRecent": "مسح",
+    "voiceTipTitle": "يمكنك البحث بطريقتك",
+    "voiceTipDescription": "اكتب كلمات بسيطة كما تتذكرها، وسيجد أمين أقرب النتائج",
+    "resultsTitle": "نتائج البحث",
+    "resultsCount": "{count} نتائج",
+    "emptyTitle": "لا توجد نتائج مطابقة",
+    "emptyDescription": "جرّب كلمات أقل أو ابحث في تصنيف مختلف",
+    "reset": "إعادة ضبط البحث"
+  },
   "categories": {
     "all": "الكل",
     "medical": "طبي",

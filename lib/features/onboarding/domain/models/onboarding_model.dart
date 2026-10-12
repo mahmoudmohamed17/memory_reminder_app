@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/app_strings.dart';
+import '../../../../core/utils/app_strings.dart';
 
 class OnboardingModel {
   final IconData centerIcon;
