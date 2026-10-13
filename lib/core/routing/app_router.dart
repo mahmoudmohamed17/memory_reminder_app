@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/domain/models/memory_item_model.dart';
+import '../models/memory_model.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/memory_details/presentation/screens/edit_memory_screen.dart';
 import '../../features/memory_details/presentation/screens/memory_details_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
@@ -54,10 +55,18 @@ class AppRouter {
         ),
         _route(
           AppRoutes.memoryDetails,
-          transition: PageTransitionType.fade,
+          transition: PageTransitionType.fadeSlide,
           builder: (context, state) {
-            final model = state.extra as MemoryItemModel;
+            final model = state.extra as MemoryModel;
             return MemoryDetailsScreen(model: model);
+          },
+        ),
+        _route(
+          AppRoutes.memoryEdit,
+          transition: PageTransitionType.fadeSlide,
+          builder: (context, state) {
+            final model = state.extra as MemoryModel;
+            return EditMemoryScreen(model: model);
           },
         ),
       ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../domain/models/memory_item_model.dart';
+import '../../../../core/models/memory_model.dart';
 import '../wigdets/greeting_widget.dart';
 import '../wigdets/home_header.dart';
 import '../wigdets/home_search_field.dart';
 import '../wigdets/memories_list.dart';
-import '../wigdets/memory_item_creation_bottom_sheet.dart';
+import '../wigdets/memory_creation_bottom_sheet.dart';
 import '../wigdets/voice_searching_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -46,11 +46,11 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet<MemoryItemModel>(
+          showModalBottomSheet<MemoryModel>(
             context: context,
             isScrollControlled: true,
             useSafeArea: true,
-            builder: (_) => const MemoryItemCreationBottomSheet(),
+            builder: (_) => const MemoryCreationBottomSheet(),
           ).then((item) {
             if (item == null) return;
 

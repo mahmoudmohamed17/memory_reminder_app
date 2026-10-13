@@ -11,14 +11,14 @@ import '../../../../core/widgets/custom_text_form_field.dart';
 import 'memory_attachments_widget.dart';
 import 'memory_category_selection_widget.dart';
 
-class MemoryItemCreationBottomSheet extends StatefulWidget {
-  const MemoryItemCreationBottomSheet({super.key});
+class MemoryCreationBottomSheet extends StatefulWidget {
+  const MemoryCreationBottomSheet({super.key});
 
   @override
-  State<MemoryItemCreationBottomSheet> createState() => _MemoryItemCreationBottomSheetState();
+  State<MemoryCreationBottomSheet> createState() => _MemoryCreationBottomSheetState();
 }
 
-class _MemoryItemCreationBottomSheetState extends State<MemoryItemCreationBottomSheet> {
+class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
   late final TextEditingController _title;
   late final TextEditingController _description;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

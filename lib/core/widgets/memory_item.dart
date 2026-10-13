@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../routing/app_routes.dart';
 import '../utils/extensions.dart';
-import '../../features/home/domain/models/memory_item_model.dart';
+import '../models/memory_model.dart';
 
 class MemoryItem extends StatelessWidget {
-  final MemoryItemModel item;
+  final MemoryModel item;
 
   const MemoryItem({super.key, required this.item});
 

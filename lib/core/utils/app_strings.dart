@@ -106,6 +106,13 @@ class AppStrings {
   static const String addMemorySave = 'addMemory.save';
   static const String addMemorySaved = 'addMemory.saved';
 
+  // Edit Memory
+  static const String editMemoryTitle = 'editMemory.title';
+  static const String editMemoryUpdate = 'editMemory.update';
+  static const String editMemoryCancel = 'editMemory.cancel';
+  static const String editMemoryStatusTitle = 'editMemory.statusTitle';
+  static const String editMemoryStatusDescription = 'editMemory.statusDescription';
+
   // Theme
   static const String themeLight = 'theme.light';
   static const String themeDark = 'theme.dark';

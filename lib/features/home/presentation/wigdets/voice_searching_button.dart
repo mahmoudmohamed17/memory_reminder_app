@@ -84,6 +84,7 @@ class VoiceSearchingButton extends StatelessWidget {
                             context.tr(AppStrings.homeVoiceEyebrow),
                             style: const TextStyle(color: Colors.white),
                           ),
+                          backgroundColor: Colors.white10,
                         ),
                         Flexible(
                           child: Text(

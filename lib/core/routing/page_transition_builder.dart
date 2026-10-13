@@ -7,6 +7,7 @@ enum PageTransitionType {
   /// Native iOS swipe-to-back or Android Material zoom
   platformAdaptive,
   fadeScale,
+  fadeSlide,
   slideUp,
   fade,
   none,
@@ -25,6 +26,8 @@ class PageTransitionBuilder {
         return _platformAdaptive(key, child);
       case PageTransitionType.fadeScale:
         return _fadeScale(key, child);
+      case PageTransitionType.fadeSlide:
+        return _fadeSlide(key, child);
       case PageTransitionType.slideUp:
         return _slideUp(key, child);
       case PageTransitionType.fade:
@@ -85,6 +88,26 @@ class PageTransitionBuilder {
         return FadeTransition(
           opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
           child: child,
+        );
+      },
+    );
+  }
+
+  static Page<dynamic> _fadeSlide(LocalKey key, Widget child) {
+    return CustomTransitionPage<void>(
+      key: key,
+      child: child,
+      transitionDuration: const Duration(milliseconds: 400),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+            child: child,
+          ),
         );
       },
     );

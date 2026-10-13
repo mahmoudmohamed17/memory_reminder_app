@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../domain/models/memory_item_model.dart';
+import '../../../../core/utils/memory_category.dart';
 
 class MemoryCategorySelectionWidget extends StatefulWidget {
   final Function(MemoryCategory category) onSelected;
@@ -63,7 +63,7 @@ class _MemoryCategorySelectionWidgetState extends State<MemoryCategorySelectionW
       duration: AppMotion.fast,
       curve: Curves.ease,
       decoration: BoxDecoration(
-        color: context.colorScheme.surfaceContainer,
+        color: context.colorScheme.surfaceContainer.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
           color: isActive ? context.colorScheme.primary : Colors.transparent,

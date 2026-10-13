@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/memory_item.dart';
-import '../../../home/domain/models/memory_item_model.dart';
+import '../../../../core/models/memory_model.dart';
 
 class SearchResults extends StatelessWidget {
   const new({super.key});
@@ -24,7 +24,7 @@ class SearchResults extends StatelessWidget {
     );
   }
 
-  Widget _results(List<MemoryItemModel> results) {
+  Widget _results(List<MemoryModel> results) {
     return Expanded(
       child: ListView.separated(
         itemBuilder: (_, index) {

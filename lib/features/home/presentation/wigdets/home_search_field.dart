@@ -12,7 +12,7 @@ class HomeSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
-      transitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: const Duration(milliseconds: 500),
       closedElevation: 0,
       closedColor: context.theme.scaffoldBackgroundColor,
       openColor: context.theme.scaffoldBackgroundColor,

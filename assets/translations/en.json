@@ -108,6 +108,13 @@
     "save": "Save memory",
     "saved": "Saved securely"
   },
+  "editMemory": {
+    "title": "Edit memory",
+    "update": "Update",
+    "cancel": "Cancel",
+    "statusTitle": "Memory data",
+    "statusDescription": "Your changes will be saved locally and encrypted"
+  },
   "theme": {
     "light": "Light mode",
     "dark": "Dark mode"

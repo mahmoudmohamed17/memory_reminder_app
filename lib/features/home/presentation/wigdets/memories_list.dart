@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../domain/models/memory_item_model.dart';
+import '../../../../core/models/memory_model.dart';
 import '../../../../core/widgets/memory_item.dart';
 
 class MemoriesList extends StatelessWidget {
