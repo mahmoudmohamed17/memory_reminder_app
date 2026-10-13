@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 import 'app_typo.dart';
@@ -139,7 +140,7 @@ abstract final class AppTheme {
       visualDensity: VisualDensity.standard,
       splashFactory: InkRipple.splashFactory,
       dividerColor: scheme.outlineVariant,
-      iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
+      iconTheme: IconThemeData(color: scheme.onSurface, size: 24.sp),
 
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
@@ -157,7 +158,7 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
         titleTextStyle: text.titleMedium,
-        iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
+        iconTheme: IconThemeData(color: scheme.onSurface, size: 24.sp),
         systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
 
@@ -191,6 +192,7 @@ abstract final class AppTheme {
           shape: const StadiumBorder(),
           textStyle: text.labelLarge,
           iconColor: scheme.onPrimary,
+          iconSize: 24.sp,
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
           elevation: 0,
@@ -203,6 +205,7 @@ abstract final class AppTheme {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
           textStyle: text.labelLarge,
+          iconSize: 24.sp,
           iconColor: scheme.onPrimary,
           foregroundColor: scheme.primary,
           side: BorderSide(color: scheme.outline),
@@ -215,6 +218,7 @@ abstract final class AppTheme {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: const StadiumBorder(),
           textStyle: text.labelLarge,
+          iconSize: 24.sp,
           foregroundColor: scheme.primary,
           shadowColor: Colors.transparent,
         ),

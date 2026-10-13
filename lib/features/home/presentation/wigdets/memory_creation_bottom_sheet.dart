@@ -9,7 +9,7 @@ import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import 'memory_attachments_widget.dart';
-import 'memory_category_selection_widget.dart';
+import '../../../../core/widgets/memory_category_selection_widget.dart';
 
 class MemoryCreationBottomSheet extends StatefulWidget {
   const MemoryCreationBottomSheet({super.key});
@@ -85,13 +85,19 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
             controller: _title,
             hint: AppStrings.addMemoryNamePlaceholder,
             label: AppStrings.addMemoryNameLabel,
-            validator: (value) => context.tr(Validators.requiredField(value!)!),
+            validator: (value) {
+              final error = Validators.requiredField(value);
+              return error != null ? context.tr(error) : null;
+            },
           ),
           CustomTextFormField(
             controller: _description,
             hint: AppStrings.addMemoryDetailsPlaceholder,
             label: AppStrings.addMemoryDetailsLabel,
-            validator: (value) => context.tr(Validators.requiredField(value!)!),
+            validator: (value) {
+              final error = Validators.requiredField(value);
+              return error != null ? context.tr(error) : null;
+            },
           ),
         ],
       ),

@@ -6,22 +6,24 @@ import '../utils/extensions.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget? icon;
   final double borderRadius;
   final double? width;
   final double? height;
   final IconAlignment? iconAlignment;
+  final WidgetStateProperty<Color?>? backgroundColor;
 
   const CustomElevatedButton({
     super.key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.borderRadius = 16,
     this.icon,
     this.width,
     this.height,
     this.iconAlignment = IconAlignment.start,
+    this.backgroundColor,
   });
 
   @override
@@ -37,6 +39,7 @@ class CustomElevatedButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius.r),
             ),
           ),
+          backgroundColor: backgroundColor,
         ),
         icon: icon,
         label: Text(context.tr(text)),

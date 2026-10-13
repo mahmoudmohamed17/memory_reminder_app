@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final int maxLines;
+  final int? maxLines;
   final bool enabled;
   final bool readOnly;
   final ValueChanged<String>? onChanged;

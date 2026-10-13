@@ -44,7 +44,7 @@ class DetailsFooter extends StatelessWidget {
               title: Text(
                 context.tr(AppStrings.memoryLocalData),
                 style: context.textTheme.labelMedium,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),

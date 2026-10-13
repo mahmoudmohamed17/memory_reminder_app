@@ -13,7 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final int maxLines;
+  final int? maxLines;
   final bool enabled;
   final bool readOnly;
   final ValueChanged<String>? onChanged;

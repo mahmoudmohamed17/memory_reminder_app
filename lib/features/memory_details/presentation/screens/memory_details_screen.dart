@@ -27,11 +27,16 @@ class MemoryDetailsScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              context.push(AppRoutes.memoryEdit, extra: model);
+            onPressed: () async {
+              final result = await context.push<MemoryModel>(AppRoutes.memoryEdit, extra: model);
+              if (result == null) return;
+
+              // TODO: Handle the updated memory model
             },
             icon: const FaIcon(FontAwesomeIcons.penToSquare),
+            tooltip: context.tr(AppStrings.edit),
           ),
+          4.horizontalSpace,
         ],
       ),
       body: ListView(
