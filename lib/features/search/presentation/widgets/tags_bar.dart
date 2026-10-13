@@ -63,7 +63,7 @@ class _TagsBarState extends State<TagsBar> {
       decoration: BoxDecoration(
         color: isActive ? context.colorScheme.primary : context.colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: isActive ? null : Border.all(color: context.colorScheme.primary),
+        border: Border.all(color: isActive ? Colors.transparent : context.colorScheme.primary),
       ),
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
       child: Text(

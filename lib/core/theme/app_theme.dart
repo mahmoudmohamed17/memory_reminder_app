@@ -139,7 +139,7 @@ abstract final class AppTheme {
       visualDensity: VisualDensity.standard,
       splashFactory: InkRipple.splashFactory,
       dividerColor: scheme.outlineVariant,
-      iconTheme: IconThemeData(color: scheme.onSurfaceVariant, size: 24),
+      iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
 
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
@@ -156,8 +156,7 @@ abstract final class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
-        toolbarHeight: 56,
-        titleTextStyle: text.titleLarge,
+        titleTextStyle: text.titleMedium,
         iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
         systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
@@ -223,7 +222,7 @@ abstract final class AppTheme {
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
           minimumSize: const Size(_minTarget, _minTarget),
-          foregroundColor: scheme.onSurfaceVariant,
+          foregroundColor: scheme.onSurface,
         ),
       ),
 
@@ -382,7 +381,7 @@ abstract final class AppTheme {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         minVerticalPadding: 12,
         minTileHeight: 56,
-        iconColor: scheme.onSurfaceVariant,
+        iconColor: scheme.onSurface,
         textColor: scheme.onSurface,
         titleTextStyle: text.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
         subtitleTextStyle: text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),

@@ -293,6 +293,45 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   }
 }
 
+/// Colors for one memory attachment file.
+/// * [base] – saturated color: dots, icons, selected-chip fill (white text).
+/// * [tint] – 12 % (light) / 20 % (dark) container background.
+@immutable
+class MemoryFileColor {
+  final Color base;
+  final Color tint;
+
+  const MemoryFileColor({
+    required this.base,
+    required this.tint,
+  });
+
+  static const MemoryFileColor pdf = MemoryFileColor(
+    base: Color(0xFFDC2626), // Crimson Red
+    tint: Color(0xFFFEE2E2), // Soft Rose
+  );
+
+  static const MemoryFileColor image = MemoryFileColor(
+    base: Color(0xFF059669), // Emerald Green
+    tint: Color(0xFFD1FAE5), // Soft Mint
+  );
+
+  static const MemoryFileColor docx = MemoryFileColor(
+    base: Color(0xFF2563EB), // Royal / Word Blue
+    tint: Color(0xFFDBEAFE), // Soft Blue
+  );
+
+  static const MemoryFileColor video = MemoryFileColor(
+    base: Color(0xFF7C3AED), // Rich Purple / Violet
+    tint: Color(0xFFEDE9FE), // Soft Lavender
+  );
+
+  static const MemoryFileColor audio = MemoryFileColor(
+    base: Color(0xFFD97706), // Warm Amber
+    tint: Color(0xFFFEF3C7), // Soft Amber
+  );
+}
+
 extension AppColorsContext on BuildContext {
   /// Semantic + category colors for the current theme.
   AppSemanticColors get appColors => Theme.of(this).extension<AppSemanticColors>() ?? AppSemanticColors.light;

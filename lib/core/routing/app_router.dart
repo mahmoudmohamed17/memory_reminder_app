@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/home/domain/models/memory_item_model.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/memory_details/presentation/screens/memory_details_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../cubits/app_flow_cubit.dart';
@@ -26,14 +28,12 @@ class AppRouter {
         final currentPath = state.matchedLocation;
 
         // Guard: onboarding not done → always land on onboarding.
-        if (flowState == AppFlowState.onboarding &&
-            currentPath != AppRoutes.onboarding) {
+        if (flowState == AppFlowState.onboarding && currentPath != AppRoutes.onboarding) {
           return AppRoutes.onboarding;
         }
 
         // Guard: onboarding done → never show onboarding again.
-        if (flowState == AppFlowState.home &&
-            currentPath == AppRoutes.onboarding) {
+        if (flowState == AppFlowState.home && currentPath == AppRoutes.onboarding) {
           return AppRoutes.home;
         }
 
@@ -51,6 +51,14 @@ class AppRouter {
         _route(
           AppRoutes.search,
           builder: (context, state) => const SearchScreen(),
+        ),
+        _route(
+          AppRoutes.memoryDetails,
+          transition: PageTransitionType.fade,
+          builder: (context, state) {
+            final model = state.extra as MemoryItemModel;
+            return MemoryDetailsScreen(model: model);
+          },
         ),
       ],
     );

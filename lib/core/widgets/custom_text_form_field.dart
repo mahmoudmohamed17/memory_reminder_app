@@ -2,17 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../utils/extensions.dart';
+
 class CustomTextFormField extends StatelessWidget {
   final String? label;
-  final String? hint;
+  final String hint;
   final TextEditingController? controller;
   final bool obscureText;
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final Widget? prefixWidget;
-  final Widget? suffixWidget;
   final int maxLines;
   final bool enabled;
   final bool readOnly;
@@ -23,19 +23,18 @@ class CustomTextFormField extends StatelessWidget {
   final VoidCallback? onTap;
   final bool canRequestFocus;
   final String? initialValue;
+  final Color? fillColor;
 
   const CustomTextFormField({
     super.key,
+    required this.hint,
     this.label,
-    this.hint,
     this.controller,
     this.obscureText = false,
     this.keyboardType,
     this.validator,
     this.prefixIcon,
     this.suffixIcon,
-    this.prefixWidget,
-    this.suffixWidget,
     this.maxLines = 1,
     this.enabled = true,
     this.readOnly = false,
@@ -46,11 +45,12 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.canRequestFocus = true,
     this.initialValue,
+    this.fillColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,11 +76,10 @@ class CustomTextFormField extends StatelessWidget {
           onTap: onTap,
           style: textTheme.bodyLarge,
           decoration: InputDecoration(
-            hintText: hint != null ? context.tr(hint!) : '',
+            hintText: context.tr(hint),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
-            prefix: prefixWidget,
-            suffix: suffixWidget,
+            fillColor: fillColor,
           ),
         ),
       ],

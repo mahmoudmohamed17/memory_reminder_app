@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../routing/app_routes.dart';
 import '../utils/extensions.dart';
 import '../../features/home/domain/models/memory_item_model.dart';
 
@@ -11,33 +13,38 @@ class MemoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Container(
-          height: 48,
-          width: 48,
-          decoration: BoxDecoration(
-            color: item.category.categoryColors.tint,
-            borderRadius: BorderRadius.circular(16.r),
+    return GestureDetector(
+      onTap: () {
+        context.push(AppRoutes.memoryDetails, extra: item);
+      },
+      child: Card(
+        child: ListTile(
+          leading: Container(
+            height: 48,
+            width: 48,
+            decoration: BoxDecoration(
+              color: item.category.categoryColors.tint,
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: Icon(item.category.icon, color: item.category.categoryColors.base),
           ),
-          child: Icon(item.category.icon, color: item.category.categoryColors.base),
-        ),
-        title: Text(
-          item.title,
-          style: context.textTheme.labelSmall?.copyWith(color: item.category.categoryColors.base),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          item.description,
-          style: context.textTheme.titleSmall,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: Icon(
-          Icons.arrow_forward_ios_outlined,
-          size: 18.sp,
-          color: context.colorScheme.outline.withValues(alpha: 0.50),
+          title: Text(
+            item.title,
+            style: context.textTheme.labelSmall?.copyWith(color: item.category.categoryColors.base),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            item.description,
+            style: context.textTheme.titleSmall,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios_outlined,
+            size: 18.sp,
+            color: context.colorScheme.outline.withValues(alpha: 0.50),
+          ),
         ),
       ),
     );

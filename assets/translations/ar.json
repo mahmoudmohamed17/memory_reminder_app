@@ -90,7 +90,8 @@
     "reminder": "التذكير",
     "openAttachment": "فتح المرفق",
     "recallByVoice": "استدعِ هذه الذكرى بصوتك",
-    "noAttachments": "لا توجد مرفقات"
+    "noAttachments": "لا توجد مرفقات",
+    "localData": "بياناتك محفوظة محلياً"
   },
   "addMemory": {
     "dialogLabel": "إضافة ذكرى",

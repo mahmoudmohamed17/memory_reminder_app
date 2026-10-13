@@ -90,7 +90,8 @@
     "reminder": "Reminder",
     "openAttachment": "Open attachment",
     "recallByVoice": "Recall this memory by voice",
-    "noAttachments": "No attachments"
+    "noAttachments": "No attachments",
+    "localData": "Your data is stored locally"
   },
   "addMemory": {
     "dialogLabel": "Add memory",

@@ -89,6 +89,7 @@ class AppStrings {
   static const String memoryOpenAttachment = 'memory.openAttachment';
   static const String memoryRecallByVoice = 'memory.recallByVoice';
   static const String memoryNoAttachments = 'memory.noAttachments';
+  static const String memoryLocalData = 'memory.localData';
 
   // Add Memory
   static const String addMemoryDialogLabel = 'addMemory.dialogLabel';
