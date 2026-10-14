@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/cubits/voice_recording_cubit.dart';
+import '../../../../core/di/di.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -106,7 +109,10 @@ class VoiceSearchingButton extends StatelessWidget {
                       showDialog<String>(
                         context: context,
                         barrierDismissible: false,
-                        builder: (_) => const VoiceRecordingDialog(),
+                        builder: (context) => BlocProvider(
+                          create: (context) => getIt<VoiceRecordingCubit>(),
+                          child: const VoiceRecordingDialog(),
+                        ),
                       ).then((text) {
                         if (text == null || text.isEmpty) return;
 

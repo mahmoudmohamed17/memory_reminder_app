@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import '../cubits/app_flow_cubit.dart' as _i49;
 import '../cubits/locale_cubit.dart' as _i867;
 import '../cubits/theme_cubit.dart' as _i525;
+import '../cubits/voice_recording_cubit.dart' as _i1068;
+import '../services/voice_recording_service.dart' as _i262;
 import '../utils/shared_prefs_helper.dart' as _i964;
 import 'modules.dart' as _i738;
 
@@ -33,9 +35,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingletonAsync<_i460.SharedPreferences>(
       () => modules.sharedPreferences,
     );
+    gh.lazySingleton<_i262.VoiceRecordingService>(
+      () => _i262.VoiceRecordingService(),
+    );
     gh.lazySingletonAsync<_i964.SharedPrefsHelper>(
       () async =>
           _i964.SharedPrefsHelper(await getAsync<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i1068.VoiceRecordingCubit>(
+      () => _i1068.VoiceRecordingCubit(gh<_i262.VoiceRecordingService>()),
     );
     gh.singletonAsync<_i49.AppFlowCubit>(
       () async => _i49.AppFlowCubit(await getAsync<_i964.SharedPrefsHelper>()),
