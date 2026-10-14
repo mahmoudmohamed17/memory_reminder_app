@@ -68,14 +68,14 @@ final mockMemories = [
     description: 'Ahmed\'s birthday is on March 15th. He loves chocolate cake and anything related to football.',
     category: MemoryCategory.friends,
     creationDate: DateTime(2024, 1, 10),
-    lastUpdateDate: DateTime(2024, 6, 1),
+    lastUpdateDate: DateTime(2024, 6),
   ),
   MemoryModel(
     id: '2',
     title: 'Monthly Rent Payment',
     description: 'Rent is due on the 1st of every month. Amount: 5,500 EGP. Transfer to account 0123456789.',
     category: MemoryCategory.financial,
-    creationDate: DateTime(2024, 2, 1),
+    creationDate: DateTime(2024, 2),
   ),
   MemoryModel(
     id: '3',
@@ -97,14 +97,13 @@ final mockMemories = [
     title: 'Book Reading Goal',
     description: 'Goal: read 12 books this year. Currently on book 7 — "Atomic Habits" by James Clear.',
     category: MemoryCategory.personal,
-    creationDate: DateTime(2024, 1, 1),
+    creationDate: DateTime(2024),
     lastUpdateDate: DateTime(2024, 8, 12),
   ),
   MemoryModel(
     id: '6',
     title: 'WiFi Password',
     description: 'Home WiFi — Network: HomeNet_5G | Password: MySecure@2024. Router admin: 192.168.1.1',
-    category: MemoryCategory.other,
     creationDate: DateTime(2024, 4, 3),
   ),
   MemoryModel(
