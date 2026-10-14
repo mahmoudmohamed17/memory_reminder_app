@@ -27,8 +27,7 @@ class CustomPasswordFormField extends StatefulWidget {
   });
 
   @override
-  State<CustomPasswordFormField> createState() =>
-      _CustomPasswordFormFieldState();
+  State<CustomPasswordFormField> createState() => _CustomPasswordFormFieldState();
 }
 
 class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
@@ -69,9 +68,7 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
                 });
               },
               icon: Icon(
-                _obscureText
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
+                _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
               ),
             ),
           ),

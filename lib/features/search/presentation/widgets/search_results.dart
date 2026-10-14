@@ -17,7 +17,7 @@ class SearchResults extends StatelessWidget {
       spacing: 12.h,
       children: [
         _header(context, mockMemories.length),
-        
+
         // TODO: Handle this using a Cubit/Bloc later
         // _emptySearch(context),
         _results(mockMemories),

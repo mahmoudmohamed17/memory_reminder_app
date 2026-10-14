@@ -10,7 +10,7 @@ import '../cubits/app_flow_state.dart';
 /// GoRouter to re-run its redirect logic.
 class GoRouterListenableBuilder extends ChangeNotifier {
   late final StreamSubscription<AppFlowState> _subscription;
-  
+
   GoRouterListenableBuilder(Stream<AppFlowState> stream) {
     _subscription = stream.listen((_) => notifyListeners());
   }

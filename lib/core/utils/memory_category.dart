@@ -45,6 +45,4 @@ enum MemoryCategory {
 
   /// The semantic colors associated with this category.
   final AppCategoryColors categoryColors;
-
-  
 }

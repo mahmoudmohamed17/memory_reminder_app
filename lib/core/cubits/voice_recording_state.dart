@@ -29,4 +29,3 @@ final class VoiceRecordingError extends VoiceRecordingState {
 
   const VoiceRecordingError({required this.error});
 }
-

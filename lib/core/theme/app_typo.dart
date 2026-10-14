@@ -129,6 +129,6 @@ abstract final class AppTypo {
   /// Use for financial and medication values:
   /// `Text('1,250', style: AppTypo.tabular(AppTypo.bodyLg))`.
   static TextStyle tabular(TextStyle base) => base.copyWith(
-        fontFeatures: const [FontFeature.tabularFigures()],
-      );
+    fontFeatures: const [FontFeature.tabularFigures()],
+  );
 }
