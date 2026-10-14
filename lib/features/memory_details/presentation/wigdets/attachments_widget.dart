@@ -38,6 +38,7 @@ class AttachmentsWidget extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _file(BuildContext context, AttachmentModel model) {
     return GestureDetector(
       onTap: () {

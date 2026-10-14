@@ -55,6 +55,7 @@ class SearchResults extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _emptySearch(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
