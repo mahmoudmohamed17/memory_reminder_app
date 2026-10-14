@@ -33,8 +33,8 @@
   "home": {
     "greeting": "Hello, how are you today?",
     "headline": "What would you like to remember?",
-    "localData": "Your data is stored locally",
     "searchPlaceholder": "Search your memories...",
+    "noMemories": "No memories found",
     "clearSearch": "Clear search",
     "voiceEyebrow": "FASTEST AND EASIEST",
     "voiceTitle": "Recall a memory by voice",
@@ -43,7 +43,6 @@
     "memoriesTitle": "Your memories",
     "memoriesCount": "{{count}} saved memories",
     "viewAll": "View all",
-    "emptyTitle": "No memories found",
     "emptyDescription": "Try another word or choose a different category",
     "privacyTitle": "Your privacy comes first, always",
     "privacyDescription": "All your memories are encrypted and stored only on your device. We cannot see or share them."

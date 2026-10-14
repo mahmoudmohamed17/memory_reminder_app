@@ -25,14 +25,15 @@ class AttachmentsWidget extends StatelessWidget {
             color: context.colorScheme.outline,
           ),
         ),
-        GridView.count(
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          crossAxisSpacing: 8.w,
-          mainAxisSpacing: 8.h,
-          physics: const NeverScrollableScrollPhysics(),
-          children: mockAttachments.map((item) => _file(context, item)).toList(),
-        ),
+        _empty(context),
+        // GridView.count(
+        //   shrinkWrap: true,
+        //   crossAxisCount: 2,
+        //   crossAxisSpacing: 8.w,
+        //   mainAxisSpacing: 8.h,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   children: mockAttachments.map((item) => _file(context, item)).toList(),
+        // ),
       ],
     );
   }
@@ -97,6 +98,30 @@ class AttachmentsWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _empty(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: context.colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.colorScheme.outlineVariant),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 16,
+        children: [
+          const FaIcon(FontAwesomeIcons.paperclip),
+          Text(
+            context.tr(AppStrings.memoryNoAttachments),
+            style: context.textTheme.labelMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

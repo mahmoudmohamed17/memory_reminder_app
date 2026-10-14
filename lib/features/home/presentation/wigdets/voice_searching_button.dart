@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
+import 'voice_recording_dialog.dart';
 
 class VoiceSearchingButton extends StatelessWidget {
   const VoiceSearchingButton({
@@ -14,23 +15,15 @@ class VoiceSearchingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      // ① ClipRRect clips everything inside to the rounded rectangle shape.
-      //    Any child that overflows the Stack boundary gets cut off cleanly —
-      //    that is the "clipping" effect you see on the decorative circles.
       borderRadius: BorderRadius.circular(24.r),
       child: Container(
         height: 120.h,
         decoration: BoxDecoration(
-          color: context.colorScheme.primary, // 1E293B, // dark teal background
+          color: context.colorScheme.primary,
           borderRadius: BorderRadius.circular(24.r),
         ),
         child: Stack(
           children: [
-            // ─────────────────────────────────────────────────────────────
-            // ② Decorative circles — Positioned so they partially overflow.
-            //    ClipRRect above slices off whatever goes outside the card.
-            // ─────────────────────────────────────────────────────────────
-
             // Large outer circle (top-left, barely visible ring)
             Positioned(
               left: -30.w,
@@ -61,9 +54,7 @@ class VoiceSearchingButton extends StatelessWidget {
               ),
             ),
 
-            // ─────────────────────────────────────────────────────────────
-            // ③ Actual content row — sits on top of the decorative layers
-            // ─────────────────────────────────────────────────────────────
+            // Actual content row — sits on top of the decorative layers
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
@@ -110,24 +101,37 @@ class VoiceSearchingButton extends StatelessWidget {
                   SizedBox(width: 12.w),
 
                   // Microphone circular button
-                  Container(
-                    width: 64.r,
-                    height: 64.r,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 12,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.mic,
-                      color: AppColors.primary,
-                      size: 30.r,
+                  GestureDetector(
+                    onTap: () {
+                      showDialog<String>(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => const VoiceRecordingDialog(),
+                      ).then((text) {
+                        if (text == null || text.isEmpty) return;
+
+                        // TODO: Search with the text from the speech recognizer.
+                      });
+                    },
+                    child: Container(
+                      width: 64.r,
+                      height: 64.r,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 12,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.mic,
+                        color: AppColors.primary,
+                        size: 30.r,
+                      ),
                     ),
                   ),
                 ],

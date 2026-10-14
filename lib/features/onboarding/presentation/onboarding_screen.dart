@@ -43,9 +43,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  /// Tells [AppFlowCubit] that onboarding is done.
-  /// The cubit emits [AppFlowState.home], which triggers
-  /// [GoRouterListenableBuilder] → GoRouter re-runs redirect → navigates to /home.
   void _onComplete() {
     context.read<AppFlowCubit>().completeOnboarding();
   }

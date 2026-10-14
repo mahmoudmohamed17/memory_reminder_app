@@ -31,8 +31,8 @@ class AppStrings {
   // Home
   static const String homeGreeting = 'home.greeting';
   static const String homeHeadline = 'home.headline';
-  static const String homeLocalData = 'home.localData';
   static const String homeSearchPlaceholder = 'home.searchPlaceholder';
+  static const String homeNoMemories = 'home.noMemories';
   static const String homeClearSearch = 'home.clearSearch';
   static const String homeVoiceEyebrow = 'home.voiceEyebrow';
   static const String homeVoiceTitle = 'home.voiceTitle';
@@ -41,7 +41,6 @@ class AppStrings {
   static const String homeMemoriesTitle = 'home.memoriesTitle';
   static const String homeMemoriesCount = 'home.memoriesCount';
   static const String homeViewAll = 'home.viewAll';
-  static const String homeEmptyTitle = 'home.emptyTitle';
   static const String homeEmptyDescription = 'home.emptyDescription';
   static const String homePrivacyTitle = 'home.privacyTitle';
   static const String homePrivacyDescription = 'home.privacyDescription';

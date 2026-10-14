@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../widgets/recent_searchs.dart';
 import '../widgets/search_header.dart';
 import '../widgets/search_results.dart';
 import '../widgets/tags_bar.dart';

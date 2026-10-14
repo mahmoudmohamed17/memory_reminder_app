@@ -33,8 +33,8 @@
   "home": {
     "greeting": "مرحباً، كيف حالك اليوم!",
     "headline": "ماذا تريد أن تتذكّر؟",
-    "localData": "بياناتك محفوظة محلياً",
     "searchPlaceholder": "ابحث في ذكرياتك...",
+    "noMemories": "لا توجد ذكريات محفوظة",
     "clearSearch": "مسح البحث",
     "voiceEyebrow": "الأسرع والأبسط",
     "voiceTitle": "استرجع ذكرى بصوتك",
@@ -43,7 +43,6 @@
     "memoriesTitle": "ذكرياتك",
     "memoriesCount": "{{count}} ذكريات محفوظة",
     "viewAll": "عرض الكل",
-    "emptyTitle": "لم نعثر على ذكرى",
     "emptyDescription": "جرّب كلمة أخرى أو اختر تصنيفاً مختلفاً",
     "privacyTitle": "خصوصيتك أولاً، دائماً",
     "privacyDescription": "كل ذكرياتك مشفرة ومحفوظة على جهازك فقط. لا نراها ولا نشاركها."
