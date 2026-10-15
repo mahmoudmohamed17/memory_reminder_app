@@ -33,6 +33,8 @@ dependencies:
   font_awesome_flutter: ^11.0.0
   speech_to_text: ^7.5.0
   waveform_flutter: ^1.2.0
+  drift: ^2.35.2
+  drift_flutter: ^0.3.1
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +44,7 @@ dev_dependencies:
   json_serializable: ^6.14.1
   build_runner: ^2.16.1
   injectable_generator: ^3.0.0
+  drift_dev: ^2.35.1
 
 flutter:
   uses-material-design: true

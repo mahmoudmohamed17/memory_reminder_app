@@ -5,14 +5,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
-
-import '../../../../core/utils/memory_category.dart';
 
 class EditMemoryScreen extends StatefulWidget {
   final MemoryModel model;

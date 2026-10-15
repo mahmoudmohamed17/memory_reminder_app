@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theme/app_theme.dart';
 import '../utils/app_strings.dart';
+import '../utils/enums.dart';
 import '../utils/extensions.dart';
-import '../utils/memory_category.dart';
 
 class MemoryCategorySelectionWidget extends StatefulWidget {
   final MemoryCategory? initialCategory;

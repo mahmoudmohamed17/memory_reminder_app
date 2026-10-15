@@ -1,12 +1,17 @@
-import '../utils/memory_category.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import '../utils/enums.dart';
 import 'attachment_model.dart';
 
+part 'memory_model.g.dart';
+
+@JsonSerializable()
 class MemoryModel {
   final String id;
   final String title;
   final String description;
   final MemoryCategory category;
-  final List<AttachmentModel>? attachments;
+  final List<AttachmentModel> attachments;
   final DateTime creationDate;
   final DateTime? lastUpdateDate;
 
@@ -16,7 +21,7 @@ class MemoryModel {
     required this.description,
     required this.creationDate,
     this.category = MemoryCategory.other,
-    this.attachments,
+    this.attachments = const [],
     this.lastUpdateDate,
   });
 
@@ -38,27 +43,9 @@ class MemoryModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'category': category.name,
-      'creationDate': creationDate.toIso8601String(),
-      'lastUpdateDate': lastUpdateDate?.toIso8601String(),
-    };
-  }
+  Map<String, dynamic> toJson() => _$MemoryModelToJson(this);
 
-  factory MemoryModel.fromJson(Map<String, dynamic> json) {
-    return MemoryModel(
-      id: json['id'] ?? '',
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      category: MemoryCategory.values.firstWhere((e) => e.name == json['category'], orElse: () => MemoryCategory.other),
-      creationDate: DateTime.parse(json['creationDate'] ?? ''),
-      lastUpdateDate: json['lastUpdateDate'] != null ? DateTime.parse(json['lastUpdateDate']) : null,
-    );
-  }
+  factory MemoryModel.fromJson(Map<String, dynamic> json) => _$MemoryModelFromJson(json);
 }
 
 final mockMemories = [
