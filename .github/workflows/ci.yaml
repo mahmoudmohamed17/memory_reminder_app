@@ -39,12 +39,7 @@ jobs:
         run: flutter analyze
 
       - name: Run tests
-        run: |
-          if find test -name '*_test.dart' 2>/dev/null | grep -q .; then
-            flutter test --coverage
-          else
-            echo "No tests found, skipping"
-          fi
+        run: flutter test --coverage
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
