@@ -38,6 +38,11 @@ class MemoriesDao extends DatabaseAccessor<AppDatabase> with _$MemoriesDaoMixin 
     return _watchJoined(filters);
   }
 
+   Stream<MemoryWithDetails?> watchOne(int id) {
+    return _watchJoined([memories.id.equals(id)])
+        .map((list) => list.isEmpty ? null : list.first);
+  }
+
   Stream<List<MemoryWithDetails>> _watchJoined(List<Expression<bool>> filters) {
     final query = select(memories).join([
       leftOuterJoin(attachments, attachments.memoryId.equalsExp(memories.id)),

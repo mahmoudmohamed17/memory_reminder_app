@@ -6,6 +6,6 @@ import 'di.config.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit(
-  preferRelativeImports: true, // default
+  preferRelativeImports: true,
 )
 void configureDependencies() => getIt.init();
