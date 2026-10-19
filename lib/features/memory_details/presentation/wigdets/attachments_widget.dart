@@ -8,9 +8,7 @@ import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 
 class AttachmentsWidget extends StatelessWidget {
-  const new({
-    super.key,
-  });
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
