@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../models/memory_model.dart';
+import '../../features/home/cubits/add_memory_cubit.dart';
+import '../../features/home/cubits/memories_list_cubit.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/memory_details/cubits/edit_memory_cubit.dart';
+import '../../features/memory_details/cubits/memory_details_cubit.dart';
 import '../../features/memory_details/presentation/screens/edit_memory_screen.dart';
 import '../../features/memory_details/presentation/screens/memory_details_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/search/cubits/search_cubit.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
 import '../cubits/app_flow_cubit.dart';
 import '../cubits/app_flow_state.dart';
 import '../di/di.dart';
+import '../models/memory_model.dart';
 import 'app_routes.dart';
 import 'go_router_listenable_builder.dart';
 import 'page_transition_builder.dart';
@@ -47,18 +53,30 @@ class AppRouter {
         ),
         _route(
           AppRoutes.home,
-          builder: (context, state) => const HomeScreen(),
+          builder: (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<MemoriesListCubit>()..watch()),
+              BlocProvider(create: (_) => getIt<AddMemoryCubit>()),
+            ],
+            child: const HomeScreen(),
+          ),
         ),
         _route(
           AppRoutes.search,
-          builder: (context, state) => const SearchScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (_) => getIt<SearchCubit>(),
+            child: const SearchScreen(),
+          ),
         ),
         _route(
           AppRoutes.memoryDetails,
           transition: PageTransitionType.fadeSlide,
           builder: (context, state) {
             final model = state.extra as MemoryModel;
-            return MemoryDetailsScreen(model: model);
+            return BlocProvider(
+              create: (_) => getIt<MemoryDetailsCubit>()..watch(model.id),
+              child: MemoryDetailsScreen(model: model),
+            );
           },
         ),
         _route(
@@ -66,7 +84,10 @@ class AppRouter {
           transition: PageTransitionType.fadeSlide,
           builder: (context, state) {
             final model = state.extra as MemoryModel;
-            return EditMemoryScreen(model: model);
+            return BlocProvider(
+              create: (_) => getIt<EditMemoryCubit>(),
+              child: EditMemoryScreen(model: model),
+            );
           },
         ),
       ],
@@ -95,3 +116,4 @@ class AppRouter {
     );
   }
 }
+

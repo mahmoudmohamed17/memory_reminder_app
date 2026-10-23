@@ -1,15 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
-import 'memory_attachments_widget.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
+import '../../cubits/add_memory_cubit.dart';
+import 'memory_attachments_widget.dart';
 
 class MemoryCreationBottomSheet extends StatefulWidget {
   const MemoryCreationBottomSheet({super.key});
@@ -22,6 +25,7 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
   late final TextEditingController _title;
   late final TextEditingController _description;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  MemoryCategory _selectedCategory = MemoryCategory.other;
 
   @override
   void initState() {
@@ -39,35 +43,64 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.r),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 16.sp),
-      child: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16.h,
-          children: [
-            _header(context),
-            _form(),
-            MemoryCategorySelectionWidget(
-              onSelected: (category) {},
-            ),
-            const MemoryAttachmentsWidget(),
-            CustomElevatedButton(
-              text: AppStrings.addMemorySave,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
-              },
-              icon: const Icon(Icons.lock),
-              iconAlignment: IconAlignment.end,
-              width: double.infinity,
-            ),
-            16.verticalSpace,
-          ],
+    return BlocListener<AddMemoryCubit, AddMemoryState>(
+      listener: (context, state) {
+        if (state is AddMemorySuccess) {
+          context.pop();
+        } else if (state is AddMemoryError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.sp),
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 16.h,
+            children: [
+              _header(context),
+              _form(),
+              MemoryCategorySelectionWidget(
+                onSelected: (category) => _selectedCategory = category,
+              ),
+              const MemoryAttachmentsWidget(),
+              BlocSelector<AddMemoryCubit, AddMemoryState, bool>(
+                selector: (state) => state is AddMemoryLoading,
+                builder: (context, isLoading) {
+                  return CustomElevatedButton(
+                    text: AppStrings.addMemorySave,
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<AddMemoryCubit>().addMemory(
+                                    title: _title.text,
+                                    description: _description.text,
+                                    category: _selectedCategory,
+                                  );
+                            }
+                          },
+                    icon: isLoading
+                        ? const SizedBox.square(
+                            dimension: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.lock),
+                    iconAlignment: IconAlignment.end,
+                    width: double.infinity,
+                  );
+                },
+              ),
+              16.verticalSpace,
+            ],
+          ),
         ),
       ),
     );

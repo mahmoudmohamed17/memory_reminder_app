@@ -3,28 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 
-class TagsBar extends StatefulWidget {
-  final Function(String value) onTagSelected;
+class CategoriesBar extends StatefulWidget {
+  final Function(MemoryCategory category) onCategoryChanged;
 
-  const TagsBar({super.key, required this.onTagSelected});
+  const CategoriesBar({super.key, required this.onCategoryChanged});
 
   @override
-  State<TagsBar> createState() => _TagsBarState();
+  State<CategoriesBar> createState() => _CategoriesBarState();
 }
 
-class _TagsBarState extends State<TagsBar> {
+class _CategoriesBarState extends State<CategoriesBar> {
   final ValueNotifier<int?> _current = ValueNotifier(null);
 
-  List<String> get _labels => [
-    AppStrings.categoriesAll,
-    AppStrings.categoriesMedical,
-    AppStrings.categoriesFinancial,
-    AppStrings.categoriesFriends,
-    AppStrings.categoriesFamily,
-    AppStrings.categoriesPersonal,
+  List<MemoryCategory> get _categories => [
+    MemoryCategory.medical,
+    MemoryCategory.financial,
+    MemoryCategory.friends,
+    MemoryCategory.family,
+    MemoryCategory.personal,
   ];
 
   @override
@@ -33,7 +32,7 @@ class _TagsBarState extends State<TagsBar> {
       scrollDirection: Axis.horizontal,
       child: Row(
         spacing: 8.w,
-        children: List.generate(_labels.length, (index) {
+        children: List.generate(_categories.length, (index) {
           return ValueListenableBuilder(
             valueListenable: _current,
             builder: (context, currentIndex, child) {
@@ -42,11 +41,11 @@ class _TagsBarState extends State<TagsBar> {
                 onTap: () {
                   if (isSelected) return;
                   _current.value = index;
-                  widget.onTagSelected.call(_labels[index]);
+                  widget.onCategoryChanged.call(_categories[index]);
                 },
                 child: _bagde(
                   context,
-                  label: _labels[index],
+                  category: _categories[index],
                   isActive: isSelected,
                 ),
               );
@@ -57,7 +56,7 @@ class _TagsBarState extends State<TagsBar> {
     );
   }
 
-  Widget _bagde(BuildContext context, {required String label, required bool isActive}) {
+  Widget _bagde(BuildContext context, {required MemoryCategory category, required bool isActive}) {
     return AnimatedContainer(
       duration: AppMotion.fast,
       decoration: BoxDecoration(
@@ -67,7 +66,7 @@ class _TagsBarState extends State<TagsBar> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
       child: Text(
-        context.tr(label),
+        context.tr(category.label),
         style: context.textTheme.labelMedium?.copyWith(
           color: isActive ? context.colorScheme.onPrimary : context.colorScheme.onSurface,
         ),

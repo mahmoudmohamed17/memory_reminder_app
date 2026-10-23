@@ -1,27 +1,36 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/memory_item.dart';
 import '../../../../core/models/memory_model.dart';
+import '../../cubits/search_cubit.dart';
 
 class SearchResults extends StatelessWidget {
-  const new({super.key});
+  const SearchResults({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 12.h,
-      children: [
-        _header(context, mockMemories.length),
-
-        // TODO: Handle this using a Cubit/Bloc later
-        // _emptySearch(context),
-        _results(mockMemories),
-      ],
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        return switch (state) {
+          SearchInitial() => _initialHint(context),
+          SearchLoading() => const Center(child: CircularProgressIndicator()),
+          SearchLoaded(:final results) => Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 12.h,
+              children: [
+                _header(context, results.length),
+                _results(results),
+              ],
+            ),
+          SearchEmpty() => _emptySearch(context),
+          SearchError(:final message) => _errorState(context, message),
+        };
+      },
     );
   }
 
@@ -31,7 +40,7 @@ class SearchResults extends StatelessWidget {
         itemBuilder: (_, index) {
           return MemoryItem(item: results[index]);
         },
-        separatorBuilder: (_, _) => 16.verticalSpace,
+        separatorBuilder: (_, __) => 16.verticalSpace,
         itemCount: results.length,
       ),
     );
@@ -55,7 +64,18 @@ class SearchResults extends StatelessWidget {
     );
   }
 
-  // ignore: unused_element
+  Widget _initialHint(BuildContext context) {
+    return Center(
+      child: Text(
+        context.tr(AppStrings.searchEmptyTitle),
+        style: context.textTheme.bodyMedium?.copyWith(
+          color: context.colorScheme.outline,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
   Widget _emptySearch(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -88,6 +108,24 @@ class SearchResults extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _errorState(BuildContext context, String message) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: context.colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Text(
+        message,
+        style: context.textTheme.labelMedium?.copyWith(
+          color: context.colorScheme.onErrorContainer,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
