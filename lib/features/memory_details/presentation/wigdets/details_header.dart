@@ -58,7 +58,7 @@ class DetailsHeader extends StatelessWidget {
             Text(
               DateFormatter.timeWithDate(
                 model.lastUpdateDate ?? model.creationDate,
-                locale: context.locale.countryCode,
+                locale: context.locale.languageCode,
               ),
               style: context.textTheme.labelSmall?.copyWith(
                 // color: context.colorScheme.outline,
