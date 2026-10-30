@@ -64,23 +64,23 @@ class SearchCubit extends Cubit<SearchState> {
     _sub?.cancel();
     emit(const SearchLoading());
 
-    _sub = _repo
-        .watchMemories(query: _query, category: _category)
-        .listen(
-          (list) {
-            if (isClosed) return;
-            if (list.isEmpty) {
-              emit(SearchEmpty(query: _query, activeCategory: _category));
-            } else {
-              emit(SearchLoaded(
-                results: list,
-                query: _query,
-                activeCategory: _category,
-              ));
-            }
-          },
-          onError: (Object e) => emit(SearchError(e.toString())),
-        );
+    _sub = _repo.watchMemories(query: _query, category: _category).listen(
+      (list) {
+        if (isClosed) return;
+        if (list.isEmpty) {
+          emit(SearchEmpty(query: _query, activeCategory: _category));
+        } else {
+          emit(
+            SearchLoaded(
+              results: list,
+              query: _query,
+              activeCategory: _category,
+            ),
+          );
+        }
+      },
+      onError: (Object e) => emit(SearchError(e.toString())),
+    );
   }
 
   @override

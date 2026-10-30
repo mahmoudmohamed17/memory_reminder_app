@@ -20,13 +20,13 @@ class SearchResults extends StatelessWidget {
           SearchInitial() => _initialHint(context),
           SearchLoading() => const Center(child: CircularProgressIndicator()),
           SearchLoaded(:final results) => Column(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 12.h,
-              children: [
-                _header(context, results.length),
-                _results(results),
-              ],
-            ),
+            mainAxisSize: MainAxisSize.min,
+            spacing: 12.h,
+            children: [
+              _header(context, results.length),
+              _results(results),
+            ],
+          ),
           SearchEmpty() => _emptySearch(context),
           SearchError(:final message) => _errorState(context, message),
         };

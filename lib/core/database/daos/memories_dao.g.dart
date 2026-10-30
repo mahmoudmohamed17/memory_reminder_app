@@ -12,8 +12,7 @@ mixin _$MemoriesDaoMixin on DatabaseAccessor<AppDatabase> {
 class MemoriesDaoManager {
   final _$MemoriesDaoMixin _db;
   MemoriesDaoManager(this._db);
-  $$MemoriesTableTableManager get memories =>
-      $$MemoriesTableTableManager(_db.attachedDatabase, _db.memories);
+  $$MemoriesTableTableManager get memories => $$MemoriesTableTableManager(_db.attachedDatabase, _db.memories);
   $$AttachmentsTableTableManager get attachments =>
       $$AttachmentsTableTableManager(_db.attachedDatabase, _db.attachments);
 }

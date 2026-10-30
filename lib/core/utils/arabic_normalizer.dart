@@ -7,10 +7,7 @@ abstract final class ArabicNormalizer {
 
   static String normalize(String input) {
     var s = input.toLowerCase().replaceAll(_diacritics, '');
-    s = s
-        .replaceAll(_alef, 'ا')
-        .replaceAll('ى', 'ي')
-        .replaceAll('ة', 'ه');
+    s = s.replaceAll(_alef, 'ا').replaceAll('ى', 'ي').replaceAll('ة', 'ه');
     for (var i = 0; i < _easternDigits.length; i++) {
       s = s.replaceAll(_easternDigits[i], '$i');
     }
