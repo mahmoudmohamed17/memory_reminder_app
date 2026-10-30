@@ -57,7 +57,6 @@ flutter:
     - assets/translations/
     - assets/env/.env.dev
     - assets/env/.env.prod
-    - .env
 
   fonts:
     - family: IBMPlexSansArabic
