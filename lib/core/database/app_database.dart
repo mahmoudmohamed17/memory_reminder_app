@@ -12,7 +12,9 @@ part 'app_database.g.dart';
 @DriftDatabase(tables: [Memories, Attachments], daos: [MemoriesDao])
 @LazySingleton()
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? executor]) : super(executor ?? driftDatabase(name: 'memory_reminder'));
+  AppDatabase() : super(driftDatabase(name: 'memory_reminder'));
+
+  AppDatabase.forTesting(super.executor);
 
   @override
   int get schemaVersion => 1;

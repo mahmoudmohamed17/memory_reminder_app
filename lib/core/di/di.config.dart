@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:drift/drift.dart' as _i500;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -48,12 +47,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => modules.sharedPreferences,
       preResolve: true,
     );
+    gh.lazySingleton<_i982.AppDatabase>(
+      () => _i982.AppDatabase(),
+      dispose: (i) => i.close(),
+    );
     gh.lazySingleton<_i262.VoiceRecordingService>(
       () => _i262.VoiceRecordingService(),
-    );
-    gh.lazySingleton<_i982.AppDatabase>(
-      () => _i982.AppDatabase(gh<_i500.QueryExecutor>()),
-      dispose: (i) => i.close(),
     );
     gh.lazySingleton<_i159.AttachmentFileService>(
       () => _i159.AttachmentFileServiceImpl(),
