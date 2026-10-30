@@ -21,21 +21,21 @@ class MemoriesList extends StatelessWidget {
         return switch (state) {
           MemoriesListLoading() => const Center(child: CircularProgressIndicator()),
           MemoriesListLoaded(:final memories) => Column(
-              spacing: 12.h,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _header(context, memories.length),
-                memories.isEmpty ? _empty(context) : _buildList(context, memories),
-              ],
-            ),
+            spacing: 12.h,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _header(context, memories.length),
+              memories.isEmpty ? _empty(context) : _buildList(context, memories),
+            ],
+          ),
           MemoriesListError(:final message) => Column(
-              spacing: 12.h,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _header(context, 0),
-                _errorState(context, message),
-              ],
-            ),
+            spacing: 12.h,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _header(context, 0),
+              _errorState(context, message),
+            ],
+          ),
         };
       },
     );
@@ -121,5 +121,3 @@ class MemoriesList extends StatelessWidget {
     );
   }
 }
-
-

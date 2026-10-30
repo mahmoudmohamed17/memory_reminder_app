@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/cubits/add_memory_cubit.dart';
 import '../../features/home/cubits/memories_list_cubit.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/memory_details/cubits/edit_memory_cubit.dart';
@@ -53,11 +52,8 @@ class AppRouter {
         ),
         _route(
           AppRoutes.home,
-          builder: (context, state) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<MemoriesListCubit>()..watch()),
-              BlocProvider(create: (_) => getIt<AddMemoryCubit>()),
-            ],
+          builder: (context, state) => BlocProvider(
+            create: (_) => getIt<MemoriesListCubit>()..watch(),
             child: const HomeScreen(),
           ),
         ),

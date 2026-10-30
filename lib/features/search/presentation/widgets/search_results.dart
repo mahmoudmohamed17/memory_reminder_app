@@ -40,7 +40,7 @@ class SearchResults extends StatelessWidget {
         itemBuilder: (_, index) {
           return MemoryItem(item: results[index]);
         },
-        separatorBuilder: (_, __) => 16.verticalSpace,
+        separatorBuilder: (_, _) => 16.verticalSpace,
         itemCount: results.length,
       ),
     );

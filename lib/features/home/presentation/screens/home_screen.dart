@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/models/memory_model.dart';
+import '../../../../core/di/di.dart';
+import '../../cubits/add_memory_cubit.dart';
 import '../wigdets/greeting_widget.dart';
 import '../wigdets/home_header.dart';
 import '../wigdets/home_search_field.dart';
@@ -10,7 +12,7 @@ import '../wigdets/memory_creation_bottom_sheet.dart';
 import '../wigdets/voice_searching_button.dart';
 
 class HomeScreen extends StatelessWidget {
-  const new({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +48,15 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet<MemoryModel>(
+          showModalBottomSheet<void>(
             context: context,
             isScrollControlled: true,
             useSafeArea: true,
-            builder: (_) => const MemoryCreationBottomSheet(),
-          ).then((item) {
-            if (item == null) return;
-
-            /// Handle adding the item using a Cubit
-          });
+            builder: (_) => BlocProvider(
+              create: (_) => getIt<AddMemoryCubit>(),
+              child: const MemoryCreationBottomSheet(),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),

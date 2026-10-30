@@ -7,7 +7,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 
 class CategoriesBar extends StatefulWidget {
-  final Function(MemoryCategory category) onCategoryChanged;
+  final Function(MemoryCategory? category) onCategoryChanged;
 
   const CategoriesBar({super.key, required this.onCategoryChanged});
 
@@ -39,15 +39,10 @@ class _CategoriesBarState extends State<CategoriesBar> {
               final bool isSelected = currentIndex == index;
               return GestureDetector(
                 onTap: () {
-                  if (isSelected) return;
                   _current.value = index;
                   widget.onCategoryChanged.call(_categories[index]);
                 },
-                child: _bagde(
-                  context,
-                  category: _categories[index],
-                  isActive: isSelected,
-                ),
+                child: _bagde(context, category: _categories[index], isActive: isSelected),
               );
             },
           );
@@ -56,7 +51,7 @@ class _CategoriesBarState extends State<CategoriesBar> {
     );
   }
 
-  Widget _bagde(BuildContext context, {required MemoryCategory category, required bool isActive}) {
+  Widget _bagde(BuildContext context, {required MemoryCategory category, bool isActive = false}) {
     return AnimatedContainer(
       duration: AppMotion.fast,
       decoration: BoxDecoration(
