@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/models/memory_model.dart';
 
@@ -43,11 +44,27 @@ class DetailsHeader extends StatelessWidget {
           model.title,
           style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
         ),
-        Text(
-          context.tr(AppStrings.memoryUpdatedAt),
-          style: context.textTheme.labelSmall?.copyWith(
-            color: context.colorScheme.outline,
-          ),
+        4.verticalSpace,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 4,
+          children: [
+            Text(
+              context.tr(AppStrings.memoryUpdatedAt),
+              style: context.textTheme.labelSmall?.copyWith(
+                color: context.colorScheme.outline,
+              ),
+            ),
+            Text(
+              DateFormatter.timeWithDate(
+                model.lastUpdateDate ?? model.creationDate,
+                locale: context.locale.countryCode,
+              ),
+              style: context.textTheme.labelSmall?.copyWith(
+                // color: context.colorScheme.outline,
+              ),
+            ),
+          ],
         ),
       ],
     );

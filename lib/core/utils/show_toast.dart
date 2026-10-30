@@ -6,10 +6,10 @@ void showToast({
   Widget? title,
   ToastificationType type = ToastificationType.info,
   ToastificationStyle style = ToastificationStyle.flat,
+  CloseButtonShowType closeButton = CloseButtonShowType.none,
   bool showProgressBar = true,
   bool dragToClose = true,
   Duration autoCloseDuration = const Duration(seconds: 3),
-  Duration animationDuration = const Duration(seconds: 3),
 }) {
   toastification.show(
     context: context,
@@ -18,7 +18,7 @@ void showToast({
     style: style,
     dragToClose: dragToClose,
     showProgressBar: showProgressBar,
-    animationDuration: animationDuration,
+    closeButton: ToastCloseButton(showType: closeButton),
     autoCloseDuration: autoCloseDuration,
   );
 }

@@ -32,7 +32,10 @@ class DetailsFooter extends StatelessWidget {
                 style: context.textTheme.labelSmall?.copyWith(color: context.colorScheme.outline),
               ),
               subTitle: Text(
-                DateFormatter.timeWithDate(creationDate),
+                DateFormatter.timeWithDate(
+                  creationDate,
+                  locale: context.locale.languageCode,
+                ),
                 style: context.textTheme.labelMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

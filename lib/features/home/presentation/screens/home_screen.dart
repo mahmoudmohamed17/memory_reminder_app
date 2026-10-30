@@ -34,7 +34,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                     16.verticalSpace,
                     const HomeSearchField(),
-                    16.verticalSpace,
                     const VoiceSearchingButton(),
                     16.verticalSpace,
                     const MemoriesList(),

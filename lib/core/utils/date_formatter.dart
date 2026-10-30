@@ -1,11 +1,13 @@
 import 'package:intl/intl.dart';
 
 abstract class DateFormatter {
-  static final String currentLocale = Intl.getCurrentLocale();
+  /// e.g. "Fri, Oct 30, 3:45 PM" (localized order and digits)
+  static String timeWithDate(DateTime value, {String? locale}) {
+    return DateFormat.MMMEd(locale).add_jm().format(value.toLocal());
+  }
 
-  static String timeWithDate(DateTime value) {
-    final date = DateFormat.MMMEd(currentLocale).format(value);
-    final time = DateFormat.jmz(currentLocale).format(value);
-    return '$time $date';
+  /// Use this if you want the timezone shown too
+  static String timeWithDateAndZone(DateTime value, {String? locale}) {
+    return DateFormat.MMMEd(locale).add_jmz().format(value.toLocal());
   }
 }
