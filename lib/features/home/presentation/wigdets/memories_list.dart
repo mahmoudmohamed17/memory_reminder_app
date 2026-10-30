@@ -49,9 +49,11 @@ class MemoriesList extends StatelessWidget {
           context.tr(AppStrings.homeMemoriesTitle),
           style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
         ),
-        if (count > 0)
+        if (count > 7)
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              // TODO: Show the all categories in a new screen
+            },
             child: Row(
               spacing: 4.w,
               mainAxisSize: MainAxisSize.min,
@@ -74,7 +76,7 @@ class MemoriesList extends StatelessWidget {
   Widget _buildList(BuildContext context, List<MemoryModel> memories) {
     return Column(
       spacing: 8.h,
-      children: memories.take(5).map<Widget>((item) => MemoryItem(item: item)).toList(),
+      children: memories.take(7).map((item) => MemoryItem(item: item)).toList(),
     );
   }
 

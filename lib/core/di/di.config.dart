@@ -21,6 +21,7 @@ import '../../features/memory_details/cubits/memory_details_cubit.dart'
     as _i463;
 import '../../features/search/cubits/search_cubit.dart' as _i51;
 import '../cubits/app_flow_cubit.dart' as _i49;
+import '../cubits/app_toast_cubit.dart' as _i48;
 import '../cubits/locale_cubit.dart' as _i867;
 import '../cubits/theme_cubit.dart' as _i525;
 import '../cubits/voice_recording_cubit.dart' as _i1068;
@@ -47,6 +48,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => modules.sharedPreferences,
       preResolve: true,
     );
+    gh.lazySingleton<_i48.AppToastCubit>(() => _i48.AppToastCubit());
     gh.lazySingleton<_i982.AppDatabase>(
       () => _i982.AppDatabase(),
       dispose: (i) => i.close(),

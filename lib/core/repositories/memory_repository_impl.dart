@@ -102,6 +102,7 @@ class MemoryRepositoryImpl implements MemoryRepository {
       id: model.id,
       title: model.title,
       description: model.description,
+      category: model.category,
       creationDate: model.createdAt,
       lastUpdateDate: model.updatedAt,
     );

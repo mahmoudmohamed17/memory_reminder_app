@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -26,10 +27,9 @@ class MemoryDetailsScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is MemoryDetailsDeleted) {
           context.pop();
+          context.read<AppToastCubit>().info(context.tr(AppStrings.memoryDeleted));
         } else if (state is MemoryDetailsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          context.read<AppToastCubit>().info(state.message);
         }
       },
       child: BlocBuilder<MemoryDetailsCubit, MemoryDetailsState>(
@@ -45,11 +45,21 @@ class MemoryDetailsScreen extends StatelessWidget {
               centerTitle: true,
               actions: [
                 IconButton(
-                  onPressed: () async {
-                    await context.push<void>(AppRoutes.memoryEdit, extra: current);
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.penToSquare),
+                  onPressed: () => context.push(AppRoutes.memoryEdit, extra: current),
+                  icon: FaIcon(
+                    FontAwesomeIcons.penToSquare,
+                    size: 22.sp,
+                  ),
                   tooltip: context.tr(AppStrings.edit),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await context.read<MemoryDetailsCubit>().deleteMemory(model.id);
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.trashCan,
+                    size: 22.sp,
+                  ),
                 ),
                 4.horizontalSpace,
               ],
@@ -58,18 +68,18 @@ class MemoryDetailsScreen extends StatelessWidget {
               MemoryDetailsLoading() => const Center(child: CircularProgressIndicator()),
               MemoryDetailsDeleted() => const SizedBox.shrink(),
               _ => ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  children: [
-                    DetailsHeader(model: current),
-                    16.verticalSpace,
-                    DescriptionWidget(description: current.description),
-                    16.verticalSpace,
-                    const AttachmentsWidget(),
-                    16.verticalSpace,
-                    DetailsFooter(creationDate: current.creationDate),
-                    32.verticalSpace,
-                  ],
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                children: [
+                  DetailsHeader(model: current),
+                  16.verticalSpace,
+                  DescriptionWidget(description: current.description),
+                  16.verticalSpace,
+                  const AttachmentsWidget(),
+                  16.verticalSpace,
+                  DetailsFooter(creationDate: current.creationDate),
+                  32.verticalSpace,
+                ],
+              ),
             },
           );
         },

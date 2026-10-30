@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/utils/validators.dart';
+import '../../../../core/utils/show_toast.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
 import '../../cubits/add_memory_cubit.dart';
 import 'memory_attachments_widget.dart';
+import 'memory_creation_form.dart';
 
 class MemoryCreationBottomSheet extends StatefulWidget {
   const MemoryCreationBottomSheet({super.key});
@@ -25,7 +26,8 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
   late final TextEditingController _title;
   late final TextEditingController _description;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  MemoryCategory _selectedCategory = MemoryCategory.other;
+  MemoryCategory? _selectedCategory;
+  final ValueNotifier<bool?> _isCategorySelected = ValueNotifier(null);
 
   @override
   void initState() {
@@ -34,10 +36,27 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
     _description = TextEditingController();
   }
 
+  void _addCategory() {
+    final isFormValid = _formKey.currentState?.validate() ?? false;
+    final isCategoryValid = _selectedCategory != null;
+
+    if (!isCategoryValid) {
+      _isCategorySelected.value = false;
+    }
+    if (isFormValid && isCategoryValid) {
+      context.read<AddMemoryCubit>().addMemory(
+        title: _title.text,
+        description: _description.text,
+        category: _selectedCategory!,
+      );
+    }
+  }
+
   @override
   void dispose() {
     _title.dispose();
     _description.dispose();
+    _isCategorySelected.dispose();
     super.dispose();
   }
 
@@ -46,11 +65,10 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
     return BlocListener<AddMemoryCubit, AddMemoryState>(
       listener: (context, state) {
         if (state is AddMemorySuccess) {
+          // showToast(context, title: const Text('Added successfully!'), type: ToastificationType.success);
           context.pop();
         } else if (state is AddMemoryError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          showToast(title: Text(state.message), type: ToastificationType.error);
         }
       },
       child: Container(
@@ -66,73 +84,50 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
             spacing: 16.h,
             children: [
               _header(context),
-              _form(),
-              MemoryCategorySelectionWidget(
-                onSelected: (category) => _selectedCategory = category,
+              MemoryCreationForm(
+                formKey: _formKey,
+                title: _title,
+                description: _description,
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 4,
+                children: [
+                  MemoryCategorySelectionWidget(
+                    onSelected: (category) {
+                      _isCategorySelected.value = true;
+                      _selectedCategory = category;
+                    },
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: _isCategorySelected,
+                    builder: (context, value, child) {
+                      final showError = value == false;
+                      return showError
+                          ? Text(
+                              context.tr(AppStrings.addMemoryCategoryNotSet),
+                              style: context.textTheme.labelMedium?.copyWith(
+                                color: context.colorScheme.error,
+                              ),
+                            )
+                          : const SizedBox.shrink();
+                    },
+                  ),
+                ],
               ),
               const MemoryAttachmentsWidget(),
-              BlocSelector<AddMemoryCubit, AddMemoryState, bool>(
-                selector: (state) => state is AddMemoryLoading,
-                builder: (context, isLoading) {
-                  return CustomElevatedButton(
-                    text: AppStrings.addMemorySave,
-                    onPressed: isLoading
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<AddMemoryCubit>().addMemory(
-                                    title: _title.text,
-                                    description: _description.text,
-                                    category: _selectedCategory,
-                                  );
-                            }
-                          },
-                    icon: isLoading
-                        ? const SizedBox.square(
-                            dimension: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.lock),
-                    iconAlignment: IconAlignment.end,
-                    width: double.infinity,
-                  );
-                },
+              CustomElevatedButton(
+                text: AppStrings.addMemorySave,
+                onPressed: _addCategory,
+                icon: const Icon(Icons.lock),
+                iconAlignment: IconAlignment.end,
+                width: double.infinity,
               ),
               16.verticalSpace,
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _form() {
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        spacing: 8.h,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomTextFormField(
-            controller: _title,
-            hint: AppStrings.addMemoryNamePlaceholder,
-            label: AppStrings.addMemoryNameLabel,
-            validator: (value) {
-              final error = Validators.requiredField(value);
-              return error != null ? context.tr(error) : null;
-            },
-          ),
-          CustomTextFormField(
-            controller: _description,
-            hint: AppStrings.addMemoryDetailsPlaceholder,
-            label: AppStrings.addMemoryDetailsLabel,
-            validator: (value) {
-              final error = Validators.requiredField(value);
-              return error != null ? context.tr(error) : null;
-            },
-          ),
-        ],
       ),
     );
   }

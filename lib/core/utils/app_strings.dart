@@ -88,6 +88,7 @@ class AppStrings {
   static const String memoryOpenAttachment = 'memory.openAttachment';
   static const String memoryRecallByVoice = 'memory.recallByVoice';
   static const String memoryNoAttachments = 'memory.noAttachments';
+  static const String memoryDeleted = 'memory.memoryDeleted';
   static const String memoryLocalData = 'memory.localData';
 
   // Add Memory
@@ -100,6 +101,7 @@ class AppStrings {
   static const String addMemoryDetailsPlaceholder = 'addMemory.detailsPlaceholder';
   static const String addMemoryCategoryLabel = 'addMemory.categoryLabel';
   static const String addMemoryCategoryHint = 'addMemory.categoryHint';
+  static const String addMemoryCategoryNotSet = 'addMemory.categoryNotSet';
   static const String addMemoryAttachmentTitle = 'addMemory.attachmentTitle';
   static const String addMemoryAttachmentTypes = 'addMemory.attachmentTypes';
   static const String addMemorySave = 'addMemory.save';
