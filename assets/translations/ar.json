@@ -90,7 +90,8 @@
     "openAttachment": "فتح المرفق",
     "recallByVoice": "استدعِ هذه الذكرى بصوتك",
     "noAttachments": "لا توجد مرفقات",
-    "localData": "بياناتك محفوظة محلياً"
+    "localData": "بياناتك محفوظة محلياً",
+    "memoryDeleted": "تم حذف الذكرى بنجاح"
   },
   "addMemory": {
     "dialogLabel": "إضافة ذكرى",
@@ -102,6 +103,7 @@
     "detailsPlaceholder": "اكتب كل ما تريد تذكره...",
     "categoryLabel": "تصنيف الذكرى",
     "categoryHint": "اختر التصنيف الأنسب لتجدها بسهولة",
+    "categoryNotSet": "لم يتم اختيار تصنيف",
     "attachmentTitle": "إضافة مرفق",
     "attachmentTypes": "صورة، ملف أو تسجيل صوتي",
     "save": "حفظ الذكرى",

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// import '../widgets/recent_searchs.dart';
+import '../../cubits/search_cubit.dart';
 import '../widgets/search_header.dart';
 import '../widgets/search_results.dart';
-import '../widgets/tags_bar.dart';
+import '../widgets/categories_bar.dart';
 
 class SearchScreen extends StatefulWidget {
-  const new({super.key});
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -22,6 +23,11 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     _controller = TextEditingController();
     _focusNode = FocusNode()..requestFocus();
+
+    // Forward every text change into the cubit with debounce.
+    _controller.addListener(
+      () => context.read<SearchCubit>().onQueryChanged(_controller.text),
+    );
   }
 
   @override
@@ -44,10 +50,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 controller: _controller,
                 focusNode: _focusNode,
               ),
-              TagsBar(
-                onTagSelected: (value) {},
+              CategoriesBar(
+                onCategoryChanged: (category) => context.read<SearchCubit>().onCategoryChanged(category),
               ),
-              // RecentSearchs(onSearchSelected: (value) {}),
               const Expanded(child: SearchResults()),
             ],
           ),

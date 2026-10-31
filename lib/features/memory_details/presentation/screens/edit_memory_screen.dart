@@ -1,18 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
-
-import '../../../../core/utils/memory_category.dart';
+import '../../cubits/edit_memory_cubit.dart';
 
 class EditMemoryScreen extends StatefulWidget {
   final MemoryModel model;
@@ -52,14 +53,12 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
   void _onUpdate() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    final updatedModel = widget.model.copyWith(
+    context.read<EditMemoryCubit>().updateMemory(
+      id: widget.model.id,
       title: _title.text.trim(),
       description: _description.text.trim(),
       category: _selectedCategory,
-      lastUpdateDate: DateTime.now(),
     );
-
-    context.pop(updatedModel);
   }
 
   @override
@@ -72,38 +71,61 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(
-        title: Text(context.tr(AppStrings.editMemoryTitle)),
-        automaticallyImplyLeading: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: [
-          _form(context),
-          18.verticalSpace,
-          MemoryCategorySelectionWidget(
-            initialCategory: widget.model.category,
-            onSelected: (category) {
-              _selectedCategory = category;
-              _checkIfUpdated();
-            },
-            gridItemColor: context.colorScheme.surfaceContainerHigh,
-          ),
-          48.verticalSpace,
-          ValueListenableBuilder<bool>(
-            valueListenable: _isModelUpdated,
-            builder: (context, isUpdated, child) {
-              return CustomElevatedButton(
-                onPressed: isUpdated ? _onUpdate : null,
-                width: double.infinity,
-                text: AppStrings.editMemoryUpdate,
-                icon: const Icon(Icons.check),
-                backgroundColor: isUpdated ? null : WidgetStatePropertyAll(context.colorScheme.surfaceContainerHighest),
-              );
-            },
-          ),
-        ],
+    return BlocListener<EditMemoryCubit, EditMemoryState>(
+      listener: (context, state) {
+        if (state is EditMemorySuccess) {
+          context.pop();
+        } else if (state is EditMemoryError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: customAppBar(
+          title: Text(context.tr(AppStrings.editMemoryTitle)),
+          automaticallyImplyLeading: true,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(12),
+          children: [
+            _form(context),
+            18.verticalSpace,
+            MemoryCategorySelectionWidget(
+              initialCategory: widget.model.category,
+              onSelected: (category) {
+                _selectedCategory = category;
+                _checkIfUpdated();
+              },
+              gridItemColor: context.colorScheme.surfaceContainerHigh,
+            ),
+            48.verticalSpace,
+            ValueListenableBuilder<bool>(
+              valueListenable: _isModelUpdated,
+              builder: (context, isUpdated, child) {
+                return BlocSelector<EditMemoryCubit, EditMemoryState, bool>(
+                  selector: (state) => state is EditMemoryLoading,
+                  builder: (context, isLoading) {
+                    return CustomElevatedButton(
+                      onPressed: (isUpdated && !isLoading) ? _onUpdate : null,
+                      width: double.infinity,
+                      text: AppStrings.editMemoryUpdate,
+                      icon: isLoading
+                          ? const SizedBox.square(
+                              dimension: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.check),
+                      backgroundColor: (isUpdated && !isLoading)
+                          ? null
+                          : WidgetStatePropertyAll(context.colorScheme.surfaceContainerHighest),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

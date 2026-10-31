@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/extensions.dart';
 
 class DetailsFooter extends StatelessWidget {
   final DateTime creationDate;
 
   const new({super.key, required this.creationDate});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +32,10 @@ class DetailsFooter extends StatelessWidget {
                 style: context.textTheme.labelSmall?.copyWith(color: context.colorScheme.outline),
               ),
               subTitle: Text(
-                creationDate.toIso8601String(),
+                DateFormatter.timeWithDate(
+                  creationDate,
+                  locale: context.locale.languageCode,
+                ),
                 style: context.textTheme.labelMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

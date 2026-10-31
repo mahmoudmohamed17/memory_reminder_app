@@ -90,7 +90,8 @@
     "openAttachment": "Open attachment",
     "recallByVoice": "Recall this memory by voice",
     "noAttachments": "No attachments",
-    "localData": "Your data is stored locally"
+    "localData": "Your data is stored locally",
+    "memoryDeleted": "Memory deleted successfully"
   },
   "addMemory": {
     "dialogLabel": "Add memory",
@@ -102,6 +103,7 @@
     "detailsPlaceholder": "Write everything you want to remember...",
     "categoryLabel": "Memory category",
     "categoryHint": "Choose the best category to find it easily",
+    "categoryNotSet": "Category not set",
     "attachmentTitle": "Add attachment",
     "attachmentTypes": "Photo, file, or voice recording",
     "save": "Save memory",

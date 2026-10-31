@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theme/app_theme.dart';
 import '../utils/app_strings.dart';
+import '../utils/enums.dart';
 import '../utils/extensions.dart';
-import '../utils/memory_category.dart';
 
 class MemoryCategorySelectionWidget extends StatefulWidget {
   final MemoryCategory? initialCategory;
@@ -73,7 +73,7 @@ class _MemoryCategorySelectionWidgetState extends State<MemoryCategorySelectionW
           return GestureDetector(
             onTap: () {
               _selectedIndex.value = index;
-              widget.onSelected(MemoryCategory.values[index]);
+              widget.onSelected.call(MemoryCategory.values[index]);
             },
             child: _category(context, category: MemoryCategory.values[index], isActive: value == index),
           );
@@ -82,7 +82,11 @@ class _MemoryCategorySelectionWidgetState extends State<MemoryCategorySelectionW
     );
   }
 
-  Widget _category(BuildContext context, {required MemoryCategory category, bool isActive = false}) {
+  Widget _category(
+    BuildContext context, {
+    required MemoryCategory category,
+    bool isActive = false,
+  }) {
     return AnimatedContainer(
       duration: AppMotion.fast,
       curve: Curves.ease,

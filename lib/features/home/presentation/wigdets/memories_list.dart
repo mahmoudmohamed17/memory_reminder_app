@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization.dart' as context;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,21 +9,35 @@ import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/widgets/memory_item.dart';
+import '../../cubits/memories_list_cubit.dart';
 
 class MemoriesList extends StatelessWidget {
-  const new({super.key});
+  const MemoriesList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 12.h,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _header(context, mockMemories.length),
-
-        // TODO: Remove this mock data and handle this with a Cubit/Bloc later
-        mockMemories.isEmpty ? _empty(context) : _buildList(context, mockMemories),
-      ],
+    return BlocBuilder<MemoriesListCubit, MemoriesListState>(
+      builder: (context, state) {
+        return switch (state) {
+          MemoriesListLoading() => const Center(child: CircularProgressIndicator()),
+          MemoriesListLoaded(:final memories) => Column(
+            spacing: 12.h,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _header(context, memories.length),
+              memories.isEmpty ? _empty(context) : _buildList(context, memories),
+            ],
+          ),
+          MemoriesListError(:final message) => Column(
+            spacing: 12.h,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _header(context, 0),
+              _errorState(context, message),
+            ],
+          ),
+        };
+      },
     );
   }
 
@@ -34,9 +49,11 @@ class MemoriesList extends StatelessWidget {
           context.tr(AppStrings.homeMemoriesTitle),
           style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
         ),
-        if (count > 0)
+        if (count > 7)
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              // TODO: Show the all categories in a new screen
+            },
             child: Row(
               spacing: 4.w,
               mainAxisSize: MainAxisSize.min,
@@ -59,7 +76,7 @@ class MemoriesList extends StatelessWidget {
   Widget _buildList(BuildContext context, List<MemoryModel> memories) {
     return Column(
       spacing: 8.h,
-      children: memories.take(5).map<Widget>((item) => MemoryItem(item: item)).toList(),
+      children: memories.take(7).map((item) => MemoryItem(item: item)).toList(),
     );
   }
 
@@ -83,6 +100,25 @@ class MemoriesList extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _errorState(BuildContext context, String message) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: context.colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        message,
+        style: context.textTheme.labelMedium?.copyWith(
+          color: context.colorScheme.onErrorContainer,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
