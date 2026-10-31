@@ -106,6 +106,7 @@
     "categoryNotSet": "لم يتم اختيار تصنيف",
     "attachmentTitle": "إضافة مرفق",
     "attachmentTypes": "صورة، ملف أو تسجيل صوتي",
+    "attachmentCount": "تم اختيار {count} ملفات",
     "save": "حفظ الذكرى",
     "saved": "تم الحفظ بأمان"
   },

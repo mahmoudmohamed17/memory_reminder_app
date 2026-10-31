@@ -12,6 +12,16 @@ final class AddMemoryLoading extends AddMemoryState {
   const AddMemoryLoading();
 }
 
+final class AddMemoryAttachmentsEmpty extends AddMemoryState {
+  const AddMemoryAttachmentsEmpty();
+}
+
+final class AddMemoryAttachmentsUpdated extends AddMemoryState {
+  final List<MemoryAttachmentInput> attachments;
+
+  const AddMemoryAttachmentsUpdated(this.attachments);
+}
+
 final class AddMemorySuccess extends AddMemoryState {
   /// The database-generated row id of the newly created memory.
   final int newMemoryId;

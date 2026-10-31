@@ -39,6 +39,35 @@ class MemoryRepositoryImpl implements MemoryRepository {
   );
 
   @override
+  Future<Result<List<int>>> addAttachments({
+    required int memoryId,
+    required List<MemoryAttachmentInput> attachments,
+  }) => _attempt(() async {
+    if (attachments.isEmpty) return <int>[];
+
+    final savedPaths = <String>[];
+    try {
+      final entries = <AttachmentsCompanion>[];
+      for (final attachment in attachments) {
+        final relativePath = await _fileService.save(attachment.file);
+        savedPaths.add(relativePath);
+        entries.add(
+          AttachmentsCompanion.insert(
+            memoryId: memoryId,
+            type: attachment.type,
+            relativePath: relativePath,
+            sizeBytes: Value(attachment.sizeBytes),
+          ),
+        );
+      }
+      return await _dao.insertManyAttachments(entries);
+    } catch (_) {
+      await _fileService.deleteAll(savedPaths);
+      rethrow;
+    }
+  }, (error) => AppError.memoryAttachmentFailed(cause: error));
+
+  @override
   Future<Result<int>> addMemory({
     required String title,
     String description = '',

@@ -106,6 +106,7 @@
     "categoryNotSet": "Category not set",
     "attachmentTitle": "Add attachment",
     "attachmentTypes": "Photo, file, or voice recording",
+    "attachmentCount": "{count} files selected",
     "save": "Save memory",
     "saved": "Saved securely"
   },

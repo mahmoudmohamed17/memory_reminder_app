@@ -104,6 +104,7 @@
   static const String addMemoryCategoryNotSet = 'addMemory.categoryNotSet';
   static const String addMemoryAttachmentTitle = 'addMemory.attachmentTitle';
   static const String addMemoryAttachmentTypes = 'addMemory.attachmentTypes';
+  static const String addMemoryAttachmentCount = 'addMemory.attachmentCount';
   static const String addMemorySave = 'addMemory.save';
   static const String addMemorySaved = 'addMemory.saved';
 

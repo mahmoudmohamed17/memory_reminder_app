@@ -95,6 +95,23 @@ class MemoriesDao extends DatabaseAccessor<AppDatabase> with _$MemoriesDaoMixin 
     });
   }
 
+  Future<List<int>> insertManyAttachments(List<AttachmentsCompanion> entries) {
+    return transaction(() async {
+      if (entries.isEmpty) return <int>[];
+
+      final memoryIds = <int>{};
+      final ids = <int>[];
+      for (final entry in entries) {
+        ids.add(await into(attachments).insert(entry));
+        memoryIds.add(entry.memoryId.value);
+      }
+      for (final memoryId in memoryIds) {
+        await _touch(memoryId);
+      }
+      return ids;
+    });
+  }
+
   /// Returns the removed file's relative path (or null if not found).
   Future<String?> deleteAttachment(int id) {
     return transaction(() async {
