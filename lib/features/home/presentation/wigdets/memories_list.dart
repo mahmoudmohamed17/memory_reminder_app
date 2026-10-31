@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -19,7 +20,21 @@ class MemoriesList extends StatelessWidget {
     return BlocBuilder<MemoriesListCubit, MemoriesListState>(
       builder: (context, state) {
         return switch (state) {
-          MemoriesListLoading() => const Center(child: CircularProgressIndicator()),
+          MemoriesListLoading() => Skeletonizer(
+            effect: ShimmerEffect(
+              baseColor: context.colorScheme.outlineVariant,
+              highlightColor: context.colorScheme.outline.withValues(alpha: 0.50),
+            ),
+            enableSwitchAnimation: true,
+            child: Column(
+              spacing: 12.h,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _header(context, 0),
+                _buildList(context, mockMemories.take(5).toList()),
+              ],
+            ),
+          ),
           MemoriesListLoaded(:final memories) => Column(
             spacing: 12.h,
             mainAxisSize: MainAxisSize.min,
@@ -49,7 +64,7 @@ class MemoriesList extends StatelessWidget {
           context.tr(AppStrings.homeMemoriesTitle),
           style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
         ),
-        if (count > 7)
+        if (count > 5)
           GestureDetector(
             onTap: () {
               // TODO: Show the all categories in a new screen

@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/models/memory_model.dart';
 import '../cubits/memory_details_cubit.dart';
@@ -34,8 +36,6 @@ class MemoryDetailsScreen extends StatelessWidget {
       },
       child: BlocBuilder<MemoryDetailsCubit, MemoryDetailsState>(
         builder: (context, state) {
-          // Use the live model if available, otherwise fall back to the initial
-          // model passed via navigation (avoids a blank frame on first load).
           final current = state is MemoryDetailsLoaded ? state.memory : model;
 
           return Scaffold(
@@ -65,25 +65,40 @@ class MemoryDetailsScreen extends StatelessWidget {
               ],
             ),
             body: switch (state) {
-              MemoryDetailsLoading() => const Center(child: CircularProgressIndicator()),
+              MemoryDetailsLoading() => _loading(context, current),
               MemoryDetailsDeleted() => const SizedBox.shrink(),
-              _ => ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                children: [
-                  DetailsHeader(model: current),
-                  16.verticalSpace,
-                  DescriptionWidget(description: current.description),
-                  16.verticalSpace,
-                  const AttachmentsWidget(),
-                  16.verticalSpace,
-                  DetailsFooter(creationDate: current.creationDate),
-                  32.verticalSpace,
-                ],
-              ),
+              _ => _loaded(current),
             },
           );
         },
       ),
+    );
+  }
+
+  Widget _loading(BuildContext context, MemoryModel current) {
+    return Skeletonizer(
+      effect: ShimmerEffect(
+        baseColor: context.colorScheme.outlineVariant,
+        highlightColor: context.colorScheme.outline.withValues(alpha: 0.50),
+      ),
+      enableSwitchAnimation: true,
+      child: _loaded(current),
+    );
+  }
+
+  Widget _loaded(MemoryModel current) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      children: [
+        DetailsHeader(model: current),
+        16.verticalSpace,
+        DescriptionWidget(description: current.description),
+        16.verticalSpace,
+        const AttachmentsWidget(),
+        16.verticalSpace,
+        DetailsFooter(creationDate: current.creationDate),
+        32.verticalSpace,
+      ],
     );
   }
 }

@@ -114,7 +114,8 @@
     "update": "Update",
     "cancel": "Cancel",
     "statusTitle": "Memory data",
-    "statusDescription": "Your changes will be saved locally and encrypted"
+    "statusDescription": "Your changes will be saved locally and encrypted",
+    "updatedSuccessfully": "Memory updated successfully!" 
   },
   "theme": {
     "light": "Light mode",
