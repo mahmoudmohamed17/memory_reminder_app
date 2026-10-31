@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/enums.dart';
@@ -13,7 +14,7 @@ import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
-import '../../cubits/edit_memory_cubit.dart';
+import '../cubits/edit_memory_cubit.dart';
 
 class EditMemoryScreen extends StatefulWidget {
   final MemoryModel model;
@@ -75,10 +76,9 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
       listener: (context, state) {
         if (state is EditMemorySuccess) {
           context.pop();
+          context.read<AppToastCubit>().success(context.tr(AppStrings.editMemoryUpdatedSuccessfully));
         } else if (state is EditMemoryError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          context.read<AppToastCubit>().error(context.tr(AppStrings.errorMemoryUpdateFailed));
         }
       },
       child: Scaffold(

@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/models/memory_model.dart';
-import '../../../core/repositories/memory_repository.dart';
+import '../../../../config/error_handler/error_handler.dart';
+import '../../../../core/models/memory_model.dart';
+import '../../../../core/repositories/memory_repository.dart';
 
 part 'memory_details_state.dart';
 
 @injectable
 class MemoryDetailsCubit extends Cubit<MemoryDetailsState> {
   final MemoryRepository _repo;
-  StreamSubscription<MemoryModel?>? _sub;
+  StreamSubscription<Result<MemoryModel?>>? _sub;
 
   MemoryDetailsCubit(this._repo) : super(const MemoryDetailsLoading());
 
@@ -22,35 +23,38 @@ class MemoryDetailsCubit extends Cubit<MemoryDetailsState> {
     emit(const MemoryDetailsLoading());
 
     _sub = _repo.watchMemory(id).listen(
-      (model) {
+      (result) {
         if (isClosed) return;
-        if (model == null) {
-          emit(const MemoryDetailsDeleted());
-        } else {
-          emit(MemoryDetailsLoaded(memory: model));
-        }
+        result.fold(
+          (error) => emit(MemoryDetailsError(error.messageKey)),
+          (model) {
+            if (model == null) {
+              emit(const MemoryDetailsDeleted());
+            } else {
+              emit(MemoryDetailsLoaded(memory: model));
+            }
+          },
+        );
       },
-      onError: (Object e) => emit(MemoryDetailsError(e.toString())),
     );
   }
 
   /// Permanently deletes the memory and all its attachments.
   Future<void> deleteMemory(int id) async {
-    try {
-      await _repo.deleteMemory(id);
-      emit(const MemoryDetailsDeleted());
-    } catch (e) {
-      emit(MemoryDetailsError(e.toString()));
-    }
+    final result = await _repo.deleteMemory(id);
+    result.fold(
+      (error) => emit(MemoryDetailsError(error.messageKey)),
+      (_) => emit(const MemoryDetailsDeleted()),
+    );
   }
 
   /// Removes a single attachment from the memory.
   Future<void> removeAttachment(int attachmentId) async {
-    try {
-      await _repo.removeAttachment(attachmentId);
-    } catch (e) {
-      emit(MemoryDetailsError(e.toString()));
-    }
+    final result = await _repo.removeAttachment(attachmentId);
+    result.fold(
+      (error) => emit(MemoryDetailsError(error.messageKey)),
+      (_) {},
+    );
   }
 
   @override

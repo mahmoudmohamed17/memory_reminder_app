@@ -121,7 +121,7 @@ class SearchResults extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Text(
-        message,
+        context.tr(message),
         style: context.textTheme.labelMedium?.copyWith(
           color: context.colorScheme.onErrorContainer,
         ),

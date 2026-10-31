@@ -1,35 +1,38 @@
+import 'package:dartz/dartz.dart';
+
+import '../../config/error_handler/error_handler.dart';
 import '../models/memory_model.dart';
 import '../utils/enums.dart';
 
 abstract class MemoryRepository {
-  Stream<List<MemoryModel>> watchMemories({
+  Stream<Result<List<MemoryModel>>> watchMemories({
     MemoryCategory? category,
     String query = '',
   });
 
-  Stream<MemoryModel?> watchMemory(int id);
+  Stream<Result<MemoryModel?>> watchMemory(int id);
 
-  Future<int> addMemory({
+  Future<Result<int>> addMemory({
     required String title,
     String description = '',
     required MemoryCategory category,
   });
 
-  Future<void> updateMemory({
+  Future<Result<Unit>> updateMemory({
     required int id,
     required String title,
     required String description,
     required MemoryCategory category,
   });
 
-  Future<void> deleteMemory(int id);
+  Future<Result<Unit>> deleteMemory(int id);
 
-  Future<int> addAttachment({
+  Future<Result<int>> addAttachment({
     required int memoryId,
     required AttachmentType type,
     required String relativePath,
     int sizeBytes = 0,
   });
 
-  Future<void> removeAttachment(int attachmentId);
+  Future<Result<Unit>> removeAttachment(int attachmentId);
 }

@@ -1,4 +1,4 @@
-class AppStrings {
+﻿class AppStrings {
   AppStrings._();
 
   // Common
@@ -113,8 +113,45 @@ class AppStrings {
   static const String editMemoryCancel = 'editMemory.cancel';
   static const String editMemoryStatusTitle = 'editMemory.statusTitle';
   static const String editMemoryStatusDescription = 'editMemory.statusDescription';
+  static const String editMemoryUpdatedSuccessfully = 'editMemory.updatedSuccessfully';
 
   // Theme
   static const String themeLight = 'theme.light';
   static const String themeDark = 'theme.dark';
+
+  // Errors - generic
+  static const String errorUnknown = 'errors.unknown';
+
+  // Errors - storage / database
+  static const String errorStorageReadFailed = 'errors.storage.readFailed';
+  static const String errorStorageWriteFailed = 'errors.storage.writeFailed';
+  static const String errorStorageDeleteFailed = 'errors.storage.deleteFailed';
+  static const String errorDatabaseCorrupted = 'errors.storage.databaseCorrupted';
+  static const String errorInsufficientStorage = 'errors.storage.insufficientStorage';
+
+  // Errors - file system
+  static const String errorFileNotFound = 'errors.file.notFound';
+  static const String errorFileAccessDenied = 'errors.file.accessDenied';
+  static const String errorFileTooLarge = 'errors.file.tooLarge';
+  static const String errorUnsupportedFileType = 'errors.file.unsupportedType';
+  static const String errorFileCopyFailed = 'errors.file.copyFailed';
+
+  // Errors - voice
+  static const String errorVoicePermissionDenied = 'errors.voice.permissionDenied';
+  static const String errorVoiceNotAvailable = 'errors.voice.notAvailable';
+  static const String errorVoiceTimeout = 'errors.voice.timeout';
+  static const String errorVoiceRecognitionFailed = 'errors.voice.recognitionFailed';
+
+  // Errors - validation
+  static const String errorTitleRequired = 'errors.validation.titleRequired';
+  static const String errorTitleTooLong = 'errors.validation.titleTooLong';
+  static const String errorCategoryRequired = 'errors.validation.categoryRequired';
+  static const String errorDetailsTooLong = 'errors.validation.detailsTooLong';
+
+  // Errors - memory CRUD
+  static const String errorMemoryNotFound = 'errors.memory.notFound';
+  static const String errorMemorySaveFailed = 'errors.memory.saveFailed';
+  static const String errorMemoryUpdateFailed = 'errors.memory.updateFailed';
+  static const String errorMemoryDeleteFailed = 'errors.memory.deleteFailed';
+  static const String errorMemoryAttachmentFailed = 'errors.memory.attachmentFailed';
 }

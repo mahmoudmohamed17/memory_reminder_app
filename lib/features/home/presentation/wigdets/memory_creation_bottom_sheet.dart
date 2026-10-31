@@ -67,7 +67,7 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
           context.pop();
           context.read<AppToastCubit>().success(context.tr(AppStrings.addMemorySaved));
         } else if (state is AddMemoryError) {
-          context.read<AppToastCubit>().error(state.message);
+          context.read<AppToastCubit>().error(context.tr(state.message));
         }
       },
       child: Container(

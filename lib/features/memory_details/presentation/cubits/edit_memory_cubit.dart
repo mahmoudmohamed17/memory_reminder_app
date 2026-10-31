@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/repositories/memory_repository.dart';
-import '../../../core/utils/enums.dart';
+import '../../../../core/repositories/memory_repository.dart';
+import '../../../../core/utils/enums.dart';
 
 part 'edit_memory_state.dart';
 
@@ -20,17 +20,16 @@ class EditMemoryCubit extends Cubit<EditMemoryState> {
     required MemoryCategory category,
   }) async {
     emit(const EditMemoryLoading());
-    try {
-      await _repo.updateMemory(
-        id: id,
-        title: title,
-        description: description,
-        category: category,
-      );
-      emit(const EditMemorySuccess());
-    } catch (e) {
-      emit(EditMemoryError(e.toString()));
-    }
+    final result = await _repo.updateMemory(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+    );
+    result.fold(
+      (error) => emit(EditMemoryError(error.messageKey)),
+      (_) => emit(const EditMemorySuccess()),
+    );
   }
 
   /// Resets to initial so the screen can handle re-editing without restart.

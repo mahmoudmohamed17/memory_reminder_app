@@ -16,8 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/home/cubits/add_memory_cubit.dart' as _i762;
 import '../../features/home/cubits/memories_list_cubit.dart' as _i531;
-import '../../features/memory_details/cubits/edit_memory_cubit.dart' as _i843;
-import '../../features/memory_details/cubits/memory_details_cubit.dart'
+import '../../features/memory_details/presentation/cubits/edit_memory_cubit.dart' as _i843;
+import '../../features/memory_details/presentation/cubits/memory_details_cubit.dart'
     as _i463;
 import '../../features/search/cubits/search_cubit.dart' as _i51;
 import '../cubits/app_flow_cubit.dart' as _i49;

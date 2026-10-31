@@ -10,7 +10,7 @@ import '../../../../core/routing/app_routes.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/models/memory_model.dart';
-import '../../cubits/memory_details_cubit.dart';
+import '../cubits/memory_details_cubit.dart';
 import '../wigdets/attachments_widget.dart';
 import '../wigdets/description_widget.dart';
 import '../wigdets/details_footer.dart';
@@ -29,7 +29,7 @@ class MemoryDetailsScreen extends StatelessWidget {
           context.pop();
           context.read<AppToastCubit>().info(context.tr(AppStrings.memoryDeleted));
         } else if (state is MemoryDetailsError) {
-          context.read<AppToastCubit>().info(state.message);
+          context.read<AppToastCubit>().error(context.tr(state.message));
         }
       },
       child: BlocBuilder<MemoryDetailsCubit, MemoryDetailsState>(

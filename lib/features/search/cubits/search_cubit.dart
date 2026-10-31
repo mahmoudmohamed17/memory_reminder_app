@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../config/error_handler/error_handler.dart';
 import '../../../core/models/memory_model.dart';
 import '../../../core/repositories/memory_repository.dart';
 import '../../../core/utils/enums.dart';
@@ -13,7 +14,7 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   final MemoryRepository _repo;
 
-  StreamSubscription<List<MemoryModel>>? _sub;
+  StreamSubscription<Result<List<MemoryModel>>>? _sub;
   Timer? _debounce;
 
   String _query = '';
@@ -65,21 +66,25 @@ class SearchCubit extends Cubit<SearchState> {
     emit(const SearchLoading());
 
     _sub = _repo.watchMemories(query: _query, category: _category).listen(
-      (list) {
+      (result) {
         if (isClosed) return;
-        if (list.isEmpty) {
-          emit(SearchEmpty(query: _query, activeCategory: _category));
-        } else {
-          emit(
-            SearchLoaded(
-              results: list,
-              query: _query,
-              activeCategory: _category,
-            ),
-          );
-        }
+        result.fold(
+          (error) => emit(SearchError(error.messageKey)),
+          (list) {
+            if (list.isEmpty) {
+              emit(SearchEmpty(query: _query, activeCategory: _category));
+            } else {
+              emit(
+                SearchLoaded(
+                  results: list,
+                  query: _query,
+                  activeCategory: _category,
+                ),
+              );
+            }
+          },
+        );
       },
-      onError: (Object e) => emit(SearchError(e.toString())),
     );
   }
 

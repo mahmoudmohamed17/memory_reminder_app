@@ -19,16 +19,15 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
     required MemoryCategory category,
   }) async {
     emit(const AddMemoryLoading());
-    try {
-      final id = await _repo.addMemory(
-        title: title,
-        description: description,
-        category: category,
-      );
-      emit(AddMemorySuccess(newMemoryId: id));
-    } catch (e) {
-      emit(AddMemoryError(e.toString()));
-    }
+    final result = await _repo.addMemory(
+      title: title,
+      description: description,
+      category: category,
+    );
+    result.fold(
+      (error) => emit(AddMemoryError(error.messageKey)),
+      (id) => emit(AddMemorySuccess(newMemoryId: id)),
+    );
   }
 
   /// Attaches a file to an already-created memory.
@@ -38,16 +37,16 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
     required String relativePath,
     int sizeBytes = 0,
   }) async {
-    try {
-      await _repo.addAttachment(
-        memoryId: memoryId,
-        type: type,
-        relativePath: relativePath,
-        sizeBytes: sizeBytes,
-      );
-    } catch (e) {
-      emit(AddMemoryError(e.toString()));
-    }
+    final result = await _repo.addAttachment(
+      memoryId: memoryId,
+      type: type,
+      relativePath: relativePath,
+      sizeBytes: sizeBytes,
+    );
+    result.fold(
+      (error) => emit(AddMemoryError(error.messageKey)),
+      (_) {},
+    );
   }
 
   /// Resets to [AddMemoryInitial] so the form can be reused in the same session.

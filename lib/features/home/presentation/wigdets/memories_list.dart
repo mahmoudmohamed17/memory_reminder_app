@@ -114,7 +114,7 @@ class MemoriesList extends StatelessWidget {
         border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
       ),
       child: Text(
-        message,
+        context.tr(message),
         style: context.textTheme.labelMedium?.copyWith(
           color: context.colorScheme.onErrorContainer,
         ),

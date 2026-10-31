@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../config/error_handler/error_handler.dart';
 import '../../../core/models/memory_model.dart';
 import '../../../core/repositories/memory_repository.dart';
 import '../../../core/utils/enums.dart';
@@ -12,7 +13,7 @@ part 'memories_list_state.dart';
 @injectable
 class MemoriesListCubit extends Cubit<MemoriesListState> {
   final MemoryRepository _repo;
-  StreamSubscription<List<MemoryModel>>? _sub;
+  StreamSubscription<Result<List<MemoryModel>>>? _sub;
 
   MemoriesListCubit(this._repo) : super(const MemoriesListLoading());
 
@@ -22,12 +23,12 @@ class MemoriesListCubit extends Cubit<MemoriesListState> {
     _sub?.cancel();
     emit(const MemoriesListLoading());
 
-    _sub = _repo
-        .watchMemories(category: category)
-        .listen(
-          (list) => emit(MemoriesListLoaded(memories: list, activeCategory: category)),
-          onError: (Object e) => emit(MemoriesListError(e.toString())),
-        );
+    _sub = _repo.watchMemories(category: category).listen((result) {
+      result.fold(
+        (error) => emit(MemoriesListError(error.messageKey)),
+        (list) => emit(MemoriesListLoaded(memories: list, activeCategory: category)),
+      );
+    });
   }
 
   @override

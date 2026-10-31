@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/home/cubits/memories_list_cubit.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/memory_details/cubits/edit_memory_cubit.dart';
-import '../../features/memory_details/cubits/memory_details_cubit.dart';
+import '../../features/memory_details/presentation/cubits/edit_memory_cubit.dart';
+import '../../features/memory_details/presentation/cubits/memory_details_cubit.dart';
 import '../../features/memory_details/presentation/screens/edit_memory_screen.dart';
 import '../../features/memory_details/presentation/screens/memory_details_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';

@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "appName": "Personal Memory",
     "tagline": "Your secure second memory",
@@ -119,5 +119,41 @@
   "theme": {
     "light": "Light mode",
     "dark": "Dark mode"
+  },
+  "errors": {
+    "unknown": "Something went wrong. Please try again.",
+    "storage": {
+      "readFailed": "Could not read your data. Please restart the app.",
+      "writeFailed": "Could not save your data. Please try again.",
+      "deleteFailed": "Could not delete this item. Please try again.",
+      "databaseCorrupted": "The local database appears to be corrupted. Please contact support.",
+      "insufficientStorage": "Not enough storage space on your device. Please free up some space and try again."
+    },
+    "file": {
+      "notFound": "The file could not be found.",
+      "accessDenied": "Permission denied. Please allow storage access in your device settings.",
+      "tooLarge": "This file is too large to attach.",
+      "unsupportedType": "This file type is not supported.",
+      "copyFailed": "Could not copy the file. Please try again."
+    },
+    "voice": {
+      "permissionDenied": "Microphone access is required. Please allow it in your device settings.",
+      "notAvailable": "Voice recognition is not available on this device.",
+      "timeout": "No speech detected. Please try again.",
+      "recognitionFailed": "Could not recognise your voice. Please try again."
+    },
+    "validation": {
+      "titleRequired": "Please enter a name for this memory.",
+      "titleTooLong": "The name is too long. Please shorten it.",
+      "categoryRequired": "Please select a category.",
+      "detailsTooLong": "The details are too long. Please shorten them."
+    },
+    "memory": {
+      "notFound": "This memory no longer exists.",
+      "saveFailed": "Could not save the memory. Please try again.",
+      "updateFailed": "Could not update the memory. Please try again.",
+      "deleteFailed": "Could not delete the memory. Please try again.",
+      "attachmentFailed": "Could not attach the file. Please try again."
+    }
   }
 }
