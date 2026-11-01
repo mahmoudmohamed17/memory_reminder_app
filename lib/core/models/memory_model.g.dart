@@ -11,24 +11,29 @@ MemoryModel _$MemoryModelFromJson(Map<String, dynamic> json) => MemoryModel(
   title: json['title'] as String,
   description: json['description'] as String,
   creationDate: DateTime.parse(json['creationDate'] as String),
-  category: $enumDecodeNullable(_$MemoryCategoryEnumMap, json['category']) ?? MemoryCategory.other,
+  category:
+      $enumDecodeNullable(_$MemoryCategoryEnumMap, json['category']) ??
+      MemoryCategory.other,
   attachments:
       (json['attachments'] as List<dynamic>?)
           ?.map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  lastUpdateDate: json['lastUpdateDate'] == null ? null : DateTime.parse(json['lastUpdateDate'] as String),
+  lastUpdateDate: json['lastUpdateDate'] == null
+      ? null
+      : DateTime.parse(json['lastUpdateDate'] as String),
 );
 
-Map<String, dynamic> _$MemoryModelToJson(MemoryModel instance) => <String, dynamic>{
-  'id': instance.id,
-  'title': instance.title,
-  'description': instance.description,
-  'category': _$MemoryCategoryEnumMap[instance.category]!,
-  'attachments': instance.attachments,
-  'creationDate': instance.creationDate.toIso8601String(),
-  'lastUpdateDate': instance.lastUpdateDate?.toIso8601String(),
-};
+Map<String, dynamic> _$MemoryModelToJson(MemoryModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'category': _$MemoryCategoryEnumMap[instance.category]!,
+      'attachments': instance.attachments,
+      'creationDate': instance.creationDate.toIso8601String(),
+      'lastUpdateDate': instance.lastUpdateDate?.toIso8601String(),
+    };
 
 const _$MemoryCategoryEnumMap = {
   MemoryCategory.medical: 'medical',

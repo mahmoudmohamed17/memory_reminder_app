@@ -73,6 +73,30 @@ class MemoriesDao extends DatabaseAccessor<AppDatabase> with _$MemoriesDaoMixin 
   Future<void> updateMemory(int id, MemoriesCompanion change) =>
       (update(memories)..where((m) => m.id.equals(id))).write(change);
 
+  /// Applies a memory edit and its attachment changes in one database transaction.
+  /// Returns paths for removed attachments so the repository can delete the files
+  /// after the transaction commits.
+  Future<List<String>> updateMemoryWithAttachments({
+    required int memoryId,
+    required MemoriesCompanion memory,
+    required List<AttachmentsCompanion> additions,
+    required List<int> removals,
+  }) => transaction(() async {
+    final removedPaths = <String>[];
+    for (final attachmentId in removals) {
+      final row = await (select(attachments)..where((a) => a.id.equals(attachmentId))).getSingleOrNull();
+      if (row == null || row.memoryId != memoryId) continue;
+      removedPaths.add(row.relativePath);
+      await (delete(attachments)..where((a) => a.id.equals(attachmentId))).go();
+    }
+
+    await updateMemory(memoryId, memory);
+    for (final entry in additions) {
+      await into(attachments).insert(entry);
+    }
+    return removedPaths;
+  });
+
   Future<List<String>> deleteMemorry(int id) {
     return transaction(() async {
       final paths =

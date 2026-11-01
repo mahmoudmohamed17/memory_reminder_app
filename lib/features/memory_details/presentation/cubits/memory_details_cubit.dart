@@ -48,15 +48,6 @@ class MemoryDetailsCubit extends Cubit<MemoryDetailsState> {
     );
   }
 
-  /// Removes a single attachment from the memory.
-  Future<void> removeAttachment(int attachmentId) async {
-    final result = await _repo.removeAttachment(attachmentId);
-    result.fold(
-      (error) => emit(MemoryDetailsError(error.messageKey)),
-      (_) {},
-    );
-  }
-
   @override
   Future<void> close() {
     _sub?.cancel();

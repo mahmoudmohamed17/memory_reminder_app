@@ -12,11 +12,18 @@ final class EditMemoryLoading extends EditMemoryState {
   const EditMemoryLoading();
 }
 
-/// Emitted when [MemoryRepository.updateMemory] completes successfully.
-/// The UI should respond by popping the edit screen so [MemoryDetailsCubit]'s
-/// stream automatically delivers the refreshed model.
 final class EditMemorySuccess extends EditMemoryState {
   const EditMemorySuccess();
+}
+
+final class EditAttachmentsUpdated extends EditMemoryState {
+  final List<AttachmentModel> keptAttachments;
+  final List<MemoryAttachmentInput> selectedAttachments;
+
+  const EditAttachmentsUpdated({
+    required this.keptAttachments,
+    required this.selectedAttachments,
+  });
 }
 
 final class EditMemoryError extends EditMemoryState {

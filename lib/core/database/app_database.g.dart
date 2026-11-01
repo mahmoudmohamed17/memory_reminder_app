@@ -47,13 +47,14 @@ class $MemoriesTable extends Memories with TableInfo<$MemoriesTable, Memory> {
     defaultValue: const Constant(''),
   );
   @override
-  late final GeneratedColumnWithTypeConverter<MemoryCategory, String> category = GeneratedColumn<String>(
-    'category',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  ).withConverter<MemoryCategory>($MemoriesTable.$convertercategory);
+  late final GeneratedColumnWithTypeConverter<MemoryCategory, String> category =
+      GeneratedColumn<String>(
+        'category',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<MemoryCategory>($MemoriesTable.$convertercategory);
   static const VerificationMeta _normalizedTextMeta = const VerificationMeta(
     'normalizedText',
   );
@@ -306,9 +307,13 @@ class Memory extends DataClass implements Insertable<Memory> {
     return Memory(
       id: data.id.present ? data.id.value : this.id,
       title: data.title.present ? data.title.value : this.title,
-      description: data.description.present ? data.description.value : this.description,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
       category: data.category.present ? data.category.value : this.category,
-      normalizedText: data.normalizedText.present ? data.normalizedText.value : this.normalizedText,
+      normalizedText: data.normalizedText.present
+          ? data.normalizedText.value
+          : this.normalizedText,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -462,7 +467,8 @@ class MemoriesCompanion extends UpdateCompanion<Memory> {
   }
 }
 
-class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, Attachment> {
+class $AttachmentsTable extends Attachments
+    with TableInfo<$AttachmentsTable, Attachment> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -495,13 +501,25 @@ class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, At
     ),
   );
   @override
-  late final GeneratedColumnWithTypeConverter<AttachmentType, String> type = GeneratedColumn<String>(
-    'type',
+  late final GeneratedColumnWithTypeConverter<AttachmentType, String> type =
+      GeneratedColumn<String>(
+        'type',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<AttachmentType>($AttachmentsTable.$convertertype);
+  static const VerificationMeta _fileNameMeta = const VerificationMeta(
+    'fileName',
+  );
+  @override
+  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
+    'file_name',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<AttachmentType>($AttachmentsTable.$convertertype);
+  );
   static const VerificationMeta _sizeBytesMeta = const VerificationMeta(
     'sizeBytes',
   );
@@ -542,6 +560,7 @@ class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, At
     id,
     memoryId,
     type,
+    fileName,
     sizeBytes,
     relativePath,
     createdAt,
@@ -568,6 +587,14 @@ class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, At
       );
     } else if (isInserting) {
       context.missing(_memoryIdMeta);
+    }
+    if (data.containsKey('file_name')) {
+      context.handle(
+        _fileNameMeta,
+        fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileNameMeta);
     }
     if (data.containsKey('size_bytes')) {
       context.handle(
@@ -615,6 +642,10 @@ class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, At
           data['${effectivePrefix}type'],
         )!,
       ),
+      fileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_name'],
+      )!,
       sizeBytes: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}size_bytes'],
@@ -635,15 +666,15 @@ class $AttachmentsTable extends Attachments with TableInfo<$AttachmentsTable, At
     return $AttachmentsTable(attachedDatabase, alias);
   }
 
-  static JsonTypeConverter2<AttachmentType, String, String> $convertertype = const EnumNameConverter<AttachmentType>(
-    AttachmentType.values,
-  );
+  static JsonTypeConverter2<AttachmentType, String, String> $convertertype =
+      const EnumNameConverter<AttachmentType>(AttachmentType.values);
 }
 
 class Attachment extends DataClass implements Insertable<Attachment> {
   final int id;
   final int memoryId;
   final AttachmentType type;
+  final String fileName;
   final int sizeBytes;
   final String relativePath;
   final DateTime createdAt;
@@ -651,6 +682,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     required this.id,
     required this.memoryId,
     required this.type,
+    required this.fileName,
     required this.sizeBytes,
     required this.relativePath,
     required this.createdAt,
@@ -665,6 +697,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
         $AttachmentsTable.$convertertype.toSql(type),
       );
     }
+    map['file_name'] = Variable<String>(fileName);
     map['size_bytes'] = Variable<int>(sizeBytes);
     map['relative_path'] = Variable<String>(relativePath);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -676,6 +709,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       id: Value(id),
       memoryId: Value(memoryId),
       type: Value(type),
+      fileName: Value(fileName),
       sizeBytes: Value(sizeBytes),
       relativePath: Value(relativePath),
       createdAt: Value(createdAt),
@@ -693,6 +727,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       type: $AttachmentsTable.$convertertype.fromJson(
         serializer.fromJson<String>(json['type']),
       ),
+      fileName: serializer.fromJson<String>(json['fileName']),
       sizeBytes: serializer.fromJson<int>(json['sizeBytes']),
       relativePath: serializer.fromJson<String>(json['relativePath']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -707,6 +742,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       'type': serializer.toJson<String>(
         $AttachmentsTable.$convertertype.toJson(type),
       ),
+      'fileName': serializer.toJson<String>(fileName),
       'sizeBytes': serializer.toJson<int>(sizeBytes),
       'relativePath': serializer.toJson<String>(relativePath),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -717,6 +753,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     int? id,
     int? memoryId,
     AttachmentType? type,
+    String? fileName,
     int? sizeBytes,
     String? relativePath,
     DateTime? createdAt,
@@ -724,6 +761,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     id: id ?? this.id,
     memoryId: memoryId ?? this.memoryId,
     type: type ?? this.type,
+    fileName: fileName ?? this.fileName,
     sizeBytes: sizeBytes ?? this.sizeBytes,
     relativePath: relativePath ?? this.relativePath,
     createdAt: createdAt ?? this.createdAt,
@@ -733,8 +771,11 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       id: data.id.present ? data.id.value : this.id,
       memoryId: data.memoryId.present ? data.memoryId.value : this.memoryId,
       type: data.type.present ? data.type.value : this.type,
+      fileName: data.fileName.present ? data.fileName.value : this.fileName,
       sizeBytes: data.sizeBytes.present ? data.sizeBytes.value : this.sizeBytes,
-      relativePath: data.relativePath.present ? data.relativePath.value : this.relativePath,
+      relativePath: data.relativePath.present
+          ? data.relativePath.value
+          : this.relativePath,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -745,6 +786,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
           ..write('id: $id, ')
           ..write('memoryId: $memoryId, ')
           ..write('type: $type, ')
+          ..write('fileName: $fileName, ')
           ..write('sizeBytes: $sizeBytes, ')
           ..write('relativePath: $relativePath, ')
           ..write('createdAt: $createdAt')
@@ -753,7 +795,15 @@ class Attachment extends DataClass implements Insertable<Attachment> {
   }
 
   @override
-  int get hashCode => Object.hash(id, memoryId, type, sizeBytes, relativePath, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    memoryId,
+    type,
+    fileName,
+    sizeBytes,
+    relativePath,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -761,6 +811,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
           other.id == this.id &&
           other.memoryId == this.memoryId &&
           other.type == this.type &&
+          other.fileName == this.fileName &&
           other.sizeBytes == this.sizeBytes &&
           other.relativePath == this.relativePath &&
           other.createdAt == this.createdAt);
@@ -770,6 +821,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
   final Value<int> id;
   final Value<int> memoryId;
   final Value<AttachmentType> type;
+  final Value<String> fileName;
   final Value<int> sizeBytes;
   final Value<String> relativePath;
   final Value<DateTime> createdAt;
@@ -777,6 +829,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     this.id = const Value.absent(),
     this.memoryId = const Value.absent(),
     this.type = const Value.absent(),
+    this.fileName = const Value.absent(),
     this.sizeBytes = const Value.absent(),
     this.relativePath = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -785,16 +838,19 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     this.id = const Value.absent(),
     required int memoryId,
     required AttachmentType type,
+    required String fileName,
     this.sizeBytes = const Value.absent(),
     required String relativePath,
     this.createdAt = const Value.absent(),
   }) : memoryId = Value(memoryId),
        type = Value(type),
+       fileName = Value(fileName),
        relativePath = Value(relativePath);
   static Insertable<Attachment> custom({
     Expression<int>? id,
     Expression<int>? memoryId,
     Expression<String>? type,
+    Expression<String>? fileName,
     Expression<int>? sizeBytes,
     Expression<String>? relativePath,
     Expression<DateTime>? createdAt,
@@ -803,6 +859,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
       if (id != null) 'id': id,
       if (memoryId != null) 'memory_id': memoryId,
       if (type != null) 'type': type,
+      if (fileName != null) 'file_name': fileName,
       if (sizeBytes != null) 'size_bytes': sizeBytes,
       if (relativePath != null) 'relative_path': relativePath,
       if (createdAt != null) 'created_at': createdAt,
@@ -813,6 +870,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     Value<int>? id,
     Value<int>? memoryId,
     Value<AttachmentType>? type,
+    Value<String>? fileName,
     Value<int>? sizeBytes,
     Value<String>? relativePath,
     Value<DateTime>? createdAt,
@@ -821,6 +879,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
       id: id ?? this.id,
       memoryId: memoryId ?? this.memoryId,
       type: type ?? this.type,
+      fileName: fileName ?? this.fileName,
       sizeBytes: sizeBytes ?? this.sizeBytes,
       relativePath: relativePath ?? this.relativePath,
       createdAt: createdAt ?? this.createdAt,
@@ -841,6 +900,9 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
         $AttachmentsTable.$convertertype.toSql(type.value),
       );
     }
+    if (fileName.present) {
+      map['file_name'] = Variable<String>(fileName.value);
+    }
     if (sizeBytes.present) {
       map['size_bytes'] = Variable<int>(sizeBytes.value);
     }
@@ -859,6 +921,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
           ..write('id: $id, ')
           ..write('memoryId: $memoryId, ')
           ..write('type: $type, ')
+          ..write('fileName: $fileName, ')
           ..write('sizeBytes: $sizeBytes, ')
           ..write('relativePath: $relativePath, ')
           ..write('createdAt: $createdAt')
@@ -882,7 +945,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final MemoriesDao memoriesDao = MemoriesDao(this as AppDatabase);
   @override
-  Iterable<TableInfo<Table, Object?>> get allTables => allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     memories,
@@ -921,14 +985,15 @@ typedef $$MemoriesTableUpdateCompanionBuilder = MemoriesCompanion Function({
   Value<DateTime> updatedAt,
 });
 
-final class $$MemoriesTableReferences extends BaseReferences<_$AppDatabase, $MemoriesTable, Memory> {
+final class $$MemoriesTableReferences
+    extends BaseReferences<_$AppDatabase, $MemoriesTable, Memory> {
   $$MemoriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$AttachmentsTable, List<Attachment>> _attachmentsRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.attachments,
-        aliasName: 'memories__id__attachments__memory_id',
-      );
+  static MultiTypedResultKey<$AttachmentsTable, List<Attachment>>
+  _attachmentsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.attachments,
+    aliasName: 'memories__id__attachments__memory_id',
+  );
 
   $$AttachmentsTableProcessedTableManager get attachmentsRefs {
     final manager = $$AttachmentsTableTableManager(
@@ -943,7 +1008,8 @@ final class $$MemoriesTableReferences extends BaseReferences<_$AppDatabase, $Mem
   }
 }
 
-class $$MemoriesTableFilterComposer extends Composer<_$AppDatabase, $MemoriesTable> {
+class $$MemoriesTableFilterComposer
+    extends Composer<_$AppDatabase, $MemoriesTable> {
   $$MemoriesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -966,7 +1032,8 @@ class $$MemoriesTableFilterComposer extends Composer<_$AppDatabase, $MemoriesTab
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<MemoryCategory, MemoryCategory, String> get category => $composableBuilder(
+  ColumnWithTypeConverterFilters<MemoryCategory, MemoryCategory, String>
+  get category => $composableBuilder(
     column: $table.category,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
@@ -1004,14 +1071,16 @@ class $$MemoriesTableFilterComposer extends Composer<_$AppDatabase, $MemoriesTab
             $table: $db.attachments,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer: $removeJoinBuilderFromRootComposer,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
           ),
     );
     return f(composer);
   }
 }
 
-class $$MemoriesTableOrderingComposer extends Composer<_$AppDatabase, $MemoriesTable> {
+class $$MemoriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MemoriesTable> {
   $$MemoriesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1055,7 +1124,8 @@ class $$MemoriesTableOrderingComposer extends Composer<_$AppDatabase, $MemoriesT
   );
 }
 
-class $$MemoriesTableAnnotationComposer extends Composer<_$AppDatabase, $MemoriesTable> {
+class $$MemoriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MemoriesTable> {
   $$MemoriesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1063,9 +1133,11 @@ class $$MemoriesTableAnnotationComposer extends Composer<_$AppDatabase, $Memorie
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get title => $composableBuilder(column: $table.title, builder: (column) => column);
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
 
   GeneratedColumn<String> get description => $composableBuilder(
     column: $table.description,
@@ -1080,9 +1152,11 @@ class $$MemoriesTableAnnotationComposer extends Composer<_$AppDatabase, $Memorie
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt => $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get updatedAt => $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> attachmentsRefs<T extends Object>(
     Expression<T> Function($$AttachmentsTableAnnotationComposer a) f,
@@ -1102,7 +1176,8 @@ class $$MemoriesTableAnnotationComposer extends Composer<_$AppDatabase, $Memorie
             $table: $db.attachments,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer: $removeJoinBuilderFromRootComposer,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
           ),
     );
     return f(composer);
@@ -1129,9 +1204,12 @@ class $$MemoriesTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () => $$MemoriesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () => $$MemoriesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () => $$MemoriesTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$MemoriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MemoriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MemoriesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -1184,9 +1262,14 @@ class $$MemoriesTableTableManager
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (attachmentsRefs)
-                    await $_getPrefetchedData<Memory, $MemoriesTable, Attachment>(
+                    await $_getPrefetchedData<
+                      Memory,
+                      $MemoriesTable,
+                      Attachment
+                    >(
                       currentTable: table,
-                      referencedTable: $$MemoriesTableReferences._attachmentsRefsTable(db),
+                      referencedTable: $$MemoriesTableReferences
+                          ._attachmentsRefsTable(db),
                       managerFromTypedResult: (p0) => $$MemoriesTableReferences(
                         db,
                         table,
@@ -1218,24 +1301,29 @@ typedef $$MemoriesTableProcessedTableManager =
       Memory,
       PrefetchHooks Function({bool attachmentsRefs})
     >;
-typedef $$AttachmentsTableCreateCompanionBuilder = AttachmentsCompanion Function({
-  Value<int> id,
-  required int memoryId,
-  required AttachmentType type,
-  Value<int> sizeBytes,
-  required String relativePath,
-  Value<DateTime> createdAt,
-});
-typedef $$AttachmentsTableUpdateCompanionBuilder = AttachmentsCompanion Function({
-  Value<int> id,
-  Value<int> memoryId,
-  Value<AttachmentType> type,
-  Value<int> sizeBytes,
-  Value<String> relativePath,
-  Value<DateTime> createdAt,
-});
+typedef $$AttachmentsTableCreateCompanionBuilder =
+    AttachmentsCompanion Function({
+      Value<int> id,
+      required int memoryId,
+      required AttachmentType type,
+      required String fileName,
+      Value<int> sizeBytes,
+      required String relativePath,
+      Value<DateTime> createdAt,
+    });
+typedef $$AttachmentsTableUpdateCompanionBuilder =
+    AttachmentsCompanion Function({
+      Value<int> id,
+      Value<int> memoryId,
+      Value<AttachmentType> type,
+      Value<String> fileName,
+      Value<int> sizeBytes,
+      Value<String> relativePath,
+      Value<DateTime> createdAt,
+    });
 
-final class $$AttachmentsTableReferences extends BaseReferences<_$AppDatabase, $AttachmentsTable, Attachment> {
+final class $$AttachmentsTableReferences
+    extends BaseReferences<_$AppDatabase, $AttachmentsTable, Attachment> {
   $$AttachmentsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $MemoriesTable _memoryIdTable(_$AppDatabase db) =>
@@ -1256,7 +1344,8 @@ final class $$AttachmentsTableReferences extends BaseReferences<_$AppDatabase, $
   }
 }
 
-class $$AttachmentsTableFilterComposer extends Composer<_$AppDatabase, $AttachmentsTable> {
+class $$AttachmentsTableFilterComposer
+    extends Composer<_$AppDatabase, $AttachmentsTable> {
   $$AttachmentsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -1269,9 +1358,15 @@ class $$AttachmentsTableFilterComposer extends Composer<_$AppDatabase, $Attachme
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<AttachmentType, AttachmentType, String> get type => $composableBuilder(
+  ColumnWithTypeConverterFilters<AttachmentType, AttachmentType, String>
+  get type => $composableBuilder(
     column: $table.type,
     builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnFilters(column),
   );
 
   ColumnFilters<int> get sizeBytes => $composableBuilder(
@@ -1305,14 +1400,16 @@ class $$AttachmentsTableFilterComposer extends Composer<_$AppDatabase, $Attachme
             $table: $db.memories,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer: $removeJoinBuilderFromRootComposer,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
           ),
     );
     return composer;
   }
 }
 
-class $$AttachmentsTableOrderingComposer extends Composer<_$AppDatabase, $AttachmentsTable> {
+class $$AttachmentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AttachmentsTable> {
   $$AttachmentsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1327,6 +1424,11 @@ class $$AttachmentsTableOrderingComposer extends Composer<_$AppDatabase, $Attach
 
   ColumnOrderings<String> get type => $composableBuilder(
     column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fileName => $composableBuilder(
+    column: $table.fileName,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1361,14 +1463,16 @@ class $$AttachmentsTableOrderingComposer extends Composer<_$AppDatabase, $Attach
             $table: $db.memories,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer: $removeJoinBuilderFromRootComposer,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
           ),
     );
     return composer;
   }
 }
 
-class $$AttachmentsTableAnnotationComposer extends Composer<_$AppDatabase, $AttachmentsTable> {
+class $$AttachmentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AttachmentsTable> {
   $$AttachmentsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1376,19 +1480,25 @@ class $$AttachmentsTableAnnotationComposer extends Composer<_$AppDatabase, $Atta
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<AttachmentType, String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
 
-  GeneratedColumn<int> get sizeBytes => $composableBuilder(column: $table.sizeBytes, builder: (column) => column);
+  GeneratedColumn<String> get fileName =>
+      $composableBuilder(column: $table.fileName, builder: (column) => column);
+
+  GeneratedColumn<int> get sizeBytes =>
+      $composableBuilder(column: $table.sizeBytes, builder: (column) => column);
 
   GeneratedColumn<String> get relativePath => $composableBuilder(
     column: $table.relativePath,
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt => $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   $$MemoriesTableAnnotationComposer get memoryId {
     final $$MemoriesTableAnnotationComposer composer = $composerBuilder(
@@ -1406,7 +1516,8 @@ class $$AttachmentsTableAnnotationComposer extends Composer<_$AppDatabase, $Atta
             $table: $db.memories,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer: $removeJoinBuilderFromRootComposer,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
           ),
     );
     return composer;
@@ -1433,14 +1544,18 @@ class $$AttachmentsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () => $$AttachmentsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () => $$AttachmentsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () => $$AttachmentsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$AttachmentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AttachmentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AttachmentsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> memoryId = const Value.absent(),
                 Value<AttachmentType> type = const Value.absent(),
+                Value<String> fileName = const Value.absent(),
                 Value<int> sizeBytes = const Value.absent(),
                 Value<String> relativePath = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -1448,6 +1563,7 @@ class $$AttachmentsTableTableManager
                 id: id,
                 memoryId: memoryId,
                 type: type,
+                fileName: fileName,
                 sizeBytes: sizeBytes,
                 relativePath: relativePath,
                 createdAt: createdAt,
@@ -1457,6 +1573,7 @@ class $$AttachmentsTableTableManager
                 Value<int> id = const Value.absent(),
                 required int memoryId,
                 required AttachmentType type,
+                required String fileName,
                 Value<int> sizeBytes = const Value.absent(),
                 required String relativePath,
                 Value<DateTime> createdAt = const Value.absent(),
@@ -1464,6 +1581,7 @@ class $$AttachmentsTableTableManager
                 id: id,
                 memoryId: memoryId,
                 type: type,
+                fileName: fileName,
                 sizeBytes: sizeBytes,
                 relativePath: relativePath,
                 createdAt: createdAt,
@@ -1500,8 +1618,11 @@ class $$AttachmentsTableTableManager
                       state = state.withJoin(
                         currentTable: table,
                         currentColumn: table.memoryId,
-                        referencedTable: $$AttachmentsTableReferences._memoryIdTable(db),
-                        referencedColumn: $$AttachmentsTableReferences._memoryIdTable(db).id,
+                        referencedTable: $$AttachmentsTableReferences
+                            ._memoryIdTable(db),
+                        referencedColumn: $$AttachmentsTableReferences
+                            ._memoryIdTable(db)
+                            .id,
                       ) as T;
                     }
 
@@ -1534,6 +1655,8 @@ typedef $$AttachmentsTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$MemoriesTableTableManager get memories => $$MemoriesTableTableManager(_db, _db.memories);
-  $$AttachmentsTableTableManager get attachments => $$AttachmentsTableTableManager(_db, _db.attachments);
+  $$MemoriesTableTableManager get memories =>
+      $$MemoriesTableTableManager(_db, _db.memories);
+  $$AttachmentsTableTableManager get attachments =>
+      $$AttachmentsTableTableManager(_db, _db.attachments);
 }

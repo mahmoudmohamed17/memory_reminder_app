@@ -7,6 +7,8 @@ import 'package:injectable/injectable.dart';
 import '../../config/error_handler/error_handler.dart';
 import '../database/app_database.dart';
 import '../database/daos/memories_dao.dart';
+import '../models/attachment_model.dart';
+import '../models/memory_attachment_input.dart';
 import '../models/memory_model.dart';
 import '../services/attachment_file_service.dart';
 import '../utils/arabic_normalizer.dart';
@@ -23,16 +25,15 @@ class MemoryRepositoryImpl implements MemoryRepository {
   @override
   Future<Result<int>> addAttachment({
     required int memoryId,
-    required AttachmentType type,
-    required String relativePath,
-    int sizeBytes = 0,
+    required MemoryAttachmentInput attachment,
   }) => _attempt(
     () => _dao.insertAttachment(
       AttachmentsCompanion.insert(
         memoryId: memoryId,
-        type: type,
-        relativePath: relativePath,
-        sizeBytes: Value(sizeBytes),
+        type: attachment.type,
+        fileName: attachment.name,
+        relativePath: attachment.file.path,
+        sizeBytes: Value(attachment.sizeBytes),
       ),
     ),
     (error) => AppError.memoryAttachmentFailed(cause: error),
@@ -56,6 +57,7 @@ class MemoryRepositoryImpl implements MemoryRepository {
             memoryId: memoryId,
             type: attachment.type,
             relativePath: relativePath,
+            fileName: attachment.name,
             sizeBytes: Value(attachment.sizeBytes),
           ),
         );
@@ -122,6 +124,53 @@ class MemoryRepositoryImpl implements MemoryRepository {
   );
 
   @override
+  Future<Result<Unit>> updateMemoryWithAttachments({
+    required int id,
+    required String title,
+    required String description,
+    required MemoryCategory category,
+    required List<MemoryAttachmentInput> additions,
+    required List<int> removals,
+  }) => _attempt(() async {
+    final savedPaths = <String>[];
+    late final List<String> removedPaths;
+    try {
+      final entries = <AttachmentsCompanion>[];
+      for (final attachment in additions) {
+        final relativePath = await _fileService.save(attachment.file);
+        savedPaths.add(relativePath);
+        entries.add(
+          AttachmentsCompanion.insert(
+            memoryId: id,
+            type: attachment.type,
+            relativePath: relativePath,
+            fileName: attachment.name,
+            sizeBytes: Value(attachment.sizeBytes),
+          ),
+        );
+      }
+
+      removedPaths = await _dao.updateMemoryWithAttachments(
+        memoryId: id,
+        memory: MemoriesCompanion(
+          title: Value(title.trim()),
+          description: Value(description.trim()),
+          normalizedText: Value(_searchText(title, description)),
+          category: Value(category),
+          updatedAt: Value(DateTime.now()),
+        ),
+        additions: entries,
+        removals: removals,
+      );
+    } catch (_) {
+      await _fileService.deleteAll(savedPaths);
+      rethrow;
+    }
+    await _fileService.deleteAll(removedPaths);
+    return unit;
+  }, (error) => AppError.memoryUpdateFailed(cause: error));
+
+  @override
   Stream<Result<List<MemoryModel>>> watchMemories({MemoryCategory? category, String query = ''}) {
     return _watch(
       _dao
@@ -163,13 +212,26 @@ class MemoryRepositoryImpl implements MemoryRepository {
 
   MemoryModel _toModel(MemoryWithDetails d) {
     final model = d.memory;
+    final attachments = d.attachments.map((item) => _toAttachment(item)).toList();
+
     return MemoryModel(
       id: model.id,
       title: model.title,
       description: model.description,
+      attachments: attachments,
       category: model.category,
       creationDate: model.createdAt,
       lastUpdateDate: model.updatedAt,
+    );
+  }
+
+  AttachmentModel _toAttachment(Attachment a) {
+    return AttachmentModel(
+      attachmentId: a.id,
+      memoryId: a.memoryId,
+      fileName: a.fileName,
+      type: a.type,
+      sizeBytes: a.sizeBytes,
     );
   }
 }

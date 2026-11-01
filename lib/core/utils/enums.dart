@@ -65,4 +65,25 @@ enum AttachmentType {
     required this.icon,
     required this.colors,
   });
+
+  static AttachmentType fromExtension(String? extension) {
+    switch (extension?.toLowerCase()) {
+      case 'pdf':
+        return AttachmentType.pdf;
+      case 'doc':
+      case 'docx':
+        return AttachmentType.docx;
+      case 'mp3':
+        return AttachmentType.audio;
+      case 'jpg':
+      case 'jpeg':
+        return AttachmentType.jpg;
+      case 'png':
+        return AttachmentType.png;
+      case 'mp4':
+        return AttachmentType.video;
+      default:
+        return AttachmentType.png;
+    }
+  }
 }

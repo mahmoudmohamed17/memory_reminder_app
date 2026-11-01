@@ -6,21 +6,23 @@ part of 'attachment_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AttachmentModel _$AttachmentModelFromJson(Map<String, dynamic> json) => AttachmentModel(
-  memoryId: json['memoryId'] as String,
-  attachmentId: json['attachmentId'] as String,
-  fileName: json['fileName'] as String,
-  fileSize: json['fileSize'] as String,
-  type: $enumDecode(_$AttachmentTypeEnumMap, json['type']),
-);
+AttachmentModel _$AttachmentModelFromJson(Map<String, dynamic> json) =>
+    AttachmentModel(
+      memoryId: (json['memoryId'] as num).toInt(),
+      attachmentId: (json['attachmentId'] as num).toInt(),
+      fileName: json['fileName'] as String,
+      sizeBytes: (json['sizeBytes'] as num).toInt(),
+      type: $enumDecode(_$AttachmentTypeEnumMap, json['type']),
+    );
 
-Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) => <String, dynamic>{
-  'memoryId': instance.memoryId,
-  'attachmentId': instance.attachmentId,
-  'fileName': instance.fileName,
-  'fileSize': instance.fileSize,
-  'type': _$AttachmentTypeEnumMap[instance.type]!,
-};
+Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) =>
+    <String, dynamic>{
+      'memoryId': instance.memoryId,
+      'attachmentId': instance.attachmentId,
+      'fileName': instance.fileName,
+      'sizeBytes': instance.sizeBytes,
+      'type': _$AttachmentTypeEnumMap[instance.type]!,
+    };
 
 const _$AttachmentTypeEnumMap = {
   AttachmentType.pdf: 'pdf',

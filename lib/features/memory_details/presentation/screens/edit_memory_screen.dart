@@ -9,12 +9,12 @@ import '../../../../core/models/memory_model.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
 import '../cubits/edit_memory_cubit.dart';
+import '../wigdets/editable_attachments_widget.dart';
+import '../wigdets/update_memory_form.dart';
 
 class EditMemoryScreen extends StatefulWidget {
   final MemoryModel model;
@@ -35,6 +35,7 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<EditMemoryCubit>().initializeAttachments(widget.model.attachments);
     _selectedCategory = widget.model.category;
     _title = TextEditingController(text: widget.model.title)..addListener(_checkIfUpdated);
     _description = TextEditingController(text: widget.model.description)..addListener(_checkIfUpdated);
@@ -45,7 +46,8 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
     final descriptionChanged = _description.text.trim() != widget.model.description.trim();
     final categoryChanged = _selectedCategory != widget.model.category;
 
-    final hasChanges = titleChanged || descriptionChanged || categoryChanged;
+    final hasChanges =
+        titleChanged || descriptionChanged || categoryChanged || context.read<EditMemoryCubit>().hasAttachmentChanges;
     final isNotEmpty = _title.text.trim().isNotEmpty && _description.text.trim().isNotEmpty;
 
     _isModelUpdated.value = hasChanges && isNotEmpty;
@@ -74,7 +76,9 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
   Widget build(BuildContext context) {
     return BlocListener<EditMemoryCubit, EditMemoryState>(
       listener: (context, state) {
-        if (state is EditMemorySuccess) {
+        if (state is EditAttachmentsUpdated) {
+          _checkIfUpdated();
+        } else if (state is EditMemorySuccess) {
           context.pop();
           context.read<AppToastCubit>().success(context.tr(AppStrings.editMemoryUpdatedSuccessfully));
         } else if (state is EditMemoryError) {
@@ -89,7 +93,7 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
         body: ListView(
           padding: const EdgeInsets.all(12),
           children: [
-            _form(context),
+            UpdateMemoryForm(formKey: _formKey, title: _title, description: _description),
             18.verticalSpace,
             MemoryCategorySelectionWidget(
               initialCategory: widget.model.category,
@@ -99,65 +103,26 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
               },
               gridItemColor: context.colorScheme.surfaceContainerHigh,
             ),
-            48.verticalSpace,
+            18.verticalSpace,
+            const EditableAttachmentsWidget(),
+            24.verticalSpace,
             ValueListenableBuilder<bool>(
               valueListenable: _isModelUpdated,
               builder: (context, isUpdated, child) {
-                return BlocSelector<EditMemoryCubit, EditMemoryState, bool>(
-                  selector: (state) => state is EditMemoryLoading,
-                  builder: (context, isLoading) {
-                    return CustomElevatedButton(
-                      onPressed: (isUpdated && !isLoading) ? _onUpdate : null,
-                      width: double.infinity,
-                      text: AppStrings.editMemoryUpdate,
-                      icon: isLoading
-                          ? const SizedBox.square(
-                              dimension: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.check),
-                      backgroundColor: (isUpdated && !isLoading)
-                          ? null
-                          : WidgetStatePropertyAll(context.colorScheme.surfaceContainerHighest),
-                    );
-                  },
+                return CustomElevatedButton(
+                  onPressed: isUpdated ? _onUpdate : null,
+                  width: double.infinity,
+                  text: AppStrings.editMemoryUpdate,
+                  icon: const Icon(Icons.check),
+                  backgroundColor: isUpdated
+                      ? null
+                      : WidgetStatePropertyAll(context.colorScheme.surfaceContainerHighest),
                 );
               },
             ),
+            24.verticalSpace,
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _form(BuildContext context) {
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16,
-        children: [
-          CustomTextFormField(
-            controller: _title,
-            hint: AppStrings.addMemoryNamePlaceholder,
-            label: AppStrings.addMemoryNameLabel,
-            validator: (value) {
-              final error = Validators.requiredField(value);
-              return error != null ? context.tr(error) : null;
-            },
-          ),
-          CustomTextFormField(
-            controller: _description,
-            maxLines: null,
-            hint: AppStrings.addMemoryDetailsPlaceholder,
-            label: AppStrings.addMemoryDetailsLabel,
-            validator: (value) {
-              final error = Validators.requiredField(value);
-              return error != null ? context.tr(error) : null;
-            },
-          ),
-        ],
       ),
     );
   }

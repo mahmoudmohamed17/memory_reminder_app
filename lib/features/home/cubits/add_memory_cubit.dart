@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/models/memory_attachment_input.dart';
 import '../../../core/repositories/memory_repository.dart';
 import '../../../core/utils/enums.dart';
 
@@ -16,8 +17,6 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
 
   AddMemoryCubit(this._repo) : super(const AddMemoryInitial());
 
-  int get selectedAttachmentCount => _selectedAttachments.length;
-
   Future<void> pickAttachments() async {
     final List<PlatformFile> files = await FilePicker.pickFiles();
 
@@ -26,12 +25,16 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
     for (final file in files) {
       final path = file.path;
       if (path == null) continue;
-      final type = _attachmentType(file.extension);
-      if (type == null) continue;
+      final type = AttachmentType.fromExtension(file.extension);
       if (_selectedAttachments.any((item) => item.file.path == path)) continue;
       final size = await file.length();
       _selectedAttachments.add(
-        MemoryAttachmentInput(file: File(path), name: file.name, type: type, sizeBytes: size ?? 0),
+        MemoryAttachmentInput(
+          file: File(path),
+          name: file.name,
+          type: type,
+          sizeBytes: size ?? 0,
+        ),
       );
     }
     emit(AddMemoryAttachmentsUpdated(_selectedAttachments));
@@ -47,6 +50,7 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
     required String title,
     required String description,
     required MemoryCategory category,
+    List<MemoryAttachmentInput>? attachments,
   }) async {
     emit(const AddMemoryLoading());
     final result = await _repo.addMemory(
@@ -57,38 +61,40 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
     await result.fold(
       (error) async => emit(AddMemoryError(error.messageKey)),
       (id) async {
-        if (_selectedAttachments.isNotEmpty) {
-          final attachmentsResult = await _repo.addAttachments(
-            memoryId: id,
-            attachments: List.unmodifiable(_selectedAttachments),
-          );
-          final hasError = attachmentsResult.fold((_) => true, (_) => false);
-          if (hasError) {
-            attachmentsResult.fold(
-              (error) => emit(AddMemoryError(error.messageKey)),
-              (_) {},
-            );
-            return;
-          }
-        }
+        addAttachments(id);
         _selectedAttachments.clear();
         emit(AddMemorySuccess(newMemoryId: id));
       },
     );
   }
 
+  Future<void> addAttachments(int memoryId) async {
+    if (_selectedAttachments.isEmpty) return;
+
+    final attachmentsResult = await _repo.addAttachments(
+      memoryId: memoryId,
+      attachments: List.unmodifiable(_selectedAttachments),
+    );
+
+    final hasError = attachmentsResult.fold((_) => true, (_) => false);
+    if (hasError) {
+      attachmentsResult.fold(
+        (error) => emit(AddMemoryError(error.messageKey)),
+        (_) {},
+      );
+      return;
+    }
+  }
+
   /// Attaches a file to an already-created memory.
   Future<void> addAttachment({
     required int memoryId,
-    required AttachmentType type,
-    required String relativePath,
+    required MemoryAttachmentInput attachment,
     int sizeBytes = 0,
   }) async {
     final result = await _repo.addAttachment(
       memoryId: memoryId,
-      type: type,
-      relativePath: relativePath,
-      sizeBytes: sizeBytes,
+      attachment: attachment,
     );
     result.fold(
       (error) => emit(AddMemoryError(error.messageKey)),
@@ -100,25 +106,5 @@ class AddMemoryCubit extends Cubit<AddMemoryState> {
   void reset() {
     _selectedAttachments.clear();
     emit(const AddMemoryInitial());
-  }
-
-  AttachmentType? _attachmentType(String? extension) {
-    switch (extension?.toLowerCase()) {
-      case 'pdf':
-        return AttachmentType.pdf;
-      case 'docx':
-        return AttachmentType.docx;
-      case 'mp3':
-        return AttachmentType.audio;
-      case 'jpg':
-      case 'jpeg':
-        return AttachmentType.jpg;
-      case 'png':
-        return AttachmentType.png;
-      case 'mp4':
-        return AttachmentType.video;
-      default:
-        return null;
-    }
   }
 }

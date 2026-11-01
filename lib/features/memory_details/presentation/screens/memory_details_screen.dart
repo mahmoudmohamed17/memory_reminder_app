@@ -94,7 +94,7 @@ class MemoryDetailsScreen extends StatelessWidget {
         16.verticalSpace,
         DescriptionWidget(description: current.description),
         16.verticalSpace,
-        const AttachmentsWidget(),
+        AttachmentsWidget(attachments: current.attachments),
         16.verticalSpace,
         DetailsFooter(creationDate: current.creationDate),
         32.verticalSpace,

@@ -16,9 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/home/cubits/add_memory_cubit.dart' as _i762;
 import '../../features/home/cubits/memories_list_cubit.dart' as _i531;
-import '../../features/memory_details/presentation/cubits/edit_memory_cubit.dart' as _i843;
+import '../../features/memory_details/presentation/cubits/edit_memory_cubit.dart'
+    as _i1001;
 import '../../features/memory_details/presentation/cubits/memory_details_cubit.dart'
-    as _i463;
+    as _i349;
 import '../../features/search/cubits/search_cubit.dart' as _i51;
 import '../cubits/app_flow_cubit.dart' as _i49;
 import '../cubits/app_toast_cubit.dart' as _i48;
@@ -83,11 +84,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i531.MemoriesListCubit>(
       () => _i531.MemoriesListCubit(gh<_i536.MemoryRepository>()),
     );
-    gh.factory<_i843.EditMemoryCubit>(
-      () => _i843.EditMemoryCubit(gh<_i536.MemoryRepository>()),
+    gh.factory<_i1001.EditMemoryCubit>(
+      () => _i1001.EditMemoryCubit(gh<_i536.MemoryRepository>()),
     );
-    gh.factory<_i463.MemoryDetailsCubit>(
-      () => _i463.MemoryDetailsCubit(gh<_i536.MemoryRepository>()),
+    gh.factory<_i349.MemoryDetailsCubit>(
+      () => _i349.MemoryDetailsCubit(gh<_i536.MemoryRepository>()),
     );
     gh.factory<_i51.SearchCubit>(
       () => _i51.SearchCubit(gh<_i536.MemoryRepository>()),
