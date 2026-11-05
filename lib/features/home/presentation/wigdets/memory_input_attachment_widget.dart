@@ -20,17 +20,18 @@ class MemoryInputAttachmentWidget extends StatelessWidget {
       child: Stack(
         children: [
           Column(
+            spacing: 4,
             children: [
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: input.type.colors.base,
+                    color: input.type.colors.tint,
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   alignment: Alignment.center,
                   child: FaIcon(
                     input.type.icon,
-                    color: input.type.colors.tint,
+                    color: input.type.colors.base,
                   ),
                 ),
               ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/models/memory_model.dart';
 
@@ -56,12 +55,9 @@ class DetailsHeader extends StatelessWidget {
               ),
             ),
             Text(
-              DateFormatter.timeWithDate(
-                model.lastUpdateDate ?? model.creationDate,
-                locale: context.locale.languageCode,
-              ),
+              (model.lastUpdateDate ?? model.creationDate).timeWithDate(locale: context.locale.languageCode),
               style: context.textTheme.labelSmall?.copyWith(
-                // color: context.colorScheme.outline,
+                color: context.colorScheme.outline,
               ),
             ),
           ],

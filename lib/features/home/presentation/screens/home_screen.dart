@@ -4,12 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/di/di.dart';
 import '../../cubits/add_memory_cubit.dart';
-import '../wigdets/greeting_widget.dart';
 import '../wigdets/home_header.dart';
 import '../wigdets/home_search_field.dart';
 import '../wigdets/memories_list.dart';
 import '../wigdets/memory_creation_bottom_sheet.dart';
-import '../wigdets/voice_searching_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,14 +26,7 @@ class HomeScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     16.verticalSpace,
-                    const Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: GreetingWidget(),
-                    ),
-                    16.verticalSpace,
                     const HomeSearchField(),
-                    16.verticalSpace,
-                    const VoiceSearchingButton(),
                     16.verticalSpace,
                     const MemoriesList(),
                     64.verticalSpace,

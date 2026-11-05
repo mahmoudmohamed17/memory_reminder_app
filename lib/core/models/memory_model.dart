@@ -25,6 +25,23 @@ class MemoryModel {
     this.lastUpdateDate,
   });
 
+  factory MemoryModel.mock({
+    int id = 1,
+    String title = 'Sample Memory',
+    String description = 'This is a mock memory description used for preview and testing purposes.',
+    MemoryCategory category = MemoryCategory.other,
+    List<AttachmentModel> attachments = const [],
+  }) {
+    return MemoryModel(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+      attachments: attachments,
+      creationDate: DateTime.now(),
+    );
+  }
+
   MemoryModel copyWith({
     int? id,
     String? title,

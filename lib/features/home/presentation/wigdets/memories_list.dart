@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/widgets/memory_item.dart';
 import '../../cubits/memories_list_cubit.dart';
+import 'memories_list_header.dart';
+import '../../../../core/widgets/skeletonizer_widget.dart';
 
 class MemoriesList extends StatelessWidget {
   const MemoriesList({super.key});
@@ -20,78 +21,45 @@ class MemoriesList extends StatelessWidget {
     return BlocBuilder<MemoriesListCubit, MemoriesListState>(
       builder: (context, state) {
         return switch (state) {
-          MemoriesListLoading() => Skeletonizer(
-            effect: ShimmerEffect(
-              baseColor: context.colorScheme.outlineVariant,
-              highlightColor: context.colorScheme.outline.withValues(alpha: 0.50),
-            ),
-            enableSwitchAnimation: true,
-            child: Column(
-              spacing: 12.h,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _header(context, 0),
-                _buildList(context, mockMemories.take(5).toList()),
-              ],
-            ),
-          ),
-          MemoriesListLoaded(:final memories) => Column(
-            spacing: 12.h,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _header(context, memories.length),
-              memories.isEmpty ? _empty(context) : _buildList(context, memories),
-            ],
-          ),
-          MemoriesListError(:final message) => Column(
-            spacing: 12.h,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _header(context, 0),
-              _errorState(context, message),
-            ],
-          ),
+          MemoriesListLoading() => _buildLoading(context),
+          MemoriesListLoaded(:final memories) => _buildLoaded(context, memories),
+          MemoriesListError(:final message) => _buildError(context, message),
         };
       },
     );
   }
 
-  Widget _header(BuildContext context, int count) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildLoaded(BuildContext context, List<MemoryModel> memories) {
+    return Column(
+      spacing: 12.h,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          context.tr(AppStrings.homeMemoriesTitle),
-          style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
-        ),
-        if (count > 5)
-          GestureDetector(
-            onTap: () {
-              // TODO: Show the all categories in a new screen
-            },
-            child: Row(
-              spacing: 4.w,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.tr(AppStrings.homeViewAll),
-                  style: context.textTheme.titleSmall,
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 14.sp,
-                ),
-              ],
-            ),
-          ),
+        if (memories.isNotEmpty) MemoriesListHeader(count: memories.length),
+        memories.isEmpty
+            ? _empty(context)
+            : Column(
+                spacing: 8.h,
+                children: memories
+                    .take(7)
+                    .map(
+                      (item) => MemoryItem(item: item),
+                    )
+                    .toList(),
+              ),
       ],
     );
   }
 
-  Widget _buildList(BuildContext context, List<MemoryModel> memories) {
-    return Column(
-      spacing: 8.h,
-      children: memories.take(7).map((item) => MemoryItem(item: item)).toList(),
+  Widget _buildLoading(BuildContext context) {
+    return SkeletonizerWidget(
+      child: Column(
+        spacing: 12.h,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const MemoriesListHeader(),
+          ...List.generate(3, (_) => MemoryItem(item: MemoryModel.mock())),
+        ],
+      ),
     );
   }
 
@@ -119,21 +87,23 @@ class MemoriesList extends StatelessWidget {
     );
   }
 
-  Widget _errorState(BuildContext context, String message) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: context.colorScheme.errorContainer,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
-      ),
-      child: Text(
-        context.tr(message),
-        style: context.textTheme.labelMedium?.copyWith(
-          color: context.colorScheme.onErrorContainer,
+  Widget _buildError(BuildContext context, String message) {
+    return Center(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: context.colorScheme.errorContainer,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
         ),
-        textAlign: TextAlign.center,
+        child: Text(
+          context.tr(message),
+          style: context.textTheme.labelMedium?.copyWith(
+            color: context.colorScheme.onErrorContainer,
+          ),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

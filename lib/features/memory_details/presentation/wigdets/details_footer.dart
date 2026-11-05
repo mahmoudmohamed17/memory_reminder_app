@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/extensions.dart';
 
 class DetailsFooter extends StatelessWidget {
@@ -32,10 +31,7 @@ class DetailsFooter extends StatelessWidget {
                 style: context.textTheme.labelSmall?.copyWith(color: context.colorScheme.outline),
               ),
               subTitle: Text(
-                DateFormatter.timeWithDate(
-                  creationDate,
-                  locale: context.locale.languageCode,
-                ),
+                creationDate.timeWithDate(locale: context.locale.languageCode),
                 style: context.textTheme.labelMedium,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

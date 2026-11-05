@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -106,4 +107,16 @@ extension Spaces on double {
   SizedBox get verticalSpace => SizedBox(height: h);
 
   SizedBox get horizontalSpace => SizedBox(width: w);
+}
+
+extension DateFormatter on DateTime {
+  /// e.g. "Fri, Oct 30, 3:45 PM" (localized order and digits)
+  String timeWithDate({String? locale}) {
+    return DateFormat.MMMEd(locale).add_jm().format(toLocal());
+  }
+
+  /// Use this if you want the timezone shown too
+  String timeWithDateAndZone({String? locale}) {
+    return DateFormat.MMMEd(locale).add_jmz().format(toLocal());
+  }
 }

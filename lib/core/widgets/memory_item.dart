@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../routing/app_routes.dart';
+import '../utils/app_strings.dart';
 import '../utils/extensions.dart';
 import '../models/memory_model.dart';
 
@@ -13,37 +16,62 @@ class MemoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? lastUpdated = item.lastUpdateDate?.timeWithDate(locale: context.locale.languageCode);
+
     return GestureDetector(
       onTap: () {
         context.push(AppRoutes.memoryDetails, extra: item);
       },
       child: Card(
-        child: ListTile(
-          leading: Container(
-            height: 48,
-            width: 48,
-            decoration: BoxDecoration(
-              color: item.category.categoryColors.tint,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Icon(item.category.icon, color: item.category.categoryColors.base),
-          ),
-          title: Text(
-            item.title,
-            style: context.textTheme.labelSmall?.copyWith(color: item.category.categoryColors.base),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Text(
-            item.description,
-            style: context.textTheme.titleSmall,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios_outlined,
-            size: 18.sp,
-            color: context.colorScheme.outline.withValues(alpha: 0.50),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: item.category.categoryColors.tint,
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Icon(item.category.icon, color: item.category.categoryColors.base),
+                ),
+                title: Text(
+                  item.title,
+                  style: context.textTheme.labelMedium?.copyWith(color: item.category.categoryColors.base),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  item.description,
+                  style: context.textTheme.titleSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: 18.sp,
+                  color: context.colorScheme.outline.withValues(alpha: 0.50),
+                ),
+              ),
+              Row(
+                spacing: 6,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.clockRotateLeft,
+                    size: 14,
+                    color: context.colorScheme.outline,
+                  ),
+                  Text(
+                    '${AppStrings.memoryUpdatedAt.tr()}: $lastUpdated',
+                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.outline),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
