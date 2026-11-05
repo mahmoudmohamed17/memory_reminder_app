@@ -1,3 +1,4 @@
+import 'package:drift_flutter/drift_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,9 @@ abstract class Modules {
   @preResolve
   @singleton
   Future<SharedPreferences> get sharedPreferences => SharedPreferences.getInstance();
+
+  @singleton
+  AppDatabase get database => AppDatabase(driftDatabase(name: 'app_db'));
 
   @lazySingleton
   MemoriesDao memoriesDao(AppDatabase db) => db.memoriesDao;

@@ -49,11 +49,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => modules.sharedPreferences,
       preResolve: true,
     );
+    gh.singleton<_i982.AppDatabase>(() => modules.database);
     gh.lazySingleton<_i48.AppToastCubit>(() => _i48.AppToastCubit());
-    gh.lazySingleton<_i982.AppDatabase>(
-      () => _i982.AppDatabase(),
-      dispose: (i) => i.close(),
-    );
     gh.lazySingleton<_i262.VoiceRecordingService>(
       () => _i262.VoiceRecordingService(),
     );
