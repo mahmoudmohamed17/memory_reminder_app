@@ -30,22 +30,22 @@ class MemoriesList extends StatelessWidget {
   }
 
   Widget _buildLoaded(BuildContext context, List<MemoryModel> memories) {
+    if (memories.isEmpty) return _empty(context);
+
     return Column(
       spacing: 12.h,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (memories.isNotEmpty) MemoriesListHeader(count: memories.length),
-        memories.isEmpty
-            ? _empty(context)
-            : Column(
-                spacing: 8.h,
-                children: memories
-                    .take(7)
-                    .map(
-                      (item) => MemoryItem(item: item),
-                    )
-                    .toList(),
-              ),
+        MemoriesListHeader(count: memories.length),
+        Column(
+          spacing: 8.h,
+          children: memories
+              .take(7)
+              .map(
+                (item) => MemoryItem(item: item),
+              )
+              .toList(),
+        ),
       ],
     );
   }
@@ -88,22 +88,20 @@ class MemoriesList extends StatelessWidget {
   }
 
   Widget _buildError(BuildContext context, String message) {
-    return Center(
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: context.colorScheme.errorContainer,
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: context.colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.colorScheme.error.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        context.tr(message),
+        style: context.textTheme.labelMedium?.copyWith(
+          color: context.colorScheme.onErrorContainer,
         ),
-        child: Text(
-          context.tr(message),
-          style: context.textTheme.labelMedium?.copyWith(
-            color: context.colorScheme.onErrorContainer,
-          ),
-          textAlign: TextAlign.center,
-        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

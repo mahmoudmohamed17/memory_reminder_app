@@ -1,11 +1,15 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/cubits/voice_recording_cubit.dart';
+import '../../../../core/di/di.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../search/presentation/screens/search_screen.dart';
+import 'voice_recording_dialog.dart';
 
 class HomeSearchField extends StatelessWidget {
   const new({super.key});
@@ -37,7 +41,18 @@ class HomeSearchField extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            showDialog<String>(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => BlocProvider(
+                create: (context) => getIt<VoiceRecordingCubit>(),
+                child: const VoiceRecordingDialog(),
+              ),
+            ).then((text) {
+              if (text == null || text.isEmpty) return;
+            });
+          },
           icon: Icon(
             Icons.mic,
             size: 34.sp,

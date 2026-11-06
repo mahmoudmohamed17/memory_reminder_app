@@ -115,8 +115,6 @@ class VoiceSearchingButton extends StatelessWidget {
                         ),
                       ).then((text) {
                         if (text == null || text.isEmpty) return;
-
-                        // TODO: Search with the text from the speech recognizer.
                       });
                     },
                     child: Container(

@@ -7,10 +7,15 @@ import 'package:waveform_flutter/waveform_flutter.dart';
 
 @LazySingleton()
 class VoiceRecordingService {
-  final StreamController<Amplitude> _amplitudeController = StreamController<Amplitude>.broadcast();
+  StreamController<Amplitude> _amplitudeController = StreamController<Amplitude>.broadcast();
   final SpeechToText _speechToText = SpeechToText();
 
-  Stream<Amplitude> get amplitudeStream => _amplitudeController.stream;
+  Stream<Amplitude> get amplitudeStream {
+    if (_amplitudeController.isClosed) {
+      _amplitudeController = StreamController<Amplitude>.broadcast();
+    }
+    return _amplitudeController.stream;
+  }
 
   Future<bool> initialize({required void Function(SpeechRecognitionError error)? onError}) async {
     return await _speechToText.initialize(onError: onError);
@@ -22,6 +27,10 @@ class VoiceRecordingService {
     String? locale,
     required Function(String recognizedWords, bool isFinal) onResult,
   }) async {
+    if (_amplitudeController.isClosed) {
+      _amplitudeController = StreamController<Amplitude>.broadcast();
+    }
+
     await _speechToText.listen(
       listenOptions: SpeechListenOptions(localeId: locale),
       onResult: (result) => onResult(result.recognizedWords, result.finalResult),
@@ -38,8 +47,14 @@ class VoiceRecordingService {
     await _speechToText.stop();
   }
 
-  Future<void> dispose() async {
-    await _amplitudeController.close();
+  Future<void> cancel() async {
     await _speechToText.cancel();
+  }
+
+  Future<void> dispose() async {
+    await _speechToText.cancel();
+    if (!_amplitudeController.isClosed) {
+      await _amplitudeController.close();
+    }
   }
 }

@@ -15,17 +15,10 @@ class HomeHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.asset(
-          AppImages.logo,
-          height: 38.h,
-          width: 38.w,
-        ),
+        Image.asset(AppImages.logo, height: 38.h, width: 38.w),
         Row(
           spacing: 12.w,
-          children: const [
-            ChangeThemeButton(),
-            ChangeLangaugeButton(),
-          ],
+          children: const [ChangeThemeButton(), ChangeLangaugeButton()],
         ),
       ],
     );

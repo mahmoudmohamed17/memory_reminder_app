@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/cubits/voice_recording_cubit.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -65,6 +66,7 @@ class _VoiceRecordingDialogState extends State<VoiceRecordingDialog> with Single
         // TODO: Handle this better later
         if (state is VoiceRecordingError) {
           context.pop();
+          context.read<AppToastCubit>().error(state.error);
         }
       },
       child: Dialog(

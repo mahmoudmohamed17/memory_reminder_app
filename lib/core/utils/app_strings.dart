@@ -77,6 +77,7 @@
   static const String voiceDescription = 'voice.description';
   static const String voiceListening = 'voice.listening';
   static const String voiceNoMatch = 'voice.noMatch';
+  static const String voiceServiceNotAvailable = 'voice.serviceNotAvailable';
 
   // Memory
   static const String memoryDetailsLabel = 'memory.detailsLabel';

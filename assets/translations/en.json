@@ -78,7 +78,8 @@
     "title": "I am listening",
     "description": "Say the name of the memory you want to recall",
     "listening": "Listening...",
-    "noMatch": "I could not find a matching memory. Please try again."
+    "noMatch": "I could not find a matching memory. Please try again.",
+    "serviceNotAvailable": "Voice recording is not available"
   },
   "memory": {
     "detailsLabel": "Memory details",

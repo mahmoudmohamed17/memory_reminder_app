@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:waveform_flutter/waveform_flutter.dart';
 
 import '../services/voice_recording_service.dart';
+import '../utils/app_strings.dart';
 
 part 'voice_recording_state.dart';
 
@@ -19,38 +20,54 @@ class VoiceRecordingCubit extends Cubit<VoiceRecordingState> {
   bool get isRecording => _service.isListening;
 
   Future<void> startRecording() async {
-    emit(const VoiceRecordingLoading());
+    try {
+      emit(const VoiceRecordingLoading());
 
-    final isAvailable = await _service.initialize(
-      onError: (error) {
-        log('Voice recording is not available: ${error.toJson()}');
-        emit(const VoiceRecordingError(error: 'Voice recording is not available'));
-      },
-    );
+      final isAvailable = await _service.initialize(
+        onError: (error) {
+          log('Voice initialization error: ${error.toJson()}');
+          if (!isClosed) {
+            emit(const VoiceRecordingError(error: AppStrings.voiceServiceNotAvailable));
+          }
+        },
+      );
 
-    if (!isAvailable) {
-      log('Voice recording is not available');
-      emit(const VoiceRecordingError(error: 'Voice recording is not available'));
-      return;
-    }
-
-    emit(const VoiceRecordingListening(words: ''));
-
-    await _service.start(
-      onResult: (words, isFinal) {
-        if (isFinal) {
-          log('Success: $words');
-          emit(VoiceRecordingSuccess(words: words));
-        } else {
-          log('Listening: $words');
-          emit(VoiceRecordingListening(words: words));
+      if (!isAvailable) {
+        if (!isClosed) {
+          emit(const VoiceRecordingError(error: AppStrings.voiceServiceNotAvailable));
         }
-      },
-    );
+        return;
+      }
+
+      if (isClosed) return;
+      emit(const VoiceRecordingListening(words: ''));
+
+      await _service.start(
+        onResult: (words, isFinal) {
+          if (isClosed) return;
+          if (isFinal) {
+            log('Success: $words');
+            emit(VoiceRecordingSuccess(words: words));
+          } else {
+            log('Listening: $words');
+            emit(VoiceRecordingListening(words: words));
+          }
+        },
+      );
+    } catch (e, stack) {
+      log('Voice startRecording error: $e\n$stack');
+      if (!isClosed) {
+        emit(const VoiceRecordingError(error: AppStrings.voiceServiceNotAvailable));
+      }
+    }
   }
 
   Future<void> stop() async {
-    await _service.stop();
+    try {
+      await _service.stop();
+    } catch (e) {
+      log('Voice stop error: $e');
+    }
   }
 
   Future<void> toggle() async {
@@ -63,7 +80,7 @@ class VoiceRecordingCubit extends Cubit<VoiceRecordingState> {
 
   @override
   Future<void> close() async {
-    await _service.dispose();
+    await _service.cancel();
     return super.close();
   }
 }

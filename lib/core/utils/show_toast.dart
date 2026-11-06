@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 void showToast({
-  BuildContext? context,
-  Widget? title,
+  required String title,
   ToastificationType type = ToastificationType.info,
   ToastificationStyle style = ToastificationStyle.flat,
   CloseButtonShowType closeButton = CloseButtonShowType.none,
@@ -12,8 +11,7 @@ void showToast({
   Duration autoCloseDuration = const Duration(seconds: 3),
 }) {
   toastification.show(
-    context: context,
-    title: title,
+    title: Text(title),
     type: type,
     style: style,
     dragToClose: dragToClose,

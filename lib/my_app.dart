@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                   child: BlocListener<AppToastCubit, AppToastState>(
                     listener: (context, state) {
                       showToast(
-                        title: Text(state.text!),
+                        title: context.tr(state.text!),
                         type: switch (state.type) {
                           ToastType.success => ToastificationType.success,
                           ToastType.error => ToastificationType.error,
