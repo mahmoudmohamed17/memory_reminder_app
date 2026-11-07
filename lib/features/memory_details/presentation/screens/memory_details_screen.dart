@@ -6,9 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/app_toast.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/models/memory_model.dart';
@@ -29,9 +29,9 @@ class MemoryDetailsScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is MemoryDetailsDeleted) {
           context.pop();
-          context.read<AppToastCubit>().info(context.tr(AppStrings.memoryDeleted));
+          AppToast.info(context.tr(AppStrings.memoryDeleted));
         } else if (state is MemoryDetailsError) {
-          context.read<AppToastCubit>().error(context.tr(state.message));
+          AppToast.error(context.tr(state.message));
         }
       },
       child: BlocBuilder<MemoryDetailsCubit, MemoryDetailsState>(

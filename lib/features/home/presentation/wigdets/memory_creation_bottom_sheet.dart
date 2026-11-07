@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/utils/app_toast.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/memory_category_selection_widget.dart';
 import '../../cubits/add_memory_cubit.dart';
@@ -65,9 +65,9 @@ class _MemoryCreationBottomSheetState extends State<MemoryCreationBottomSheet> {
       listener: (context, state) {
         if (state is AddMemorySuccess) {
           context.pop();
-          context.read<AppToastCubit>().success(context.tr(AppStrings.addMemorySaved));
+          AppToast.success(context.tr(AppStrings.addMemorySaved));
         } else if (state is AddMemoryError) {
-          context.read<AppToastCubit>().error(context.tr(state.message));
+          AppToast.error(context.tr(state.message));
         }
       },
       child: Container(

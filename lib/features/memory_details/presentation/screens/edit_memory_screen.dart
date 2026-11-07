@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/cubits/app_toast_cubit.dart';
 import '../../../../core/models/memory_model.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/app_toast.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -80,9 +80,9 @@ class _EditMemoryScreenState extends State<EditMemoryScreen> {
           _checkIfUpdated();
         } else if (state is EditMemorySuccess) {
           context.pop();
-          context.read<AppToastCubit>().success(context.tr(AppStrings.editMemoryUpdatedSuccessfully));
+          AppToast.success(context.tr(AppStrings.editMemoryUpdatedSuccessfully));
         } else if (state is EditMemoryError) {
-          context.read<AppToastCubit>().error(context.tr(AppStrings.errorMemoryUpdateFailed));
+          AppToast.error(context.tr(AppStrings.errorMemoryUpdateFailed));
         }
       },
       child: Scaffold(
