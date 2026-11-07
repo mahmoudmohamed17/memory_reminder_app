@@ -103,6 +103,14 @@ extension ContextExtension on BuildContext {
   bool get isDarkMode => theme.brightness == Brightness.dark;
 }
 
+extension LocaleContext on BuildContext {
+  void cycleLocale() {
+    final locales = supportedLocales;
+    final nextIndex = (locales.indexOf(locale) + 1) % locales.length;
+    setLocale(locales[nextIndex]);
+  }
+}
+
 extension Spaces on double {
   SizedBox get verticalSpace => SizedBox(height: h);
 

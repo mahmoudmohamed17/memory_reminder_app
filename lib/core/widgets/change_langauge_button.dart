@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../cubits/locale_cubit.dart';
 import '../utils/extensions.dart';
 
 class ChangeLangaugeButton extends StatelessWidget {
@@ -11,7 +9,7 @@ class ChangeLangaugeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.read<LocaleCubit>().cycleLocale(),
+      onTap: context.cycleLocale,
       child: Container(
         decoration: BoxDecoration(
           color: context.colorScheme.surface,

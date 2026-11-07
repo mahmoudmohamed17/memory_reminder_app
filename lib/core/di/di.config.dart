@@ -22,7 +22,6 @@ import '../../features/memory_details/presentation/cubits/memory_details_cubit.d
     as _i349;
 import '../../features/search/cubits/search_cubit.dart' as _i51;
 import '../cubits/app_flow_cubit.dart' as _i49;
-import '../cubits/locale_cubit.dart' as _i867;
 import '../cubits/theme_cubit.dart' as _i525;
 import '../cubits/voice_recording_cubit.dart' as _i1068;
 import '../database/app_database.dart' as _i982;
@@ -42,7 +41,6 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final modules = _$Modules();
-    gh.singleton<_i867.LocaleCubit>(() => _i867.LocaleCubit());
     gh.singleton<_i525.ThemeCubit>(() => _i525.ThemeCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => modules.sharedPreferences,

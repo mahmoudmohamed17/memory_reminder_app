@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/cubits/app_flow_cubit.dart';
-import 'core/cubits/locale_cubit.dart';
 import 'core/cubits/theme_cubit.dart';
 import 'core/di/di.dart';
 import 'core/routing/app_router.dart';
@@ -25,29 +24,23 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (_) => getIt<ThemeCubit>()),
             BlocProvider(create: (_) => getIt<AppFlowCubit>()),
-            BlocProvider(create: (_) => getIt<LocaleCubit>()),
           ],
-          child: BlocListener<LocaleCubit, Locale>(
-            listener: (context, locale) => context.setLocale(locale),
-            child: BlocBuilder<ThemeCubit, ThemeMode>(
-              builder: (context, themeMode) {
-                return MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  localizationsDelegates: context.localizationDelegates,
-                  supportedLocales: context.supportedLocales,
-                  locale: context.locale,
-                  themeMode: themeMode,
-                  theme: AppTheme.light,
-                  darkTheme: AppTheme.dark,
-                  themeAnimationDuration: const Duration(milliseconds: 1500),
-                  themeAnimationCurve: Curves.fastOutSlowIn,
-                  routerConfig: AppRouter.router,
-                  builder: (context, child) {
-                    return ToastificationWrapper(child: child!);
-                  },
-                );
-              },
-            ),
+          child: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                themeMode: themeMode,
+                theme: AppTheme.light,
+                darkTheme: AppTheme.dark,
+                themeAnimationDuration: const Duration(milliseconds: 1500),
+                themeAnimationCurve: Curves.fastOutSlowIn,
+                routerConfig: AppRouter.router,
+                builder: (context, child) => ToastificationWrapper(child: child!),
+              );
+            },
           ),
         );
       },
